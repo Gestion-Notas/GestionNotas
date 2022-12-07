@@ -55,6 +55,7 @@ CREATE TABLE Estudiantes(
     Clave CHAR(32)
 );
 
+
 CREATE TABLE Maestros(
 	ID INT PRIMARY KEY auto_increment,
     Cod_Maestro CHAR(9),
@@ -109,6 +110,10 @@ CREATE TABLE Materias(
     
     CONSTRAINT FK_Maestros_Mat FOREIGN KEY (ID_Maestro) REFERENCES Maestros(ID)
 );
+
+INSERT INTO Materias VALUES(null, 1, 'GNDR-0001', 'Matematicas', 'Materia de Matematicas', 100, 1)
+INSERT INTO Materias VALUES(null, 2, 'GNDR-0002', '', 'Materia de Matematicas', 100, 1)
+INSERT INTO Materias VALUES(null, 2, 'GNDR-0003', 'Matematicas', 'Materia de Matematicas', 100, 1)
 
 CREATE TABLE Requisitos(
 	ID INT PRIMARY KEY auto_increment,
