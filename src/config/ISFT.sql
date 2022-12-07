@@ -36,7 +36,7 @@ CREATE TABLE Estudiantes(
     Lugar_Trabajo CHAR(60),
     Dir_Trabajo CHAR(90),
     Tel_Trabajo CHAR(12),
-    Cargo_T CHAR(60),/*duda*/
+    Cargo_Trabajo CHAR(60),/*duda*/
     H_Laboral CHAR(30),
     Estado_Estudios BOOL,
     Lugar_Estudio CHAR(60),
@@ -44,7 +44,7 @@ CREATE TABLE Estudiantes(
     Iglesia CHAR(60),
     Pastor CHAR(60), /*Un solo*/
     Tiempo_Iglesia CHAR(30),
-    Cargos_I CHAR(60),/*duda*/
+    Cargo_Iglesia CHAR(60),/*duda*/
     Motivacion TEXT(1024),
     Expectativas TEXT(512),
     Testimonio TEXT(2048),
@@ -88,7 +88,7 @@ CREATE TABLE Maestros(
     Lugar_Trabajo CHAR(60),
     Dir_Trabajo CHAR(90),
     Tel_Trabajo CHAR(12),
-    Cargo CHAR(60),
+    Cargo_Trabajo CHAR(60),
     H_Laboral CHAR(30),
     Estado_Estudios BOOL,
     Lugar_Estudio CHAR(60),
@@ -96,7 +96,7 @@ CREATE TABLE Maestros(
     Iglesia CHAR(60),
     Pastor CHAR(60), /*Un solo*/
     Tiempo_Iglesia CHAR(30),
-    Cargos CHAR(60),
+    Cargo_Iglesia CHAR(60),
     Motivacion TEXT(1024),
     Expectativas TEXT(512),
     Testimonio TEXT(2048),
@@ -106,7 +106,7 @@ CREATE TABLE Maestros(
     Clave CHAR(32)
 );
 
-INSERT INTO Maestros VALUES (NULL,"DNR-0001","Marlon","Villa Mella","402-1823012-1", 03/12/1998,"Clininca la angleita ","Dominicano","(809)112-8765","M.V.M@gmail.com",
+INSERT INTO Maestros VALUES (NULL,"DNR-0001", "Marlon","Villa Mella","402-1823012-1", 03/12/1998,"Clininca la angleita ","Dominicano","(809)112-8765","M.V.M@gmail.com",
 "C. Pedro Livio Cedeño #69","Ensanche Luperon","Distrito Nacional","casado","6",null,null,"P.matematicas","Universitario","activo",
 "Instituto Tecnico Salesiano(ITESA)","Av. Albert Thomas 66, Santo Domingo 10306","(809)-120-1341","profesor","8h","inactivo",null,null,"Cristo Redentor",
 "Jose Cuello","12 años","musico del coro","mis hermanos de la iglesia","completar el curso","Dios es mi salvador",0, "aceptado","123456");
@@ -128,6 +128,10 @@ CREATE TABLE Materias(
     CONSTRAINT FK_Maestros_Mat FOREIGN KEY (ID_Maestro) REFERENCES Maestros(ID)
 );
 
+INSERT INTO Materias VALUES(null, 1, 'GNDR-0001', 'Matematicas', 'Materia de Matematicas', 100, 10)
+INSERT INTO Materias VALUES(null, 2, 'GNDR-0002', 'Sociales', 'Materia de Sociales', 100, 5)
+INSERT INTO Materias VALUES(null, 2, 'GNDR-0003', 'Español', 'Materia de Español', 100, 2)
+
 CREATE TABLE Requisitos(
 	ID INT PRIMARY KEY auto_increment,
     Materia INT,
@@ -136,13 +140,21 @@ CREATE TABLE Requisitos(
     CONSTRAINT FK_Requisitos FOREIGN KEY (Requisitos) REFERENCES Materias(ID)
 );
 
-CREATE TABLE Asuntos{
+INSERT INTO Requisitos VALUES(null, 1, null)
+INSERT INTO Requisitos VALUES(null, 2, null)
+INSERT INTO Requisitos VALUES(null, 3, null)
+
+CREATE TABLE Criterios_Evaluacion{
     ID INT PRIMARY KEY auto_increment,
     Nombre CHAR(200),
     Materia INT
 
     CONSTRAINT FK_Materia_Asuntos foreign key (Materia) REFERENCES Materias(ID)
 }
+
+INSERT INTO Criterios_Evaluacion VALUES(null, 'Asistencia', 1,)
+INSERT INTO Criterios_Evaluacion VALUES(null, 'Asistencia', 2,)
+INSERT INTO Criterios_Evaluacion VALUES(null, 'Asistencia', 3,)
 
 CREATE TABLE Calificaciones(
 	ID INT PRIMARY KEY auto_increment,
