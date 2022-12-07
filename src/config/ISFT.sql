@@ -36,7 +36,7 @@ CREATE TABLE Estudiantes(
     Lugar_Trabajo CHAR(60),
     Dir_Trabajo CHAR(90),
     Tel_Trabajo CHAR(12),
-    Cargo CHAR(60),
+    Cargo_T CHAR(60),/*duda*/
     H_Laboral CHAR(30),
     Estado_Estudios BOOL,
     Lugar_Estudio CHAR(60),
@@ -44,8 +44,7 @@ CREATE TABLE Estudiantes(
     Iglesia CHAR(60),
     Pastor CHAR(60), /*Un solo*/
     Tiempo_Iglesia CHAR(30),
-    Cargos CHAR(60),
-    Periodo CHAR(30), /*Se llena solo?*/
+    Cargos_I CHAR(60),/*duda*/
     Motivacion TEXT(1024),
     Expectativas TEXT(512),
     Testimonio TEXT(2048),
@@ -54,6 +53,16 @@ CREATE TABLE Estudiantes(
     E_Aceptado BOOL,
     Clave CHAR(32)
 );
+
+INSERT INTO Estudiantes VALUES (NULL,"2019-0024","JUAN","RIVERA GIL","402-0102912-1", 12/10/2000,"clinica la angelita","Dominicano","(809)288-1232","J.R.G@gmail.com",
+"C. Pedro Livio Cedeño #66","Ensanche Luperon","Distrito Nacional","Soltero","0","Asma","Al camaron","Poltero de escuela","Secundaria","activo",
+"Instituto Tecnico Salesiano(ITESA)","Av. Albert Thomas 66, Santo Domingo 10306","(809)-120-1341","portero","4h","activo","uasd","Ingieneria civil","Cristo Redentor",
+"Jose Cuello","4 años","Encargado del coro", "la iglesia y mi familia","completar el curso","Dios me saco de las tinieblas",0, "aceptado","123456");
+
+INSERT INTO Estudiantes VALUES (NULL,"2019-0013","Rodolfo","Garcia Moreno","402-1726821-0", 02/11/1999,"Hospital Plaza de la salud","Dominicano","(809)121-1231","R.G.M@gmail.com",
+"C. Pedro Livio Cedeño #67","Ensanche Luperon","Distrito Nacional","casado","2","Diabetes","Canela","Secretario","Tecnico","activo",
+"Instituto Tecnico Salesiano(ITESA)","Av. Albert Thomas 66, Santo Domingo 10306","(809)-120-1341","secretario","6h","activo","uasd","arquitecto","Cristo Redentor",
+"Jose Cuello","2 años","evangelisador","mis hermanos de la iglesia","completar el curso","Dios es mi salvador",0, "aceptado","123456");
 
 CREATE TABLE Maestros(
 	ID INT PRIMARY KEY auto_increment,
@@ -88,7 +97,6 @@ CREATE TABLE Maestros(
     Pastor CHAR(60), /*Un solo*/
     Tiempo_Iglesia CHAR(30),
     Cargos CHAR(60),
-    Periodo CHAR(30), /*Se llena solo?*/
     Motivacion TEXT(1024),
     Expectativas TEXT(512),
     Testimonio TEXT(2048),
@@ -97,6 +105,16 @@ CREATE TABLE Maestros(
     E_Aceptado BOOL, /*???*/
     Clave CHAR(32)
 );
+
+INSERT INTO Maestros VALUES (NULL,"DNR-0001","Marlon","Villa Mella","402-1823012-1", 03/12/1998,"Clininca la angleita ","Dominicano","(809)112-8765","M.V.M@gmail.com",
+"C. Pedro Livio Cedeño #69","Ensanche Luperon","Distrito Nacional","casado","6",null,null,"P.matematicas","Universitario","activo",
+"Instituto Tecnico Salesiano(ITESA)","Av. Albert Thomas 66, Santo Domingo 10306","(809)-120-1341","profesor","8h","inactivo",null,null,"Cristo Redentor",
+"Jose Cuello","12 años","musico del coro","mis hermanos de la iglesia","completar el curso","Dios es mi salvador",0, "aceptado","123456");
+
+INSERT INTO Maestros VALUES (NULL,"DNR-OOO2","Jorge","Ponce de Leon","402-1342341-1", 05/09/1997,"Hospital Plaza de la salud","Dominicano","(809)123-1221","J.P.L@gmail.com",
+"C. Pedro Livio Cedeño #12","Ensanche Luperon","Distrito Nacional","casado","4","ARTRITIS","","Guanabana","universitario","activo",
+"Instituto Tecnico Salesiano(ITESA)","Av. Albert Thomas 66, Santo Domingo 10306","(809)-120-1341","P.Fisica","8h","inactivo",null,null,"Cristo Redentor",
+"Jose Cuello","10 años","preparador del altar","mis hermanos de la iglesia","completar el curso","Cristo viene",0, "aceptado","123456");
 
 CREATE TABLE Materias(
 	ID INT PRIMARY KEY auto_increment,
