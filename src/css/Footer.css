@@ -37,11 +37,12 @@
   color: var(--BaseTone);
   margin: 10rem;
   font-size: 30rem;
+  transition: all 250ms;
 }
 
 .icon-Footer:hover {
   color: var(--LighterGray);
-  transition: all 150ms;
+  transition: all 250ms;
 }
 
 .grupo2-Footer {
