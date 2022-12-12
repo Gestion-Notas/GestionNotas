@@ -6,18 +6,32 @@ const Admisiones = () => {
   const [faqs, setfaqs] = useState([
     {
       question: "Datos Personales",
-      answer: <><input type="text" placeholder="HolaPili"/></>,
+      answer: (
+        <div className="form-Admisiones">
+          <input type="text" placeholder="Nombres" />
+          <input type="text" placeholder="Apellidos" />
+        </div>
+      ),
       open: true,
     },
     {
-      question: "Who is the most awesome person?",
-      answer: "You. The Viewer.",
+      question: "Datos familiares",
+      answer: (
+        <div className="form-Admisiones">
+          <input type="text" />
+          <input type="text" />
+        </div>
+      ),
       open: false,
     },
     {
-      question:
-        "How many questions does it take to make a successful FAQ Page?",
+      question: "Datos Ocupacionales",
       answer: "This many.",
+      open: false,
+    },
+    {
+      question: "Datos esclesiásticos",
+      answer: "Holamundo",
       open: false,
     },
   ]);
@@ -38,12 +52,15 @@ const Admisiones = () => {
 
   return (
     <main>
-      <div className="faqs">
-        <form action="">
-          {faqs.map((faq, i) => (
-            <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
-          ))}
-        </form>
+      <div className="container-Admisiones">
+        <div className="faqs">
+          <form action="">
+            {faqs.map((faq, i) => (
+              <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
+            ))}
+          </form>
+        </div>
+        <div className="sidecolumn-Admisiones"></div>
       </div>
     </main>
   );
