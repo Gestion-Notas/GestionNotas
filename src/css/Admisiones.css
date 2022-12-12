@@ -1,82 +1,104 @@
-
 .faqs {
   width: 100%;
-  max-width: 768px;
-  margin: 0 auto;
-  padding: 15px;
+  max-width: 768rem;
 }
 
 .faqs .faq {
-  margin: 15px;
-  padding: 15px;
+  margin: 15rem 0;
+  padding: 15rem;
   background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  border-radius: 8rem;
+  box-shadow: 0rem 0rem 10rem rgba(0, 0, 0, 0.2);
 }
 
-.header-faq{
-    display:flex;
-    justify-content: space-between;
-    align-items: center;
-    vertical-align: middle;
+.header-faq {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
 }
 
-.arrow{
-    font-size: 20rem;
+.arrow {
+  font-size: 20rem;
 }
 
-.arrow::after{
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0px;
-    transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    transition: all 0.3s ease-out;
-  
+.arrow::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0rem;
+  transform: translateY(-50%);
+  width: 30rem;
+  height: 30rem;
+  transition: all 150ms;
 }
 
 .faqs .faq .faq-question {
   position: relative;
-  font-size: 20px;
-  padding-right: 80px;
-  transition: all 0.3s ease;
+  font-size: 24rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding-right: 80rem;
+  transition: all 150ms;
 }
 
 .faqs .faq .faq-question::after {
   content: "";
   position: absolute;
   top: 50%;
-  right: 0px;
+  right: 0rem;
   transform: translateY(-50%);
-  width: 30px;
-  height: 30px;
+  width: 30rem;
+  height: 30rem;
 
   background-image: url();
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-
-  
 }
 
 .faqs .faq .faq-answer {
   opacity: 0;
   max-height: 0;
   overflow-y: hidden;
-  transition: all 0.3s ease-out;
+  transition: all 150ms;
 }
 
 .faqs .faq.open .faq-question {
-  margin-bottom: 15px;
+  margin-bottom: 15rem;
 }
 
 .faqs .faq.open .header-faq.open .arrow {
-  transform:rotate(90deg);
+  transform: rotate(90deg);
 }
 
 .faqs .faq.open .faq-answer {
-  max-height: 1000px;
+  max-height: 1000rem;
   opacity: 1;
+}
+
+/*FORMULARIO ESTILOS*/
+
+.form-Admisiones {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-Admisiones input {
+  border: none;
+  border-bottom: 2px solid black;
+  width: 100%;
+  outline: none;
+  margin: 10rem 0;
+  font-size: 18rem;
+}
+
+.container-Admisiones {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  grid-gap: 50rem;
+}
+
+.sidecolumn-Admisiones{
+  background-color: red;
 }
