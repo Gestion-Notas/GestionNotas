@@ -9,13 +9,18 @@ const Admisiones = () => {
       answer: (
         <div className="form-Admisiones">
           <div className="grid1-1">
-            <input type="text" placeholder="Nombres" id="Nombres" />
-            <input type="text" placeholder="Apellidos" id="Apellidos" />
+            <input type="text" placeholder="Nombres" id="Nombres" required />
+            <input
+              type="text"
+              placeholder="Apellidos"
+              id="Apellidos"
+              required
+            />
           </div>
           <div className="grid3-1"></div>
           <div className="grid3-1">
-            <input type="text" placeholder="Cédula" id="Cedula" />
-            <select name="Sexo" id="Sexo" placeholder="Sexo">
+            <input type="text" placeholder="Cédula" id="Cedula" required />
+            <select name="Sexo" id="Sexo" placeholder="Sexo" required>
               <option value="">Sexo</option>
               <option value="">Masculino</option>
               <option value="">Femenino</option>
@@ -24,93 +29,85 @@ const Admisiones = () => {
           <div className="grid3-2">
             <input
               type="text"
-              placeholder="Lugar de Nacimiento"
+              placeholder="Lugar y Fecha de Nacimiento"
               id="L_Nacimiento"
             />
-            <input
-              type="date"
-              placeholder="Fecha de Nacimiento"
-              id="F_Nacimiento"
-            />
+            <div className="grid1-3">
+              <label htmlFor="">Fecha:</label>
+              <input
+                type="date"
+                placeholder="Fecha de Nacimiento"
+                id="F_Nacimiento"
+              />
+            </div>
           </div>
           <div className="grid3-1">
-            <input type="text" placeholder="Nacionalidad" id="Nacionalidad" />
-            <input type="tel" placeholder="Teléfono" id="Tel" />
+            <input
+              type="text"
+              placeholder="Nacionalidad"
+              id="Nacionalidad"
+              required
+            />
+            <input type="tel" placeholder="Teléfono" id="Tel" required />
           </div>
-          <input type="email" placeholder="Correo Electrónico" id="Correo" />
+          <input
+            type="email"
+            placeholder="Correo Electrónico"
+            id="Correo"
+            required
+          />
           <input
             type="text"
             placeholder="Dirección (Calle, Nro, Edificio, Apto.)"
             id="Direccion"
+            required
           />
           <div className="grid1-1">
-            <input type="text" placeholder="Sector" id="Sector" />
-            <input type="text" placeholder="Provincia" id="Provincia" />
+            <input type="text" placeholder="Sector" id="Sector" required />
+            <input
+              type="text"
+              placeholder="Provincia"
+              id="Provincia"
+              required
+            />
           </div>
         </div>
       ),
       open: true,
     },
-    {
-      question: "Datos familiares",
-      answer: (
-        <div className="form-Admisiones">
-          <div className="grid1-1">
-            <select name="E_Civil" id="E_Civil">
-              <option value="">Seleccione su Estado Civil</option>
-              <option value="">Casado</option>
-              <option value="">Soltero</option>
-              <option value="">Viudo</option>
-            </select>
-            <input type="text" placeholder="Cantidad De Hijos" id="C_Hijos" />
-          </div>
-          <textarea
-            name="Enfermedad"
-            id="Enfermedad"
-            rows="8"
-            placeholder="Padece de Alguna Enfermedad? Indique Cual/es"
-          ></textarea>
-          <textarea
-            name="Alergias"
-            id="Alergias"
-            rows="8"
-            placeholder="Padece de Alergias? Indique Cual/es"
-          ></textarea>
-        </div>
-      ),
-      open: false,
-    },
-    {
-      question: "Datos Ocupacionales",
-      answer: (
-        <div className="form-Admisiones">
-          <input
-            type="text"
-            placeholder="Ocupación que Ejerce"
-            id="Ocupacion"
-          />
-          <input
-            type="text"
-            placeholder="Grado Académico Alcanzado"
-            id="G_Academico"
-          />
-          <div className="grid1-1">
-            <label htmlFor="">Trabaja Actualmente?</label>
-            <div className="grid1-1">
-              <input type="checkbox" value={true} id="Estado_Trabajo" />
-            </div>
-          </div>
-          Ocupacion CHAR(60), G_Academico CHAR(20), Estado_Trabajo BOOL,
-          Lugar_Trabajo CHAR(60), Dir_Trabajo CHAR(90), Tel_Trabajo CHAR(12),
-          Cargo_Trabajo CHAR(60),/*duda*/ H_Laboral CHAR(30), Estado_Estudios
-          BOOL, Lugar_Estudio CHAR(60), Estudios CHAR(30),
-        </div>
-      ),
-      open: false,
-    },
+
     {
       question: "Datos esclesiásticos",
-      answer: "Holamundo",
+      answer: (
+        <div className="form-Admisiones">
+          <input
+            type="text"
+            placeholder="Iglesia en la que se congrega actualmente"
+            id="Iglesia"
+            required
+          />
+          <div className="grid1-1">
+            <input
+              type="text"
+              placeholder="Pastor de su iglesia"
+              id="Pastor"
+              required
+            />
+            <input
+              type="text"
+              placeholder="Tiempo congregándose"
+              id="Tiempo_Iglesia"
+              required
+            />
+          </div>
+          <input
+            type="text"
+            placeholder="Cargo que desempeña"
+            id="Cargo_Iglesia"
+            required
+          />
+        </div>
+      ),
       open: false,
     },
   ]);
@@ -154,6 +151,7 @@ const Admisiones = () => {
             {faqs.map((faq, i) => (
               <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
             ))}
+            <button type="submit">Ingresar y Enviar tus Datos</button>
           </form>
         </div>
       </div>
