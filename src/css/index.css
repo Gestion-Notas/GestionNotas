@@ -112,4 +112,7 @@ main {
 }
 
 @media only screen and (max-width: 700px) {
+  main {
+    padding: 15rem;
+  }
 }

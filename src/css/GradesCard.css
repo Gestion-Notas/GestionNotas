@@ -7,24 +7,31 @@
 }
 
 .imagen-GradesCard {
-  position: relative;
+  position: absolute;
   background-position: center center;
   background-size: cover;
-  height: 160rem;
-  margin: 12rem;
+  width: 100%;
+  height: 100%;
   transition: all 300ms;
 }
 
-.container-GradesCard:hover > .imagen-GradesCard {
+.container-GradesCard:hover .container_img-GradesCard > .imagen-GradesCard {
   transform: scale(1.03);
   transition: all 300ms;
 }
 
 .container-GradesCard p {
   color: var(--BaseTone);
-  font-size: 15rem;
+  font-size: 20rem;
   font-weight: 400;
   margin: 0 0rem 10rem 10rem;
+}
+
+.container_img-GradesCard{
+  height: 160rem;
+  margin: 5rem;
+  position: relative;
+  overflow: hidden;
 }
 
 @media only screen and (min-width: 1400px) {

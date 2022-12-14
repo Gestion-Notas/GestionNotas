@@ -18,6 +18,7 @@ CREATE TABLE Estudiantes(
     Nombres CHAR(60),
     Apellidos CHAR(60),
     Cedula CHAR(13),
+    Sexo CHAR(9),
     F_Nacimiento DATE,
     Lugar_Nacimiento CHAR(60),
     Nacionalidad CHAR(20),
