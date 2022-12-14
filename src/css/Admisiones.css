@@ -94,7 +94,7 @@
   padding: 0 3rem;
 }
 
-.form-Admisiones select{
+.form-Admisiones select {
   border: none;
   border-bottom: 2px solid black;
   width: 100%;
@@ -109,23 +109,23 @@
   grid-gap: 50rem;
 }
 
-.sidecolumn-Admisiones{
-  background-color: red;
+.sidecolumn-Admisiones {
+  background-color: var(--BaseTone);
   padding: 30rem;
+  box-shadow: 0rem 0rem 10rem rgba(0, 0, 0, 0.2);
 }
 
-
-.title_side-Admisiones{
+.title_side-Admisiones {
   font-size: 30rem;
   font-weight: 500;
   text-transform: uppercase;
 }
 
-.text_side-Admisiones{
+.text_side-Admisiones {
   text-align: justify;
 }
 
-textarea{
+textarea {
   resize: none;
   width: 100%;
   outline: none;
@@ -136,25 +136,35 @@ textarea{
   padding: 10rem;
 }
 
-label{
-  font-size: 20rem;
-
+label {
+  width: 100%;
+  margin: 10rem 0;
+  font-size: 18rem;
+  padding: 0 3rem;
+  text-align: right;
+  font-weight: 500;
 }
 
-.grid1-1{
+.grid1-1 {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 25rem;
 }
 
-.grid3-1{
+.grid3-1 {
   display: grid;
   grid-template-columns: 3fr 1fr;
   grid-gap: 25rem;
 }
 
-.grid3-2{
+.grid3-2 {
   display: grid;
   grid-template-columns: 3fr 2fr;
   grid-gap: 25rem;
+}
+
+.grid1-3 {
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-gap: 10rem;
 }
