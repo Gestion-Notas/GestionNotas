@@ -72,6 +72,11 @@ body {
   padding: 10rem;
 }
 
+button:hover{
+  background-color: var(--DarkerYellow);
+  transition: 300ms;
+}
+
 .boton-news-container {
   height: 70rem;
   width: 100%;
@@ -91,7 +96,7 @@ main {
   min-height: 70vh;
 }
 
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1500px) {
   main {
     padding: 50rem 280rem;
   }

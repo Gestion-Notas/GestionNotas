@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NewsButton = ({ route }) => {
+const NewsButton = (props) => {
+  
+  const link = "/noticias/" + props.idnews;
+
   return (
     <div className="boton-news-container">
       <div className="news-button">
-        <Link to="/noticias:1" style={{ textDecoration: "none", color: "white" }}>
+        <Link to={link} style={{ textDecoration: "none", color: "white" }}>
           <p>LEER MAS...</p>
         </Link>
       </div>

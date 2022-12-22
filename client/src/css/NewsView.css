@@ -13,6 +13,7 @@
 
 .image-NewsView {
   background-position: center center;
+  background-size: cover;
 }
 
 .text-NewsView {

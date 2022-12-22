@@ -8,8 +8,12 @@
 .imagen-NewsDetails {
   float: left;
   width: 100%;
+  max-height: 400rem;
+  
   padding: 20rem;
 }
+
+
 
 .title-NewsDetails {
   font-size: 40rem;
