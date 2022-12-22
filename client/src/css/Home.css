@@ -136,7 +136,7 @@
   color: var(--DarkerTone);
   transition: 300ms;
 }
-@media only screen and (min-width: 1400px) {
+@media only screen and (min-width: 1500px) {
   .container_intro-Home {
     padding: 0 280rem;
   }

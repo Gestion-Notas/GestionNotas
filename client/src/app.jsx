@@ -7,7 +7,6 @@ import NotasVista from "./pages/NotasVista"
 import NotasPublicar from "./pages/NotasPublicar";
 import Login from "./pages/Login"
 import Pensum from "./pages/Pensum";
-import Null from "./pages/Null";
 import News from "./pages/News";
 import NewsDetails from "./pages/NewsDetails";
 import AboutUs from "./pages/AboutUs";
@@ -25,7 +24,7 @@ export const App = () => {
         <Route path="/notas/vista" element={<MainPage Main={NotasVista}/>} />
         <Route path="/admisiones" element={<MainPage Main={Admisiones}/>} />
         <Route path="/login" element={<MainPage Main={Login}/>} />
-        <Route path="/noticias:id" element={<MainPage Main={NewsDetails}/>}/> 
+        <Route path="/noticias/:id" element={<MainPage Main={NewsDetails}/>}/> 
       </Routes>
     </Router>
   );
