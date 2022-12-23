@@ -86,3 +86,4 @@ app.get("/getNoticiasDetails/:id", (req, res) => {
     }
   });
 });
+

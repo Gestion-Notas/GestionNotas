@@ -77,11 +77,24 @@ CREATE TABLE Calificaciones(
     ID_Usuario INT,
     Materia INT,
     Nota FLOAT,
-    Asunto INT,
     Periodo INT,
     
     CONSTRAINT FK_Usuario_Cal foreign key (ID_Usuario) REFERENCES Usuarios(ID),
     CONSTRAINT FK_Materia_Cal FOREIGN KEY (Materia) REFERENCES Materias(ID),
+    CONSTRAINT FK_Periodo_Cal foreign key (Periodo) REFERENCES Periodos(ID)
+);
+
+CREATE TABLE Calificaciones_Criterios(
+	ID INT PRIMARY KEY auto_increment,
+    ID_Usuario INT,
+    Materia INT,
+    Nota FLOAT,
+    Criterio INT,
+    Periodo INT,
+    
+    CONSTRAINT FK_Usuario_Cal foreign key (ID_Usuario) REFERENCES Usuarios(ID),
+    CONSTRAINT FK_Materia_Cal FOREIGN KEY (Materia) REFERENCES Materias(ID),
+    CONSTRAINT FK_Criterio_Cal FOREIGN KEY (Criterio) REFERENCES Criterios_Evaluacion(ID),
     CONSTRAINT FK_Periodo_Cal foreign key (Periodo) REFERENCES Periodos(ID)
 );
 
@@ -128,8 +141,8 @@ INSERT INTO Requisitos VALUES(null, 2, null);
 INSERT INTO Requisitos VALUES(null, 3, null);
 
 INSERT INTO Criterios_Evaluacion VALUES(null, 'Asistencia', 1);
-INSERT INTO Criterios_Evaluacion VALUES(null, 'Asistencia', 2);
-INSERT INTO Criterios_Evaluacion VALUES(null, 'Asistencia', 3);
+INSERT INTO Criterios_Evaluacion VALUES(null, 'Examen 1', 1);
+INSERT INTO Criterios_Evaluacion VALUES(null, 'Practica Grupal', 1);
 */
 /*
 INSERT INTO Noticias VALUES (NULL, "Chicos van a hotel Catalonia Grand Dominicus", "Se divierten demasiado", "los negocios están floreciendo esta Navidad en Belén, la ciudad natal de Jesús, después de dos años de recesión debido a la pandemia de coronavirus.
