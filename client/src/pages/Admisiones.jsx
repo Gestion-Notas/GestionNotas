@@ -4,6 +4,10 @@ import Axios from "axios";
 import "../css/Admisiones.css";
 
 const Admisiones = () => {
+  const refreshpage = () => {
+    window.location.reload(false);
+  };
+
   const [nombres, setNombres] = useState("");
   const [apellidos, setApellidos] = useState("");
   const [cedula, setCedula] = useState("");
@@ -21,9 +25,7 @@ const Admisiones = () => {
   const [tiempo_iglesia, setTiempo_Iglesia] = useState("");
   const [cargo_iglesia, setCargo_Iglesia] = useState("");
 
-  console.log(sexo);
   const addUsuario = () => {
-    console.log(nombres);
     Axios.post("http://localhost:4001/sumbitAdmisiones", {
       nombres: nombres,
       apellidos: apellidos,
@@ -45,6 +47,7 @@ const Admisiones = () => {
       console.log("success!");
     });
   };
+
 
   const [faqs, setfaqs] = useState([
     {
@@ -88,7 +91,7 @@ const Admisiones = () => {
               placeholder="Sexo"
               required
             >
-              <option>Sexo</option>
+              <option disabled selected="selected">Sexo</option>
               <option value={"Masculino"}>Masculino</option>
               <option value={"Femenino"}>Femenino</option>
             </select>
@@ -251,10 +254,18 @@ const Admisiones = () => {
         </div>
         <div className="faqs">
           <div>
-            {faqs.map((faq, i) => (
-              <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
-            ))}
-            <button onClick={addUsuario}>Ingresar y Enviar tus Datos</button>
+              {faqs.map((faq, i) => (
+                <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
+              ))}
+              <button
+                type="submit"
+                onClick={() => {
+                  addUsuario();
+                  refreshpage();
+                }}
+              >
+                Ingresar y Enviar tus Datos
+              </button>
           </div>
         </div>
       </div>

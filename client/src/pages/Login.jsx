@@ -1,8 +1,21 @@
-import React from "react";
-import {Link} from "react-router-dom"
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import Axios from "axios";
 import "../css/Login.css";
 
 const Login = () => {
+
+  const loginauth = () => {
+    Axios.post("http://localhost:4001/login", {
+      username: username,
+      password: password
+    }).then((response) => {
+      console.log(response);
+    });
+  }
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("initialState");
   return (
     <main>
       <div className="container-Login">
@@ -11,7 +24,7 @@ const Login = () => {
         </div>
         <div className="texto-Login">
           <p>Iniciar Sesión</p>
-          <form action="">
+          <div>
             <ul>
               <li>
                 <p>Código</p>
@@ -20,6 +33,9 @@ const Login = () => {
                   name="usercode"
                   id=""
                   placeholder="Introduce tu Código"
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                  }}
                 />
               </li>
               <li>
@@ -29,14 +45,18 @@ const Login = () => {
                   name="pass"
                   id=""
                   placeholder="Introduce tu Contraseña"
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </li>
             </ul>
             <div className="links-Login">
-              <button type="submit">Ingresar</button>
-              <Link to="/register" className="link-Login">Has Olvidado tu Contraseña?</Link>
+              <button onClick={() => {
+                  loginauth();
+                }}>Ingresar</button>
             </div>
-          </form>
+          </div>
         </div>
       </div>
     </main>
