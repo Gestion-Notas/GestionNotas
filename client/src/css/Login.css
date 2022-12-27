@@ -28,13 +28,13 @@ ul {
   list-style: none;
 }
 
-.texto-Login form ul p {
+.texto-Login div ul p {
   font-size: 20rem;
   font-weight: 400;
   margin: 10rem 0px;
 }
 
-form ul li input {
+div ul li input {
   border: none;
   border-bottom: 0.2rem solid black;
   padding: 5rem;
@@ -44,7 +44,7 @@ form ul li input {
   width: 100%;
 }
 
-form ul li {
+div ul li {
   margin: 30rem 0;
 }
 

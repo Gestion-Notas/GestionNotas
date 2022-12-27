@@ -3,6 +3,7 @@ const app = express();
 const mysql2 = require("mysql2");
 const cors = require("cors");
 const path = require("path");
+const jwt = require("jsonwebtoken")
 
 const db = mysql2.createConnection({
   user: "root",
@@ -18,6 +19,28 @@ app.use("/static", express.static(path.join(__dirname, "public")));
 app.listen(4001, () => {
   console.log("Server Running at port 4001");
 });
+
+app.post("/login", (req,res) => {
+
+  const username = req.body.username;
+  const password = req.body.password;
+
+  db.query(
+    "SELECT * FROM Usuarios WHERE Cod_Usuario = ? AND Clave = ?",
+    [username, password], (err, results) => {
+      if (err) {
+        res.send({err:err})
+      } else {
+        if (results){
+          res.send
+        }else{
+          res.send({message: "Codigo de Usuario y/o Contraseña incorrectos"})
+        }
+      }
+    }
+
+  )
+})
 
 app.post("/sumbitAdmisiones", (req, res) => {
   const nombres = req.body.nombres;
@@ -36,9 +59,10 @@ app.post("/sumbitAdmisiones", (req, res) => {
   const pastor = req.body.pastor;
   const tiempo_iglesia = req.body.tiempo_iglesia;
   const cargo_iglesia = req.body.cargo_iglesia;
+  const clave = req.body.clave;
 
   db.query(
-    "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, false, NULL)",
+    "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, false, 2019-0091)",
     [
       nombres,
       apellidos,
@@ -56,6 +80,7 @@ app.post("/sumbitAdmisiones", (req, res) => {
       pastor,
       tiempo_iglesia,
       cargo_iglesia,
+      clave
     ],
     (err, result) => {
       if (err) {
@@ -76,6 +101,16 @@ app.get("/getNoticias", (req, res) => {
     }
   });
 });
+
+app.get("/getIglesias", (req, res) => {
+  db.query("SELECT * FROM Iglesias", (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result);
+    }
+  })
+})
 
 app.get("/getNoticiasDetails/:id", (req, res) => {
   db.query("SELECT * FROM Noticias WHERE ID=?", [req.params.id], (err, result) => {
