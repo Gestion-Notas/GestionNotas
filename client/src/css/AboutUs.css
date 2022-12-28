@@ -4,7 +4,7 @@
   grid-template-columns: repeat(2, 1fr);
   height: auto;
   overflow: hidden;
-  margin-bottom: 60rem;
+  margin-bottom: 60px;
 }
 
 .image_Container-AboutUs {
@@ -21,18 +21,18 @@
 }
 
 .history-AboutUs {
-  padding: 60rem 20rem;
+  padding: 60px 20px;
   text-align: justify;
-  font-size: 18rem;
+  font-size: 18px;
   overflow: hidden;
 }
 
 .title-AboutUs {
-  font-size: 40rem;
+  font-size: 40px;
   font-weight: 600;
   border-bottom: 2px solid var(--DarkerGray);
   text-transform: uppercase;
-  margin-bottom: 10rem;
+  margin-bottom: 10px;
 }
 
 .text-AboutUs:hover .image_Container-AboutUs > .image-AboutUs {
@@ -50,27 +50,27 @@
 
 .cardMVV {
   background-color: var(--BaseMain);
-  padding: 40rem;
+  padding: 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .icon-AboutUs {
-  font-size: 150rem;
+  font-size: 150px;
   color: var(--DarkerGray);
-  margin: 15rem;
+  margin: 15px;
   transition: 500ms;
 }
 
 .title_Cards-AboutUs {
-  font-size: 40rem;
+  font-size: 40px;
   text-transform: uppercase;
   font-weight: 500;
 }
 
 .text_Cards-AboutUs {
-  margin: 10rem 0;
+  margin: 10px 0;
   text-align: center;
 }
 
@@ -88,13 +88,13 @@
   }
 
   .history-AboutUs {
-    padding: 20rem;
+    padding: 20px;
     text-align: justify;
-    font-size: 14rem;
+    font-size: 14px;
   }
 
   .title-AboutUs {
-    font-size: 28rem;
+    font-size: 28px;
   }
   .cards-AboutUs {
     display: grid;

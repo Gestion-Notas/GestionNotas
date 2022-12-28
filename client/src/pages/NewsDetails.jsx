@@ -15,7 +15,7 @@ const NewsDetails = () => {
   });
 
   return (
-    <main>  
+    <main className="main">  
       <div className="container-NewsDetails">
         {noticiasdetalles.map((val, key) => {
           const imageconcat = "http://localhost:4001/static/images/" + val.Imagen;

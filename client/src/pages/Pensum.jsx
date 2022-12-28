@@ -3,7 +3,7 @@ import "../css/Pensum.css";
 
 const Pensum = () => {
   return (
-    <main>
+    <main className="main">
       <div className="container-Pensum">
         <div className="cardColumn-Pensum">
           <div className="header-Pensum">

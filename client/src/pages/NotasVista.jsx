@@ -1,11 +1,12 @@
 import React from "react";
 import "../css/NotasVista.css";
-import GradesCard from "../components/GradesCard";
+import CardEstudiante from "../components/CardEstudiante";
 
 const NotasVista = () => {
   return (
-    <main>
+    <main className="main">
         <div className="container-Notas">
+            <CardEstudiante name="ISFT"/>
             
         </div>
     </main>

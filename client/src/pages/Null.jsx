@@ -1,6 +1,6 @@
 const Null = () => {
     return (
-      <main>
+      <div className="main">
         <h1>Hola Mundo</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus magni perferendis nulla deserunt laborum magnam rem quo! Esse earum, quam distinctio repudiandae dolorem a consequatur quod reiciendis aliquid eligendi provident!
         Odio distinctio officia asperiores iste mollitia illum corporis officiis, velit ratione possimus minima nulla maiores quo fugit fugiat ipsam quas consequatur fuga quia ducimus aspernatur. Quasi laudantium asperiores minus animi.
@@ -102,7 +102,7 @@ const Null = () => {
         Earum libero dignissimos sequi facere nam exercitationem ipsa, dolorem explicabo eum molestias perferendis ullam enim, corrupti dolore! Vel unde officia aliquid at, error delectus praesentium placeat exercitationem, cumque ea quaerat!
         Omnis voluptate molestias quae cupiditate autem sit officiis minus libero distinctio? Blanditiis ut animi commodi temporibus aliquid reiciendis dolores repellat. Fugiat saepe facere nisi recusandae porro doloremque blanditiis vitae dignissimos.
         Nisi delectus earum impedit praesentium maiores blanditiis ea quas excepturi necessitatibus tempora eius laudantium ratione fuga ipsam aspernatur ex, labore iusto porro tenetur rerum sed minima temporibus vero. Sunt, mollitia.</p>
-      </main>
+      </div>
     );
   };
   

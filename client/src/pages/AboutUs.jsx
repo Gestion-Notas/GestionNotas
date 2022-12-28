@@ -5,7 +5,7 @@ import "../css/AboutUs.css";
 
 const AboutUs = () => {
   return (
-    <main>
+    <main className="main">
       <div className="text-AboutUs">
       <div className="image_Container-AboutUs">
           <div className="image-AboutUs"/>

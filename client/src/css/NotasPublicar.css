@@ -1,10 +1,10 @@
 .container_Queries-NotasPublicar {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-gap: 30rem;
+  grid-gap: 30px;
   align-items: center;
   justify-content: center;
-  margin-top: 30rem;
+  margin-top: 30px;
 }
 
 .cardQuery-NotasPublicar {
@@ -12,45 +12,45 @@
   color: var(--BaseTone);
   display: grid;
   grid-template-columns: 3fr 1fr;
-  height: 250rem;
-  padding: 35rem;
+  height: 250px;
+  padding: 35px;
   width: auto;
   align-items: center;
 }
 .icon-NotasPublicar {
-  font-size: 140rem;
+  font-size: 140px;
 }
 .text_cardQuery-NotasPublicar {
   display: flex;
   flex-direction: column;
-  font-size: 40rem;
+  font-size: 40px;
 }
 
 .text_cardQuery-NotasPublicar h2 {
-  font-size: 40rem;
+  font-size: 40px;
 }
 
 @media only screen and (max-width: 970px) {
   .container_Queries-NotasPublicar {
     grid-template-columns: repeat(1, 1fr);
-    grid-gap: 15rem;
+    grid-gap: 15px;
   }
   .cardQuery-NotasPublicar {
     grid-template-columns: 3fr 1fr;
-    padding: 20rem;
-    height: 180rem;
+    padding: 20px;
+    height: 180px;
     
   }
 
   .text_cardQuery-NotasPublicar{
-    font-size: 25rem;
+    font-size: 25px;
   }
 
   .text_cardQuery-NotasPublicar h2 {
-    font-size: 25rem;
+    font-size: 25px;
   }
 
   .icon-NotasPublicar {
-    font-size: 80rem;
+    font-size: 80px;
   }
 }

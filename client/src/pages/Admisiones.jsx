@@ -22,7 +22,6 @@ const Admisiones = () => {
   const [provincia, setProvincia] = useState("");
   const [iglesia, setIglesia] = useState("");
   const [pastor, setPastor] = useState("");
-  const [tiempo_iglesia, setTiempo_Iglesia] = useState("");
   const [cargo_iglesia, setCargo_Iglesia] = useState("");
 
   const addUsuario = () => {
@@ -41,13 +40,11 @@ const Admisiones = () => {
       provincia: provincia,
       iglesia: iglesia,
       pastor: pastor,
-      tiempo_iglesia: tiempo_iglesia,
       cargo_iglesia: cargo_iglesia,
     }).then(() => {
       console.log("success!");
     });
   };
-
 
   const [faqs, setfaqs] = useState([
     {
@@ -91,7 +88,9 @@ const Admisiones = () => {
               placeholder="Sexo"
               required
             >
-              <option disabled selected="selected">Sexo</option>
+              <option disabled selected="selected">
+                Sexo
+              </option>
               <option value={"Masculino"}>Masculino</option>
               <option value={"Femenino"}>Femenino</option>
             </select>
@@ -197,21 +196,13 @@ const Admisiones = () => {
             />
             <input
               type="text"
-              placeholder="Tiempo congregándose"
+              placeholder="Cargo que desempeña"
               onChange={(event) => {
-                setTiempo_Iglesia(event.target.value);
+                setCargo_Iglesia(event.target.value);
               }}
               required
             />
           </div>
-          <input
-            type="text"
-            placeholder="Cargo que desempeña"
-            onChange={(event) => {
-              setCargo_Iglesia(event.target.value);
-            }}
-            required
-          />
         </div>
       ),
       open: false,
@@ -233,7 +224,7 @@ const Admisiones = () => {
   };
 
   return (
-    <main>
+    <main className="main">
       <div className="container-Admisiones">
         <div className="sidecolumn-Admisiones">
           <p className="title_side-Admisiones">Formulario de Admisiones</p>
@@ -254,18 +245,18 @@ const Admisiones = () => {
         </div>
         <div className="faqs">
           <div>
-              {faqs.map((faq, i) => (
-                <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
-              ))}
-              <button
-                type="submit"
-                onClick={() => {
-                  addUsuario();
-                  refreshpage();
-                }}
-              >
-                Ingresar y Enviar tus Datos
-              </button>
+            {faqs.map((faq, i) => (
+              <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
+            ))}
+            <button
+              type="submit"
+              onClick={() => {
+                addUsuario();
+                refreshpage();
+              }}
+            >
+              Ingresar y Enviar tus Datos
+            </button>
           </div>
         </div>
       </div>
