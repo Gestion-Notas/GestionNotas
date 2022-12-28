@@ -1,7 +1,7 @@
 .container-GradesCard {
   display: flex;
   flex-direction: column;
-  height: 200rem;
+  height: 200px;
   
   background-color: var(--BaseYellow);
 }
@@ -22,27 +22,27 @@
 
 .container-GradesCard p {
   color: var(--BaseTone);
-  font-size: 20rem;
+  font-size: 20px;
   font-weight: 400;
-  margin: 0 0rem 10rem 10rem;
+  margin: 0 0px 10px 10px;
 }
 
 .container_img-GradesCard{
-  height: 160rem;
-  margin: 5rem;
+  height: 160px;
+  margin: 5px;
   position: relative;
   overflow: hidden;
 }
 
 @media only screen and (min-width: 1500px) {
   .container-GradesCard {
-    height: 300rem;
+    height: 300px;
   }
   .imagen-GradesCard {
-    height: 230rem;
+    height: 230px;
   }
 
   .container-GradesCard p {
-    font-size: 40rem;
+    font-size: 40px;
   }
 }

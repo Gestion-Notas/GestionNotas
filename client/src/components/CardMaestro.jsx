@@ -2,7 +2,7 @@ import React from "react";
 import "../css/GradesCard.css";
 import bgimage from "../img/imagen_news-Home.jpg";
 
-const GradesCard = (props) => {
+const CardMaestro = (props) => {
   return (
     <div className="container-GradesCard">
       <div className="container_img-GradesCard">
@@ -18,4 +18,4 @@ const GradesCard = (props) => {
   );
 };
 
-export default GradesCard;
+export default CardMaestro ;

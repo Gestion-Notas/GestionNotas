@@ -1,7 +1,9 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import MainPage from "./pages/MainPage"
+import MainPage_Admin from "./pages/MainPage_Admin";
 import "./css/index.css";
+import Null from "./pages/Null"
 import Home from "./pages/Home";
 import NotasVista from "./pages/NotasVista"
 import NotasPublicar from "./pages/NotasPublicar";
@@ -11,6 +13,7 @@ import News from "./pages/News";
 import NewsDetails from "./pages/NewsDetails";
 import AboutUs from "./pages/AboutUs";
 import Admisiones from "./pages/Admisiones";
+import UsuariosAdmin from "./pages/UsuariosAdmin";
 export const App = () => {
   return (
     <Router>
@@ -25,6 +28,9 @@ export const App = () => {
         <Route path="/admisiones" element={<MainPage Main={Admisiones}/>} />
         <Route path="/login" element={<MainPage Main={Login}/>} />
         <Route path="/noticias/:id" element={<MainPage Main={NewsDetails}/>}/> 
+
+        <Route path="/admin/home" element={<MainPage_Admin Main={Null}/>}/>
+        <Route path="/admin/usuarios" element={<MainPage_Admin Main={UsuariosAdmin}/>}/>
       </Routes>
     </Router>
   );

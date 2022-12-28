@@ -1,6 +1,6 @@
 .container-ImportantNews {
   display: grid;
-  margin: 20rem 0;
+  margin: 20px 0;
   grid-template-columns: 1fr;
   grid-template-rows: 2fr 3fr;
   background-color: var(--BaseTone);
@@ -18,15 +18,15 @@
 
 .text-ImportantNews {
   text-align: justify;
-  padding: 10rem;
+  padding: 10px;
   width: 100%;  
 }
 
 .title-ImportantNews {
   text-align: left;
   font-weight: 600;
-  font-size: 20rem;
-  margin-bottom: 10rem;
+  font-size: 20px;
+  margin-bottom: 10px;
 }
 
 

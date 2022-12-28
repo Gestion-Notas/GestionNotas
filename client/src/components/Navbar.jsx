@@ -34,7 +34,7 @@ export function Navbar(props) {
 
       <div className="userDetails-Navbar">
         <Link to="/login" className="Link-Navbar">
-          <p>Iniciar Sesión</p>
+          <div>Iniciar Sesión</div>
           <FaUserCircle className="usericon-Navbar" />
         </Link>
         <FaBars

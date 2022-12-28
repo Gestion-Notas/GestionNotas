@@ -33,11 +33,10 @@ CREATE TABLE Usuarios(
     Provincia CHAR(20) NOT NULL,
     Iglesia CHAR(60) NOT NULL,
     Pastor CHAR(60) NOT NULL,
-    Tiempo_Iglesia CHAR(30) NOT NULL,
     Cargo_Iglesia CHAR(60) NOT NULL,
     Tipo INT, /*0, estudiante, 1 maestro, 2 administrativo*/
     E_Aceptado BOOL,
-    Clave CHAR(32)
+    Clave TEXT
 );
 
 CREATE TABLE Iglesias(
@@ -75,7 +74,8 @@ CREATE TABLE Periodos(
 	ID INT PRIMARY KEY auto_increment,
     Nombre CHAR(12), /*Sep-Dic 2022 || Es un combobox seleccionando el mes*/
     F_Inicio DATE,
-    F_Final DATE
+    F_Final DATE,
+    Estado BOOL
 );
 
 CREATE TABLE Criterios_Evaluacion(
@@ -148,8 +148,6 @@ CREATE TRIGGER trigger_codigoUsuario BEFORE INSERT ON Usuarios
 		ELSE
 			set NEW.Cod_Usuario=CONCAT(year(now()),'-ISFT-', (SELECT lpad(cast(MAX(substring(Cod_Usuario,11,15)) AS SIGNED)+1,5,'0') FROM Usuarios WHERE substring(Cod_Usuario,1,4)=year(now())));
 		END IF;
-        
-        set NEW.Clave = NEW.Cod_Usuario;
 	END;
 $$
 
@@ -157,7 +155,7 @@ $$
 /*
 INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas Jair", "Lopez Tavarez", "001-2112123-1", "Masculino", "2006-01-06", 
 "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", 
-"Santo Domingo", "Los Tres Ojos", "Hither Trinidad", "14 años", "Educacion Somijo", 1, true, NULL);
+"Santo Domingo", "Los Tres Ojos", "Hither Trinidad", "Educacion Somijo", 1, true, "2019-0091");
 
 INSERT INTO Iglesias VALUES (NULL, "Los 3 Ojos", "Av. 5ta, Respaldo los 3 Ojos", 1);
 
@@ -223,5 +221,11 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
 	
     SELECT 
 */
+
+/*UPDATES*/
+
+/*
+
+UPDATE Usuarios SET E_Aceptado = true WHERE ID = 2
 
 

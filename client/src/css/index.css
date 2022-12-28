@@ -18,14 +18,6 @@
   font-family: "Roboto";
 }
 
-html {
-  font-size: 6.25%;
-}
-
-body {
-  font-size: 16rem;
-}
-
 .yellow-filter {
   width: 100%;
   height: 100%;
@@ -37,7 +29,7 @@ body {
 .thin-line {
   height: 2px;
   background-color: var(--DarkerGray);
-  margin-bottom: 20rem;
+  margin-bottom: 20px;
   width: auto;
 }
 
@@ -55,9 +47,9 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  font-size: 20rem;
+  font-size: 20px;
   vertical-align: center;
-  padding: 0px 40rem;
+  padding: 0px 40px;
   height: 100%;
   width: 100%;
 }
@@ -68,20 +60,15 @@ body {
   font-weight: 800;
   position: absolute;
   right: 0;
-  font-size: 20rem;
-  padding: 10rem;
-}
-
-button:hover{
-  background-color: var(--DarkerYellow);
-  transition: 300ms;
+  font-size: 20px;
+  padding: 10px;
 }
 
 .boton-news-container {
-  height: 70rem;
+  height: 70px;
   width: 100%;
   position: relative;
-  padding: 10rem;
+  padding: 10px;
 }
 
 .news-button:hover {
@@ -90,7 +77,7 @@ button:hover{
 }
 
 main {
-  padding: 50rem 150rem;
+  padding: 50px 150px;
   background-color: var(--BaseMain);
   font-weight: 300;
   min-height: 70vh;
@@ -98,7 +85,7 @@ main {
 
 @media only screen and (min-width: 1500px) {
   main {
-    padding: 50rem 280rem;
+    padding: 50px 280px;
   }
 }
 
@@ -107,17 +94,17 @@ main {
 
 @media only screen and (max-width: 1000px) {
   main {
-    padding: 30rem;
+    padding: 30px;
   }
 
   .gray-center-text {
-    font-size: 25rem;
+    font-size: 25px;
     font-weight: 500;
   }
 }
 
 @media only screen and (max-width: 700px) {
   main {
-    padding: 15rem;
+    padding: 15px;
   }
 }

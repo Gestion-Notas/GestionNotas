@@ -3,7 +3,7 @@
   grid-template-columns: repeat(3, 1fr);
   margin: auto;
   justify-content: center;
-  grid-gap: 30rem;
+  grid-gap: 30px;
   height: auto;
 }
 
@@ -13,32 +13,32 @@
 }
 .header-Pensum {
   text-align: center;
-  padding: 40rem;
+  padding: 40px;
   background-color: var(--BaseYellow);
   color: var(--BaseTone);
-  border: 10rem white;
+  border: 10px white;
 }
 
 .header-Pensum h2{
-  font-size: 40rem;
+  font-size: 40px;
 }
 
 .text-Pensum{
   background-color: var(--BaseTone);
-  padding: 10rem 0;
+  padding: 10px 0;
 }
 
 .details-Pensum{
   font-weight: 500;
-  font-size: 20rem;
-  padding: 15rem;
+  font-size: 20px;
+  padding: 15px;
   cursor: pointer;
 }
 
 
 .details-Pensum p{
   font-weight: 300;
-  font-size: 16rem;
+  font-size: 16px;
   width: 100%;
   cursor: auto;
 }

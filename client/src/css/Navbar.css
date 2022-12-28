@@ -3,28 +3,29 @@ header {
   background-color: var(--BaseGray);
   display: flex;
   justify-content: space-between;
-  padding: 0 150rem;
+  align-items: center;
+  padding: 0 150px;
 }
 
 .seccion2-Navbar {
   display: flex;
   align-items: center;
+  vertical-align: middle;
   justify-content: center;
-  height: 75rem;
+  height: 75px;
 }
 
 .seccion2-Navbar ul li {
   list-style: none;
   display: inline-block;
-  padding: 20rem;
+  padding: 20px;
 }
 
 .seccion2-Navbar ul li a {
   text-decoration: none;
   font-weight: 400;
   color: var(--BaseTone);
-  vertical-align: middle;
-  font-size: 15rem;
+  font-size: 15px;
 }
 
 .seccion2-Navbar ul li a:hover {
@@ -33,18 +34,22 @@ header {
 }
 
 .logo-Navbar {
-  width: 60rem;
+  width: 60px;
+}
+
+ul.navbarlist.false{
+  margin-bottom: 0px;
 }
 
 .usericon-Navbar {
   color: var(--BaseTone);
-  font-size: 25rem;
-  margin-left: 10rem;
+  font-size: 25px;
+  margin-left: 10px;
 }
 
 .menuicon-Navbar {
   color: var(--BaseTone);
-  font-size: 25rem;
+  font-size: 25px;
   cursor: pointer;
 }
 
@@ -59,9 +64,9 @@ header {
   align-items: center;
 }
 
-.Link-Navbar p {
+.Link-Navbar div {
   color: var(--BaseTone);
-  font-size: 13rem;
+  font-size: 13px;
   text-transform: uppercase;
 
 }
@@ -76,27 +81,27 @@ header {
 
 @media only screen and (min-width: 1500px){
   header {
-    padding: 0 280rem;
+    padding: 0 280px;
   }
 }
 
 @media only screen and (max-width: 1200px) {
   header {
-    padding: 0 75rem;
+    padding: 0 75px;
   }
 }
 @media only screen and (max-width: 1000px) {
   
   header {
-    padding: 0 30rem;
+    padding: 0 30px;
   }
   
   #icon {
     display: block;
-    margin-left: 10rem;
+    margin-left: 10px;
   }
 
-  .Link-Navbar p {
+  .Link-Navbar div {
     display: none;
   }
 
@@ -107,7 +112,7 @@ header {
     width: 100%;
     height: 100%;
     background-color: var(--BaseGray);
-    top: 75rem;
+    top: 75px;
     right:0;
     transform: translateX(100%);
     transition: all .5s;
@@ -124,12 +129,12 @@ header {
 
   .seccion2-Navbar li{
     display: block;
-    line-height: 30rem;
+    line-height: 30px;
   }
 
   .logotitle-Navbar{
     display: block;
     color: var(--BaseTone);
-    margin: 0rem 10rem;
+    margin: 0px 10px;
   }
 }

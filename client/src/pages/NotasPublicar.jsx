@@ -1,16 +1,16 @@
 import React from "react";
 import "../css/NotasVista.css";
 import "../css/NotasPublicar.css";
-import GradesCard from "../components/GradesCard";
+import CardMaestro from "../components/CardMaestro";
 import { FaClipboardList, FaCalendarCheck } from "react-icons/fa";
 
 const NotasPublicar = () => {
   return (
-    <main>
+    <main className="main">
       <div className="container-Notas">
-        <GradesCard name="DioriRoja" />
-        <GradesCard name="DioriRoja" />
-        <GradesCard name="DioriRoja" />
+        <CardMaestro name="DioriRoja" />
+        <CardMaestro name="DioriRoja" />
+        <CardMaestro name="DioriRoja" />
       </div>
       <div className="container_Queries-NotasPublicar">
         <div className="cardQuery-NotasPublicar">

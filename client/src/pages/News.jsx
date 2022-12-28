@@ -11,7 +11,7 @@ const News = () => {
   });
 
   return (
-    <main>
+    <main className="main">
       <div className="news-Container">
         {noticias.map((val, key) => {
           return (

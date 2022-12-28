@@ -9,16 +9,17 @@
   background-image: url("../img/imagen_news-Home.jpg");
   background-position: center center;
   background-size: cover;
+  transition: 300ms;
   position: relative;
 }
 
 .texto-Login {
   align-items: center;
-  padding: 60rem 40rem;
+  padding: 60px 40px;
 }
 
 .texto-Login > p {
-  font-size: 60rem;
+  font-size: 60px;
   font-weight: 600;
   color: var(--DarkerGray);
 }
@@ -26,31 +27,32 @@
 ul {
   text-decoration: none;
   list-style: none;
+  padding-left: 0;
 }
 
 .texto-Login div ul p {
-  font-size: 20rem;
+  font-size: 20px;
   font-weight: 400;
-  margin: 10rem 0px;
+  margin: 10px 0px;
 }
 
 div ul li input {
   border: none;
-  border-bottom: 0.2rem solid black;
-  padding: 5rem;
-  height: 20rem;
-  font-size: 15rem;
+  border-bottom: 0.2px solid black;
+  padding: 5px;
+  height: 20px;
+  font-size: 15px;
   outline: none;
   width: 100%;
 }
 
 div ul li {
-  margin: 30rem 0;
+  margin: 30px 0;
 }
 
 button {
-  padding: 8rem 10rem;
-  font-size: 20rem;
+  padding: 8px 10px;
+  font-size: 20px;
   text-transform: uppercase;
   background-color: var(--BaseYellow);
   border: none;
@@ -59,7 +61,7 @@ button {
 }
 
 .links-Login {
-  margin: 40rem 0;
+  margin: 40px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -72,7 +74,7 @@ button {
 
 @media only screen and (min-width: 1500px) {
   main {
-    padding: 50rem 280rem;
+    padding: 50px 280px;
   }
 }
 
@@ -81,7 +83,7 @@ button {
 
 @media only screen and (max-width: 1000px) {
   main {
-    padding: 40rem;
+    padding: 40px;
   }
 }
 
@@ -99,6 +101,6 @@ button {
   }
 
   .link-Login{
-    padding-top:15rem;
+    padding-top:15px;
   }
 }
