@@ -7,3 +7,34 @@
     text-transform: uppercase;
     font-weight: 500;
 }
+
+.icon-AdminPages{
+    font-weight: 800;
+    font-size: 20px;
+}
+
+.containerheader-AdminPages{
+    display: flex;
+    justify-content: space-between;
+}
+
+.botones-AdminPages{
+    display: flex;
+    grid-gap: 8px;
+}
+
+
+.table-AdminPages{
+    margin: 40px 0;
+    max-height: calc(100vh - 338px);
+    overflow-y: auto;
+}
+
+.acciones-AdminPages{
+    display: flex;
+    grid-gap: 10px;
+}
+
+.tablePrint-Adminpages{
+    margin: 10px
+}
