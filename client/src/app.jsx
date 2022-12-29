@@ -1,4 +1,4 @@
-import React from "react";
+import React, {lazy} from "react";
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import MainPage from "./pages/MainPage"
 import MainPage_Admin from "./pages/MainPage_Admin";
@@ -14,6 +14,8 @@ import NewsDetails from "./pages/NewsDetails";
 import AboutUs from "./pages/AboutUs";
 import Admisiones from "./pages/Admisiones";
 import UsuariosAdmin from "./pages/UsuariosAdmin";
+
+const PrintUsers = lazy(() => import("./print/PrintUsuarios"));
 export const App = () => {
   return (
     <Router>
@@ -31,6 +33,8 @@ export const App = () => {
 
         <Route path="/admin/home" element={<MainPage_Admin Main={Null}/>}/>
         <Route path="/admin/usuarios" element={<MainPage_Admin Main={UsuariosAdmin}/>}/>
+
+        <Route path="/print/usuarios" element={<PrintUsers/>}></Route>
       </Routes>
     </Router>
   );

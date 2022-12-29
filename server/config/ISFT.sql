@@ -89,7 +89,7 @@ CREATE TABLE Criterios_Evaluacion(
     CONSTRAINT FK_Periodo_Asuntos FOREIGN KEY (Periodo) REFERENCES Periodos(ID)
 );
 
-CREATE TABLE Calificaciones(
+CREATE TABLE Calificaciones( 
 	ID INT PRIMARY KEY auto_increment,
     ID_Usuario INT,
     Materia INT,
@@ -156,7 +156,7 @@ $$
 INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas Jair", "Lopez Tavarez", "001-2112123-1", "Masculino", "2006-01-06", 
 "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", 
 "Santo Domingo", "Los Tres Ojos", "Hither Trinidad", "Educacion Somijo", 1, true, "2019-0091");
-
+v
 INSERT INTO Iglesias VALUES (NULL, "Los 3 Ojos", "Av. 5ta, Respaldo los 3 Ojos", 1);
 
 INSERT INTO Materias VALUES(null, 1, 'ILC-101', 'Crecimiento Espiritual', 'Materia de Crecimiento Espiritual, sin libro fijo', 100, 2);
@@ -226,6 +226,10 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
 
 /*
 
-UPDATE Usuarios SET E_Aceptado = true WHERE ID = 2
+UPDATE Usuarios SET E_Aceptado = true, Cedula = "1010101" WHERE ID = 2
+
+*/
+
+SELECT * FROM Usuarios WHERE Cod_Usuario Like '%''''%' 
 
 
