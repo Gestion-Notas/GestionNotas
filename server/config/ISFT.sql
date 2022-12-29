@@ -222,17 +222,4 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     SELECT 
 */
 
-/*UPDATES*/
-
-/*
-
-UPDATE Usuarios SET E_Aceptado = true, Cedula = "1010101" WHERE ID = 2
-
-*/
-
-UPDATE Usuarios SET Nombres="Lucas", Apellidos="Lopez", Cedula="10",Sexo="Masculino",F_Nacimiento="2006-01-09",Lugar_Nacimiento="casirta",
-Nacionalidad="Piti",Tel="829",Correo="nomeacuerdo@gmail.com",Direccion="casita", Sector="casa", Pastor="davi", Cargo_Iglesia="na", Tipo=0, E_Aceptado=true WHERE ID=4;
-
-SELECT * FROM Usuarios WHERE Cod_Usuario Like '%''''%' 
-
 
