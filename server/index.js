@@ -240,7 +240,6 @@ app.listen(4001, () => {
 });
 
 /* ==== CRUD USUARIOS ==== */
-
 app.get("/getUsuarios", (req, res) => {
   db.query(`SELECT * FROM Usuarios'`, (err, result) => {
     if (err) {
@@ -327,7 +326,7 @@ app.put("/updateUsuarios", (req, res) => {
   const cargo_iglesia = req.body.cargo_iglesia;
   const tipo = req.body.tipo;
   const e_aceptado = req.body.e_aceptado;
-  
+
   db.query(
     "UPDATE Usuarios SET Nombres=?, Apellidos=?, Cedula=?, Sexo=?, F_Nacimiento=?, Lugar_Nacimiento=?, Nacionalidad=?,Tel=?, Correo=?, Direccion=?, Sector=?, Provincia=?, Iglesia=?, Pastor=?, Cargo_Iglesia=?, Tipo=?, E_Aceptado=? WHERE ID=?;",
     [
@@ -372,3 +371,86 @@ app.post("/getusuariosUpdate", (req, res) => {
 });
 
 /* ==== FIN  USUARIOS ==== */
+
+/* ==== CRUD MATERIAS ==== */
+
+app.get("/getMaterias", (req, res) => {
+  db.query("SELECT * FROM Materias", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/insertMaterias", (req, res) => {
+  const id_maestro = req.body.id_maestro;
+  const cod_materia = req.body.cod_materia;
+  const nombre = req.body.nombre;
+  const descripcion = req.body.descripcion;
+  const nivel = req.body.nivel;
+  const creditos = req.body.creditos;
+
+  db.query(
+    "INSERT INTO Materias VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+    [id_maestro, cod_materia, nombre, descripcion, nivel, creditos],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/updateMaterias", (req, res) => {
+  const id = req.body.id;
+  const id_maestro = req.body.id_maestro;
+  const cod_materia = req.body.cod_materia;
+  const nombre = req.body.nombre;
+  const descripcion = req.body.descripcion;
+  const nivel = req.body.nivel;
+  const creditos = req.body.creditos;
+
+  db.query(
+    "UPDATE Materias SET ID_Maestro = ?, Cod_Materia = ?, Nombre = ?, Descripcion = ?, Nivel = ?, Creditos =? WHERE ID = ?",
+    [id_maestro, cod_materia, nombre, descripcion, nivel, creditos, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getmateriasUpdate", (req, res) => {
+  const id = req.body.id;
+  db.query("SELECT * FROM Materias WHERE ID = ?",[id], (err, result) => {
+    if (err) {
+      console.log(err)
+    } else {
+      res.send(result)
+    }
+  })
+})
+
+/* ==== FIN  MATERIAS ==== */
+
+/* ==== COMBOBOXES ==== */
+
+app.get("/comboboxMaestros", (req, res) => {
+  db.query("SELECT * FROM Usuarios WHERE Tipo=1", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      
+      res.send(result);
+    }
+  });
+});
+
+/* ==== FIN COMBOBOXES ==== */
