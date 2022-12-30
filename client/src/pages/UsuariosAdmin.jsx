@@ -339,6 +339,7 @@ const UsuariosAdmin = () => {
                     <Input
                       id="Nombres"
                       placeholder="Nombres"
+                      autoComplete="off"
                       onChange={(event) => {
                         setNombresInsert(event.target.value);
                       }}
@@ -350,6 +351,7 @@ const UsuariosAdmin = () => {
                     <Label for="Apellidos" hidden></Label>
                     <Input
                       id="Apellidos"
+                      autoComplete="off"
                       placeholder="Apellidos"
                       onChange={(event) => {
                         setApellidosInsert(event.target.value);
@@ -364,6 +366,7 @@ const UsuariosAdmin = () => {
                     <Label for="Cedula" hidden></Label>
                     <Input
                       id="Cedula"
+                      autoComplete="off"
                       placeholder="Cedula"
                       onChange={(event) => {
                         setCedulaInsert(event.target.value);
@@ -376,6 +379,7 @@ const UsuariosAdmin = () => {
                     <Label for="Tel" hidden></Label>
                     <Input
                       id="Tel"
+                      autoComplete="off"
                       placeholder="Teléfono"
                       onChange={(event) => {
                         setTelInsert(event.target.value);
@@ -389,6 +393,7 @@ const UsuariosAdmin = () => {
                     <Input
                       type="select"
                       id="Sexo"
+                      autoComplete="off"
                       onChange={(event) => {
                         setSexoInsert(event.target.value);
                       }}
@@ -407,6 +412,7 @@ const UsuariosAdmin = () => {
                 <Input
                   id="Lugar_Nacimiento"
                   placeholder="Lugar de Nacimiento y Fecha (Debajo)"
+                  autoComplete="off"
                   onChange={(event) => {
                     setLugar_NacimientoInsert(event.target.value);
                   }}
@@ -419,6 +425,7 @@ const UsuariosAdmin = () => {
                     <Input
                       id="F_Nacimiento"
                       type="date"
+                      autoComplete="off"
                       onChange={(event) => {
                         setF_NacimientoInsert(event.target.value);
                       }}
@@ -431,6 +438,7 @@ const UsuariosAdmin = () => {
                     <Input
                       id="Nacionalidad"
                       placeholder="Nacionalidad"
+                      autoComplete="off"
                       onChange={(event) => {
                         setNacionalidadInsert(event.target.value);
                       }}
@@ -443,6 +451,7 @@ const UsuariosAdmin = () => {
                 <Input
                   id="Correo"
                   type="email"
+                  autoComplete="off"
                   placeholder="Correo"
                   onChange={(event) => {
                     setCorreoInsert(event.target.value);
@@ -454,6 +463,7 @@ const UsuariosAdmin = () => {
                 <Input
                   id="Direccion"
                   placeholder="Dirección"
+                  autoComplete="off"
                   onChange={(event) => {
                     setDireccionInsert(event.target.value);
                   }}
@@ -466,6 +476,7 @@ const UsuariosAdmin = () => {
                     <Input
                       id="Sector"
                       placeholder="Sector"
+                      autoComplete="off"
                       onChange={(event) => {
                         setSectorInsert(event.target.value);
                       }}
@@ -477,6 +488,7 @@ const UsuariosAdmin = () => {
                     <Label for="Provincia" hidden></Label>
                     <Input
                       id="Provincia"
+                      autoComplete="off"
                       placeholder="Provincia"
                       onChange={(event) => {
                         setProvinciaInsert(event.target.value);
@@ -491,6 +503,7 @@ const UsuariosAdmin = () => {
                     <Label for="Iglesia" hidden></Label>
                     <Input
                       id="Iglesia"
+                      autoComplete="off"
                       placeholder="Iglesia"
                       onChange={(event) => {
                         setIglesiaInsert(event.target.value);
@@ -504,6 +517,7 @@ const UsuariosAdmin = () => {
                     <Input
                       id="Cargo"
                       placeholder="Cargo"
+                      autoComplete="off"
                       onChange={(event) => {
                         setCargo_IglesiaInsert(event.target.value);
                       }}
@@ -518,6 +532,7 @@ const UsuariosAdmin = () => {
                     <Input
                       id="Pastor"
                       placeholder="Pastor"
+                      autoComplete="off"
                       onChange={(event) => {
                         setPastorInsert(event.target.value);
                       }}
@@ -530,6 +545,7 @@ const UsuariosAdmin = () => {
                     <Input
                       type="select"
                       id="Tipo"
+                      autoComplete="off"
                       onChange={(event) => {
                         setTipoInsert(event.target.value);
                       }}
@@ -549,6 +565,7 @@ const UsuariosAdmin = () => {
                     <Input
                       type="select"
                       id="E_Aceptado"
+                      autoComplete="off"
                       onChange={(event) => {
                         setE_AceptadoInsert(event.target.value);
                       }}

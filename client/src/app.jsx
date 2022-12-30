@@ -13,9 +13,12 @@ import News from "./pages/News";
 import NewsDetails from "./pages/NewsDetails";
 import AboutUs from "./pages/AboutUs";
 import Admisiones from "./pages/Admisiones";
-import UsuariosAdmin from "./pages/UsuariosAdmin";
 
-const PrintUsers = lazy(() => import("./print/PrintUsuarios"));
+import UsuariosAdmin from "./pages/UsuariosAdmin";
+import MateriasAdmin from './pages/MateriasAdmin';
+
+import PrintUsuarios from "./print/PrintUsuarios";
+import PrintMaterias from "./print/PrintMaterias";
 export const App = () => {
   return (
     <Router>
@@ -33,8 +36,10 @@ export const App = () => {
 
         <Route path="/admin/home" element={<MainPage_Admin Main={Null}/>}/>
         <Route path="/admin/usuarios" element={<MainPage_Admin Main={UsuariosAdmin}/>}/>
+        <Route path="/admin/materias" element={<MainPage_Admin Main={MateriasAdmin}/>}/>
 
-        <Route path="/print/usuarios" element={<PrintUsers/>}></Route>
+        <Route path="/print/usuarios" element={<PrintUsuarios/>}></Route>
+        <Route path="/print/materias" element={<PrintMaterias/>}></Route>
       </Routes>
     </Router>
   );

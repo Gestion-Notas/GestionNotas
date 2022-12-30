@@ -22,8 +22,7 @@ const db = mysql2.createConnection({
   database: "ISFT",
 });
 
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(
@@ -33,6 +32,8 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   session({
     key: "userID",
@@ -40,7 +41,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 6,
+      expires: 60 * 60 * 24,
     },
   })
 );
@@ -51,7 +52,7 @@ app.post("/login", (req, res) => {
 
   db.query(
     "SELECT * FROM Usuarios WHERE Cod_Usuario = ? AND E_Aceptado = 1; ",
-    [username, password],
+    [username],
     (err, result) => {
       if (err) {
         res.send({ err: err });
@@ -64,7 +65,6 @@ app.post("/login", (req, res) => {
             const token = jwt.sign({ id }, "institutoseminariometodistalibre", {
               expiresIn: 300,
             });
-            res.setHeader("x-access-token", token);
             req.session.user = result;
             res.json({ auth: true, token: token, result: result });
           } else {
@@ -72,7 +72,7 @@ app.post("/login", (req, res) => {
           }
         });
       } else {
-        res.send(err);
+        res.json({ auth: false, message: "Error" });
       }
     }
   );
@@ -370,7 +370,7 @@ app.post("/getusuariosUpdate", (req, res) => {
   });
 });
 
-/* ==== FIN  USUARIOS ==== */
+/* ==== FIN  USUARIOS ==== */ 
 
 /* ==== CRUD MATERIAS ==== */
 

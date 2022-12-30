@@ -60,6 +60,7 @@
   text-align: center;
   line-height: 50px;
   transform: translate(-50%);
+  cursor: pointer;
 }
 
 .sidebar.active .iconBar {
@@ -189,13 +190,14 @@
 .profile .logout {
   position: absolute;
   left: 50%;
-  bottom: 18px;
+  bottom: 7px;
   transform: translateX(-50%);
   min-width: 50px;
   line-height: 50px;
   font-size: 20px;
   border-radius: 12px;
   text-align: center;
+  color: white;
 }
 
 .sidebar.active .profile .logout {
