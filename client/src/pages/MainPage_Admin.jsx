@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../css/Sidebar.css";
 import logo from "../logoseminario1.png";
 import {
@@ -20,6 +20,11 @@ import { HiNewspaper } from "react-icons/hi";
 
 const MainPage_Admin = ({ Main }) => {
   const [isOpen, setIsOpen] = useState(false);
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = "/";
+    navigate(path);
+  };
 
   return (
     <>
@@ -31,7 +36,7 @@ const MainPage_Admin = ({ Main }) => {
               <div className="logo-text">ISFT</div>
             </div>
           </div>
-          <FaBars onClick={() => setIsOpen(!isOpen)} className="iconBar" />
+          <FaBars onClick={() => setIsOpen(!isOpen)} className="iconBar" poin/>
 
           <ul className="nav_list">
             <li>
@@ -109,7 +114,7 @@ const MainPage_Admin = ({ Main }) => {
                   <div className="nombre">Lucas Lopez</div>
                 </div>
               </div>
-              <BiLogOut className="logout" />
+              <Link to="/" className="logout" ><BiLogOut /></Link>
             </div>
           </div>
         </div>

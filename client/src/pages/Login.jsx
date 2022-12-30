@@ -1,44 +1,34 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
+import AuthContext from "../context/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
-import Axios from "axios";
+import axios from "axios";
 import "../css/Login.css";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Login = () => {
-  const navigate = useNavigate();
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [alert, setAlert] = useState(false);
-  const [loginStatus, setLoginStatus] = useState("");
   const toggle = () => setAlert(!alert);
 
-  const homeroute = () => {
-    const path = "/";
-    navigate(path);
-  };
+  const {setAuth} =useContext(AuthContext);
+  const userRef = useRef();
+  const errRef = useRef();
 
-  Axios.defaults.withCredentials = true;
-
-  const loginauth = () => {
-    Axios.post("http://localhost:4001/login", {
-      username: username,
-      password: password,
-    }).then((response) => {
-      if (response.data.length == 0) {
-        toggle();
-      } else {
-        setLoginStatus(response.data);
-        homeroute();
-      }
-    });
-  };
+  const [user, setUser] = useState("");
+  const [pwd, setPwd] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
-    Axios.get("http://localhost:4001/login").then((response) =>{
-      setLoginStatus(response.data.user[0].ID)
-    })
-  }, []);
+    setErrMsg("");
+  }, [user, pwd]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setUser("");
+    setPwd("");
+    setSuccess(true)
+  }
 
   return (
     <main className="main">
@@ -48,42 +38,43 @@ const Login = () => {
         </div>
         <div className="texto-Login">
           <p>Iniciar Sesión</p>
-          <Alert color="danger" isOpen={alert} toggle={toggle} fade>
-            Codigo y/o Contraseña Incorrectos
+          <Alert
+            color="danger"
+            ref={errRef}
+            aria-live="assertive"
+            isOpen={alert}
+            toggle={toggle}
+            fade
+          >
+            {errMsg}
           </Alert>
-          <div>
+          <form onSubmit={handleSubmit}>
             <ul>
               <li>
                 <p>Código</p>
                 <input
                   type="text"
+                  ref={userRef}
                   placeholder="Introduce tu Código"
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                  }}
+                  autoComplete="off"
+                  onChange={(e) => setUser(e.target.value)}
                 />
               </li>
               <li>
                 <p>Contraseña</p>
                 <input
-                  type="password"
+                  type="password" 
                   placeholder="Introduce tu Contraseña"
-                  onChange={(e) => {
-                    setPassword(e.target.value);
-                  }}
+                  onChange={(e) => setPwd(e.target.value)}
+                  value={pwd}
+                  required
                 />
               </li>
             </ul>
             <div className="links-Login">
-              <button
-                onClick={() => {
-                  loginauth();
-                }}
-              >
-                Ingresar
-              </button>
+              <button>Ingresar</button>
             </div>
-          </div>
+          </form>
         </div>
       </div>
     </main>

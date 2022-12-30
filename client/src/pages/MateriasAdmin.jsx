@@ -168,7 +168,14 @@ const MateriasAdmin = () => {
             >
               Agregar Materia
             </Button>
-            <Button color="primary" onClick={() => {routeChange();}}>Imprimir</Button>
+            <Button
+              color="primary"
+              onClick={() => {
+                routeChange();
+              }}
+            >
+              Imprimir
+            </Button>
           </div>
           <div className="botones-AdminPages">
             <Input
@@ -239,6 +246,7 @@ const MateriasAdmin = () => {
                     <Label for="ID_Maestro" hidden></Label>
                     <Input
                       type="select"
+                      autoComplete="off"
                       id="ID_Maestro"
                       onChange={(event) => {
                         setId_maestroInsert(event.target.value);
@@ -261,6 +269,7 @@ const MateriasAdmin = () => {
                   <FormGroup>
                     <Label for="Cod_Materia" hidden></Label>
                     <Input
+                      autoComplete="off"
                       id="Cod_Materia"
                       placeholder="Cod_Materia"
                       onChange={(event) => {
@@ -275,6 +284,7 @@ const MateriasAdmin = () => {
                 <Input
                   id="Nombre"
                   placeholder="Nombre"
+                  autoComplete="off"
                   onChange={(event) => {
                     setNombreInsert(event.target.value);
                   }}
@@ -285,6 +295,7 @@ const MateriasAdmin = () => {
                 <Input
                   type="textarea"
                   id="Descripcion"
+                  autoComplete="off"
                   placeholder="Descripción"
                   onChange={(event) => {
                     setDescripcionInsert(event.target.value);
@@ -298,6 +309,7 @@ const MateriasAdmin = () => {
                     <Input
                       type="select"
                       id="Nivel"
+                      autoComplete="off"
                       onChange={(event) => {
                         setNivelInsert(event.target.value);
                       }}
@@ -317,6 +329,7 @@ const MateriasAdmin = () => {
                     <Input
                       id="Creditos"
                       placeholder="Creditos"
+                      autoComplete="off"
                       onChange={(event) => {
                         setCreditosInsert(event.target.value);
                       }}
@@ -353,6 +366,7 @@ const MateriasAdmin = () => {
                           <Input
                             type="select"
                             id="ID_Maestro"
+                            autoComplete="off"
                             defaultValue={val.ID_Maestro}
                             onChange={(event) => {
                               setId_maestroUpdate(event.target.value);
@@ -378,6 +392,7 @@ const MateriasAdmin = () => {
                             defaultValue={val.Cod_Materia}
                             id="Cod_Materia"
                             placeholder="Cod_Materia"
+                            autoComplete="off"
                             onChange={(event) => {
                               setCod_materiaUpdate(event.target.value);
                             }}
@@ -391,6 +406,7 @@ const MateriasAdmin = () => {
                         id="Nombre"
                         defaultValue={val.Nombre}
                         placeholder="Nombre"
+                        autoComplete="off"
                         onChange={(event) => {
                           setNombreUpdate(event.target.value);
                         }}
@@ -403,6 +419,7 @@ const MateriasAdmin = () => {
                         type="textarea"
                         id="Descripcion"
                         placeholder="Descripción"
+                        autoComplete="off"
                         onChange={(event) => {
                           setDescripcionUpdate(event.target.value);
                         }}
@@ -416,6 +433,7 @@ const MateriasAdmin = () => {
                             defaultValue={val.Nivel}
                             type="select"
                             id="Nivel"
+                            autoComplete="off"
                             onChange={(event) => {
                               setNivelUpdate(event.target.value);
                             }}
@@ -436,6 +454,7 @@ const MateriasAdmin = () => {
                             defaultValue={val.Creditos}
                             id="Creditos"
                             placeholder="Creditos"
+                            autoComplete="off"
                             onChange={(event) => {
                               setCreditosUpdate(event.target.value);
                             }}
