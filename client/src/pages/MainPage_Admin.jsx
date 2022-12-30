@@ -53,7 +53,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="/admin/users" className="a">
+              <Link to="/admin/materias" className="a">
                 <ImBooks className="icon" />
                 <span className="links_name">Materias</span>
               </Link>
