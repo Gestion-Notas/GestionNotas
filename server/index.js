@@ -15,6 +15,8 @@ const session = require("express-session");
 
 const jwt = require("jsonwebtoken");
 
+const noticiasImgUpload = require("./routes/index");
+
 const db = mysql2.createConnection({
   user: "root",
   host: "localhost",
@@ -22,7 +24,8 @@ const db = mysql2.createConnection({
   database: "ISFT",
 });
 
-
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
 app.use(
@@ -32,8 +35,8 @@ app.use(
     credentials: true,
   })
 );
-app.use(cookieParser());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/noticias", noticiasImgUpload);
+
 app.use(
   session({
     key: "userID",
@@ -41,62 +44,10 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 24,
+      expires: 60 * 60 * 6,
     },
   })
 );
-
-app.post("/login", (req, res) => {
-  const username = req.body.username;
-  const password = req.body.password;
-
-  db.query(
-    "SELECT * FROM Usuarios WHERE Cod_Usuario = ? AND E_Aceptado = 1; ",
-    [username],
-    (err, result) => {
-      if (err) {
-        res.send({ err: err });
-      }
-
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].Clave, (error, response) => {
-          if (response) {
-            const id = result[0].ID;
-            const token = jwt.sign({ id }, "institutoseminariometodistalibre", {
-              expiresIn: 300,
-            });
-            req.session.user = result;
-            res.json({ auth: true, token: token, result: result });
-          } else {
-            res.send(err);
-          }
-        });
-      } else {
-        res.json({ auth: false, message: "Error" });
-      }
-    }
-  );
-});
-
-const verifyJWT = (req, res, next) => {
-  const token = req.headers["x-access-token"];
-  if (!token) {
-    res.send("Token Needed");
-  } else {
-    jwt.verify(token, "institutoseminariometodistalibre", (err, decoded) => {
-      if (err) {
-        res.json({ auth: false, message: "auth failed" });
-      } else {
-        req.userID = decoded.id;
-        next();
-      }
-    });
-  }
-};
-
-app.get("/isUserAuth", verifyJWT, (req, res) => {
-  res.send("Auth");
-});
 
 app.post("/login", (req, res) => {
   const username = req.body.username;
@@ -129,6 +80,26 @@ app.post("/login", (req, res) => {
       }
     }
   );
+});
+
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    res.send("Token Needed");
+  } else {
+    jwt.verify(token, "institutoseminariometodistalibre", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "auth failed" });
+      } else {
+        req.userID = decoded.id;
+        next();
+      }
+    });
+  }
+};
+
+app.get("/isUserAuth", verifyJWT, (req, res) => {
+  res.send("Auth");
 });
 
 app.get("/login", (req, res) => {
@@ -190,7 +161,6 @@ app.post("/sumbitAdmisiones", (req, res) => {
     );
   });
 });
-
 app.get("/getNoticias", (req, res) => {
   db.query("SELECT * FROM Noticias", (err, result) => {
     if (err) {
@@ -238,6 +208,8 @@ app.get("/getNoticiasDetails/:id", (req, res) => {
 app.listen(4001, () => {
   console.log("Server Running at port 4001");
 });
+
+app.get;
 
 /* ==== CRUD USUARIOS ==== */
 app.get("/getUsuarios", (req, res) => {
@@ -370,7 +342,7 @@ app.post("/getusuariosUpdate", (req, res) => {
   });
 });
 
-/* ==== FIN  USUARIOS ==== */ 
+/* ==== FIN  USUARIOS ==== */
 
 /* ==== CRUD MATERIAS ==== */
 
@@ -429,25 +401,90 @@ app.put("/updateMaterias", (req, res) => {
 
 app.post("/getmateriasUpdate", (req, res) => {
   const id = req.body.id;
-  db.query("SELECT * FROM Materias WHERE ID = ?",[id], (err, result) => {
+  db.query("SELECT * FROM Materias WHERE ID = ?", [id], (err, result) => {
     if (err) {
-      console.log(err)
+      console.log(err);
     } else {
-      res.send(result)
+      res.send(result);
     }
-  })
-})
+  });
+});
 
 /* ==== FIN  MATERIAS ==== */
 
-/* ==== COMBOBOXES ==== */
+/* ==== CRUD NOTICIAS ==== */
+
+app.get("/getNoticias", (req, res) => {
+  db.query("SELECT * FROM Noticias", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/insertNoticias", (req, res) => {
+  const titulo = req.body.titulo;
+  const subtitulo = req.body.subtitulo;
+  const contenido = req.body.contenido;
+  const imagen = req.body.imagen;
+  const destacada = req.body.destacada;
+
+  db.query(
+    "INSERT INTO Noticias VALUES (NULL, ?, ?, ?, ?, ?)",
+    [titulo, subtitulo, contenido, imagen, destacada],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/updateNoticias", (req, res) => {
+  const id = req.body.id;
+  const titulo = req.body.titulo;
+  const subtitulo = req.body.subtitulo;
+  const contenido = req.body.contenido;
+  const imagen = req.body.imagen;
+  const destacada = req.body.destacada;
+
+  db.query(
+    "UPDATE Noticias SET Titulo = ?, Subtitulo = ?, Contenido = ?, Imagen = ?, Destacada = ? WHERE ID = ?",
+    [titulo, subtitulo, contenido, imagen, destacada, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getnoticiasUpdate", (req, res) => {
+  const id = req.body.id;
+  db.query("SELECT * FROM Noticias WHERE ID = ?", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+/* ==== FIN  NOTICIAS ==== */
+
+/* ==== COMBO   BOXES ==== */
 
 app.get("/comboboxMaestros", (req, res) => {
   db.query("SELECT * FROM Usuarios WHERE Tipo=1", (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      
       res.send(result);
     }
   });
