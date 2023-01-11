@@ -18,7 +18,8 @@
     "react-icons": "^4.7.1",
     "react-router-dom": "^6.4.3",
     "react-to-print": "^2.14.10",
-    "reactstrap": "^9.1.5"
+    "reactstrap": "^9.1.5",
+    "universal-cookie": "^4.0.4"
   },
   "devDependencies": {
     "@types/react": "^18.0.24",

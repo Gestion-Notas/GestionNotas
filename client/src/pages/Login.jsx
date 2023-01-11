@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import "../css/Login.css";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -21,7 +21,7 @@ const Login = () => {
   Axios.defaults.withCredentials = true;
 
   const loginauth = () => {
-    Axios.post("http://localhost:4001/login", {
+    Axios.post("/login", {
       username: username,
       password: password,
     }).then((response) => {
@@ -35,7 +35,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    Axios.get("http://localhost:4001/login").then((response) =>{
+    Axios.get("/login").then((response) =>{
       setLoginStatus(response.data.user[0].ID)
     })
   }, []);

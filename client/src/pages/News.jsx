@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NewsView from "../components/NewsView";
 import "../css/News.css";
-import Axios from "axios";
+import Axios from "../libs/axios"
 
 const News = () => {
   const [noticias, setNoticias] = useState([]);
 
-  Axios.get("http://localhost:4001/getNoticias").then((response) => {
+ useEffect(()=> {Axios.get("/getNoticias").then((response) => {
     setNoticias(response.data);
-  });
+  }).catch((err)=>{
+    console.log(err)
+  })});
 
   return (
     <main className="main">

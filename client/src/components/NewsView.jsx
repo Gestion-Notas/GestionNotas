@@ -1,11 +1,11 @@
 import React from "react";
 import NewsButton from "./NewsButton";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import "../css/NewsView.css"
 
 const NewsView = (props) => {
 
-  const imageconcat = "http://localhost:4001/static/images/" + props.image;
+  const imageconcat = "/static/images/" + props.image;
   return (
     <div className="container-NewsView">
         <div className="image-NewsView" style={{backgroundImage: `url(${imageconcat})`}}/>

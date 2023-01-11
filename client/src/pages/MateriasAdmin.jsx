@@ -15,7 +15,7 @@ import {
   Label,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import { MdEdit } from "react-icons/md";
 
 const MateriasAdmin = () => {
@@ -57,13 +57,13 @@ const MateriasAdmin = () => {
   /* BACKEND INSERTAR */
 
   const getMaestros = () => {
-    Axios.get("http://localhost:4001/comboboxMaestros").then((response) => {
+    Axios.get("/comboboxMaestros").then((response) => {
       setCbMaestros(response.data);
     });
   };
 
   const insertMateria = () => {
-    Axios.post("http://localhost:4001/insertMaterias", {
+    Axios.post("/insertMaterias", {
       id_maestro: id_maestroInsert,
       cod_materia: cod_materiaInsert,
       nombre: nombreInsert,
@@ -79,7 +79,7 @@ const MateriasAdmin = () => {
   /* BACKEND BUSQUEDA Y SELECT */
 
   const getSearch = () => {
-    Axios.get("http://localhost:4001/getMaterias").then((response) => {
+    Axios.get("/getMaterias").then((response) => {
       setMateriasTemp(response.data);
       setMateriasarray(response.data);
     });
@@ -127,7 +127,7 @@ const MateriasAdmin = () => {
   /* BACKEND UPDATE */
 
   const execUpdate = (id) => {
-    Axios.post("http://localhost:4001/getmateriasUpdate", {
+    Axios.post("/getmateriasUpdate", {
       id: id,
     }).then((response) => {
       setUpdateData(response.data);
@@ -135,7 +135,7 @@ const MateriasAdmin = () => {
   };
 
   const updateMateria = (id) => {
-    Axios.put("http://localhost:4001/updateMaterias", {
+    Axios.put("/updateMaterias", {
       id: id,
       id_maestro: id_maestroUpdate,
       cod_materia: cod_materiaUpdate,

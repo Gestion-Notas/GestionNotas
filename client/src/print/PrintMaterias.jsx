@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Table, Button } from "reactstrap";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import "../css/AdminPages.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -14,7 +14,7 @@ const PrintMaterias = () => {
   });
 
   const getSearch = () => {
-    Axios.get("http://localhost:4001/getMaterias").then((response) => {
+    Axios.get("/getMaterias").then((response) => {
       setMateriasTemp(response.data);
     });
   };

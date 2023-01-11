@@ -14,7 +14,7 @@ import {
   Label,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import { MdEdit } from "react-icons/md";
 
 const UsuariosAdmin = () => {
@@ -45,7 +45,7 @@ const UsuariosAdmin = () => {
   const [claveInsert, setClaveInsert] = useState("");
 
   const insertUsuario = () => {
-    Axios.post("http://localhost:4001/insertUsuarios", {
+    Axios.post("/insertUsuarios", {
       nombres: nombresInsert,
       apellidos: apellidosInsert,
       cedula: cedulaInsert,
@@ -79,7 +79,7 @@ const UsuariosAdmin = () => {
   };
 
   const execUpdate = (id) => {
-    Axios.post("http://localhost:4001/getusuariosUpdate", {
+    Axios.post("/getusuariosUpdate", {
       id: id,
     }).then((response) => {
       setUpdateData(response.data);
@@ -106,7 +106,7 @@ const UsuariosAdmin = () => {
   const [claveUpdate, setClaveUpdate] = useState("");
 
   const updateUsuario = (id) => {
-    Axios.put("http://localhost:4001/updateUsuarios", {
+    Axios.put("/updateUsuarios", {
       id: id,
       nombres: nombresUpdate,
       apellidos: apellidosUpdate,
@@ -133,7 +133,7 @@ const UsuariosAdmin = () => {
   };
 
   const getsearch = () => {
-    Axios.get("http://localhost:4001/getUsuarios").then((response) => {
+    Axios.get("/getUsuarios").then((response) => {
       setUsuariosTemp(response.data);
       setUsuariosArray(response.data);
     });
