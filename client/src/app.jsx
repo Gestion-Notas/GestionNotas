@@ -19,9 +19,11 @@ import MateriasAdmin from './pages/MateriasAdmin';
 import NoticiasAdmin from "./pages/NoticiasAdmin";
 
 import PrintUsuarios from "./print/PrintUsuarios";
+import { AuthProvider } from './contexts/Auth';
 import PrintMaterias from "./print/PrintMaterias";
 export const App = () => {
   return (
+    <AuthProvider>
     <Router>
       <Routes>
         <Route path="*" element={<h1>hola 404</h1>} />
@@ -44,5 +46,6 @@ export const App = () => {
         <Route path="/print/materias" element={<PrintMaterias/>}></Route>
       </Routes>
     </Router>
+    </AuthProvider>
   );
 };

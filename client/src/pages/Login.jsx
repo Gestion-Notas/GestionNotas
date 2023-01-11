@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Axios from "../libs/axios"
+import Axios from "../libs/axios";
 import "../css/Login.css";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import { useAuthContext } from "../contexts/Auth";
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -12,14 +12,16 @@ const Login = () => {
   const [alert, setAlert] = useState(false);
   const [loginStatus, setLoginStatus] = useState("");
   const toggle = () => setAlert(!alert);
-
+  const [User, SetUser] = useAuthContext();
   const homeroute = () => {
     const path = "/";
     navigate(path);
   };
 
   Axios.defaults.withCredentials = true;
+useEffect(()=>{
 
+})
   const loginauth = () => {
     Axios.post("/login", {
       username: username,
@@ -28,16 +30,20 @@ const Login = () => {
       if (response.data.length == 0) {
         toggle();
       } else {
-        setLoginStatus(response.data);
+        SetUser({
+          auth: true,
+          token: response.data.token,
+          User: response.data.result,
+        });
         homeroute();
       }
     });
   };
 
   useEffect(() => {
-    Axios.get("/login").then((response) =>{
-      setLoginStatus(response.data.user[0].ID)
-    })
+    Axios.get("/login").then((response) => {
+      setLoginStatus(response.data.user[0].ID);
+    });
   }, []);
 
   return (
