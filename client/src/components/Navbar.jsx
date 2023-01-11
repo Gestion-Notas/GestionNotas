@@ -7,42 +7,6 @@ import Axios from "axios";
 
 export function Navbar(props) {
   const [isOpen, setIsOpen] = useState(false);
-  const [loginStatus, setLoginStatus] = useState([]);
-  const [userAuthenticated, setUserAuthenticated] = useState(false);
-
-  Axios.defaults.withCredentials = true;
-
-  Axios.get("http://localhost:4001/login").then((response) => {
-    if (response.data.loggedIn == true) {
-      setLoginStatus(response.data.user[0]);
-
-      setUserAuthenticated(true);
-    } else {
-      setUserAuthenticated(false);
-    }
-  });
-
-  var loginButton;
-  console.log(loginStatus);
-  if (userAuthenticated == true) {
-    loginButton = loginStatus.map((val, key) => {
-      return (
-        <div className="Link-Navbar">
-          <div>{val.Nombre}</div>
-          <FaUserCircle className="usericon-Navbar" />
-        </div>
-      );
-    });
-  } else {
-    loginButton = (
-      <Link to="/login" className="Link-Navbar">
-        <div>INICIAR SESIÓN</div>
-        <FaUserCircle className="usericon-Navbar" />
-      </Link>
-    );
-  }
-
-  console.log(loginButton);
 
   return (
     <header>
@@ -71,7 +35,10 @@ export function Navbar(props) {
       </div>
 
       <div className="userDetails-Navbar">
-        {loginButton}
+      <Link to="/login" className="Link-Navbar">
+        <div>INICIAR SESIÓN</div>
+        <FaUserCircle className="usericon-Navbar" />
+      </Link>
         <FaBars
           id="icon"
           className={`menuicon-Navbar ${isOpen && "open"}`}

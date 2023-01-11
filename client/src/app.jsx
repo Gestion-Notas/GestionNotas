@@ -16,6 +16,7 @@ import Admisiones from "./pages/Admisiones";
 
 import UsuariosAdmin from "./pages/UsuariosAdmin";
 import MateriasAdmin from './pages/MateriasAdmin';
+import NoticiasAdmin from "./pages/NoticiasAdmin";
 
 import PrintUsuarios from "./print/PrintUsuarios";
 import PrintMaterias from "./print/PrintMaterias";
@@ -37,6 +38,7 @@ export const App = () => {
         <Route path="/admin/home" element={<MainPage_Admin Main={Null}/>}/>
         <Route path="/admin/usuarios" element={<MainPage_Admin Main={UsuariosAdmin}/>}/>
         <Route path="/admin/materias" element={<MainPage_Admin Main={MateriasAdmin}/>}/>
+        <Route path="/admin/noticias" element={<MainPage_Admin Main={NoticiasAdmin}/>}/>
 
         <Route path="/print/usuarios" element={<PrintUsuarios/>}></Route>
         <Route path="/print/materias" element={<PrintMaterias/>}></Route>

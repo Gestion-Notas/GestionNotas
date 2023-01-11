@@ -100,7 +100,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/noticias" className="a">
                 <HiNewspaper className="icon" />
                 <span className="links_name">Noticias</span>
               </Link>
