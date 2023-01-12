@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import DropdownAccordion from "../components/DropdownAccordion";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import "../css/Admisiones.css";
 
 const Admisiones = () => {
@@ -25,7 +25,7 @@ const Admisiones = () => {
   const [cargo_iglesia, setCargo_Iglesia] = useState("");
 
   const addUsuario = () => {
-    Axios.post("http://localhost:4001/sumbitAdmisiones", {
+    Axios.post("/sumbitAdmisiones", {
       nombres: nombres,
       apellidos: apellidos,
       cedula: cedula,

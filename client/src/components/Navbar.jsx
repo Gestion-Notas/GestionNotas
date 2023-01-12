@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import logo from "../logoseminario1.png";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Axios from "axios";
+import Axios from "../libs/axios"
 
 export function Navbar(props) {
   const [isOpen, setIsOpen] = useState(false);

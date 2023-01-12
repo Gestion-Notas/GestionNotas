@@ -1,7 +1,7 @@
 import React, { useRef, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Table, Button } from "reactstrap";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../css/AdminPages.css";
 
@@ -13,7 +13,7 @@ const PrintUsuarios = () => {
     documentTitle: "Usuarios-Impresion",
   });
 
-  Axios.get("http://localhost:4001/getUsuarios").then((response) => {
+  Axios.get("/getUsuarios").then((response) => {
     setUsuariosTemp(response.data);
   });
 

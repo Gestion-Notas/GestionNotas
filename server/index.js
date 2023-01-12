@@ -28,12 +28,9 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use("/static", express.static(path.join(__dirname, "public")));
-app.use(
-  cors({
-    origin: ["http://localhost:3001"],
-    methods: ["GET", "POST", "PUT"],
-    credentials: true,
-  })
+app.use(cors({
+  origin: ["*"]
+})
 );
 app.use("/noticias", noticiasImgUpload);
 
@@ -44,7 +41,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     cookie: {
-      expires: 60 * 60 * 6,
+      expires: 21600,
     },
   })
 );
@@ -68,7 +65,9 @@ app.post("/login", (req, res) => {
             const token = jwt.sign({ id }, "institutoseminariometodistalibre", {
               expiresIn: 300,
             });
-            res.setHeader("x-access-token", token);
+            res.cookie("userID", token, {
+              maxAge: 900000,
+            });
             req.session.user = result;
             res.json({ auth: true, token: token, result: result });
           } else {
@@ -186,6 +185,7 @@ app.get("/getUsuarios", (req, res) => {
     if (err) {
       console.log(err);
     } else {
+      delete result.Clave
       res.send(result);
     }
   });

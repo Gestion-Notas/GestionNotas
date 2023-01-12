@@ -16,7 +16,7 @@ import {
   Label,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Axios from "axios";
+import Axios from "../libs/axios"
 import { MdEdit } from "react-icons/md";
 
 const NoticiasAdmin = () => {
@@ -60,14 +60,14 @@ const NoticiasAdmin = () => {
 
   /* BACKEND BUSQUEDA Y SELECT */
 
-  const getSearch = () => {
-    Axios.get("http://localhost:4001/getNoticias").then((response) => {
-      setNoticiasTemp(response.data);
-      setNoticiasarray(response.data);
-    });
-  };
+ 
 
   useEffect(() => {
+    const getSearch = async () => {
+      const response = await Axios.get("/getNoticias");
+      setNoticiasTemp(response.data);
+      setNoticiasarray(response.data);
+    };
     getSearch();
   }, []);
 
@@ -105,7 +105,7 @@ const NoticiasAdmin = () => {
   /* BACKEND UPDATE */
 
   const execUpdate = (id) => {
-    Axios.post("http://localhost:4001/getnoticiasUpdate", {
+    Axios.post("/getnoticiasUpdate", {
       id: id,
     }).then((response) => {
       setUpdateData(response.data);
@@ -113,7 +113,7 @@ const NoticiasAdmin = () => {
   };
 
   const updateMateria = (id) => {
-    Axios.put("http://localhost:4001/updateNoticias", {
+    Axios.put("/updateNoticias", {
       id: id,
       titulo: tituloUpdate,
       subtitulo: subtituloUpdate,
@@ -150,7 +150,7 @@ const NoticiasAdmin = () => {
       },
     };
 
-    Axios.post("http://localhost:4001/noticias/uploadImage", formData, config)
+    Axios.post("/noticias/uploadImage", formData, config)
       .then((response) => {
         console.log(response);
       })
@@ -158,7 +158,7 @@ const NoticiasAdmin = () => {
         console.log("error", err);
       });
     console.log(tituloInsert);
-    Axios.post("http://localhost:4001/insertNoticias", {
+    Axios.post("/insertNoticias", {
       titulo: tituloInsert,
       subtitulo: subtituloInsert,
       contenido: contenidoInsert,
@@ -182,7 +182,7 @@ const NoticiasAdmin = () => {
       },
     };
 
-    Axios.post("http://localhost:4001/noticias/uploadImage", formData, config)
+    Axios.post("/noticias/uploadImage", formData, config)
       .then((response) => {
         console.log(response);
       })
@@ -190,7 +190,7 @@ const NoticiasAdmin = () => {
         console.log("error", err);
       });
     console.log(tituloInsert);
-    Axios.post("http://localhost:4001/insertNoticias", {
+    Axios.post("/insertNoticias", {
       titulo: tituloInsert,
       subtitulo: subtituloInsert,
       contenido: contenidoInsert,
