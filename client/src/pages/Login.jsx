@@ -18,7 +18,6 @@ const Login = () => {
     navigate(path);
   };
 
-  Axios.defaults.withCredentials = true;
 useEffect(()=>{
 
 })
@@ -30,6 +29,7 @@ useEffect(()=>{
       if (response.data.length == 0) {
         toggle();
       } else {
+        localStorage.setItem("auth",response.data.token)
         SetUser({
           auth: true,
           token: response.data.token,
