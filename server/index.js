@@ -49,6 +49,27 @@ app.use(
   })
 );
 
+const verifyJWT = (req, res, next) => {
+  const token = req.headers["authorization"]?.split(' ')[1];
+  if (!token) {
+    res.status(401).send("Token Needed");
+  } else {
+    jwt.verify(token, "institutoseminariometodistalibre", (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "auth failed" });
+      } else {
+        db.query(`select * from Usuarios where ID=${decoded.id}`,(err, result) => {
+          req.auth={
+            token,
+            user: result.data
+          }
+          next();
+        });
+      }
+    });
+  }
+};
+
 app.post("/login", (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
@@ -84,24 +105,10 @@ app.post("/login", (req, res) => {
   );
 });
 
-const verifyJWT = (req, res, next) => {
-  const token = req.headers["authorization"];
-  if (!token) {
-    res.status(401).send("Token Needed");
-  } else {
-    jwt.verify(token, "institutoseminariometodistalibre", (err, decoded) => {
-      if (err) {
-        res.json({ auth: false, message: "auth failed" });
-      } else {
-        req.userID = decoded.id;
-        next();
-      }
-    });
-  }
-};
+
 
 app.get("/isUserAuth", verifyJWT, (req, res) => {
-  req.userID
+  req.userID;
   res.send("Auth");
 });
 
@@ -184,7 +191,7 @@ app.get("/getIglesias", (req, res) => {
   });
 });
 
-app.get("/getUsuarios", (req, res) => {
+app.get("/getUsuarios", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Usuarios", (err, result) => {
     if (err) {
       console.log(err);

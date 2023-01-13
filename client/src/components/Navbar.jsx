@@ -3,11 +3,13 @@ import React, { useState, useEffect } from "react";
 import logo from "../logoseminario1.png";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import Axios from "../libs/axios"
-
-export function Navbar(props) {
+import { useAuthContext } from "../contexts/auth";
+export const Navbar=(props)=> {
   const [isOpen, setIsOpen] = useState(false);
-
+  const data = useAuthContext()
+  useEffect(()=>{
+    console.log(data)
+  }, [data])
   return (
     <header>
       <div className="seccion2-Navbar">
@@ -15,7 +17,7 @@ export function Navbar(props) {
           <img src={logo} alt="Logo" className="logo-Navbar" />
         </Link>
         <h1 className="logotitle-Navbar">ISFT</h1>
-        <ul className={`navbarlist ${isOpen && "open"}`}>
+        <ul className={`navbarlist ${isOpen ? "open" : ""}`}>
           <li>
             <Link to="/pensum">PENSUM</Link>
           </li>
@@ -35,10 +37,10 @@ export function Navbar(props) {
       </div>
 
       <div className="userDetails-Navbar">
-      <Link to="/login" className="Link-Navbar">
-        <div>INICIAR SESIÓN</div>
-        <FaUserCircle className="usericon-Navbar" />
-      </Link>
+        <Link to="/login" className="Link-Navbar">
+          <div>INICIAR SESIÓN</div>
+          <FaUserCircle className="usericon-Navbar" />
+        </Link>
         <FaBars
           id="icon"
           className={`menuicon-Navbar ${isOpen && "open"}`}
