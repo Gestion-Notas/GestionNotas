@@ -3,13 +3,14 @@ import React, { useState, useEffect } from "react";
 import logo from "../logoseminario1.png";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useAuthContext } from "../contexts/auth";
+import { useAuthContext } from "../contexts/Auth";
 export const Navbar=(props)=> {
   const [isOpen, setIsOpen] = useState(false);
-  const data = useAuthContext()
-  useEffect(()=>{
-    console.log(data)
-  }, [data])
+  const [user, setUser] = useAuthContext();
+
+  const notaslink = () => {
+    
+  }
   return (
     <header>
       <div className="seccion2-Navbar">
@@ -28,7 +29,7 @@ export const Navbar=(props)=> {
             <Link to="/nosotros">NOSOTROS</Link>
           </li>
           <li>
-            <Link to="/notas/vista">NOTAS</Link>
+            <Link to={notaslink}>NOTAS</Link>
           </li>
           <li>
             <Link to="/admisiones">ADMISIONES</Link>

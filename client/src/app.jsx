@@ -1,4 +1,5 @@
 import React, { lazy } from "react";
+import { AuthProvider } from "./contexts/Auth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import MainPage_Admin from "./pages/MainPage_Admin";
@@ -19,9 +20,9 @@ import MateriasAdmin from "./pages/MateriasAdmin";
 import NoticiasAdmin from "./pages/NoticiasAdmin";
 
 import PrintUsuarios from "./print/PrintUsuarios";
-import { AuthProvider } from "./contexts/Auth";
 import PrintMaterias from "./print/PrintMaterias";
-export const App = () => {
+
+const App = () => {
   return (
     <AuthProvider>
       <Router>
@@ -64,3 +65,5 @@ export const App = () => {
     </AuthProvider>
   );
 };
+
+export default App;
