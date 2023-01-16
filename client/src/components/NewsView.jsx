@@ -1,11 +1,10 @@
 import React from "react";
 import NewsButton from "./NewsButton";
-import Axios from "../libs/axios"
 import "../css/NewsView.css"
 
 const NewsView = (props) => {
-
-  const imageconcat = "/static/images/" + props.image;
+  const imageconcat = import.meta.env.VITE_HOSTAPI + "/static/images/" + props.image;
+  
   return (
     <div className="container-NewsView">
         <div className="image-NewsView" style={{backgroundImage: `url(${imageconcat})`}}/>

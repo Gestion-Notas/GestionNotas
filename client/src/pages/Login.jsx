@@ -18,9 +18,39 @@ const Login = () => {
     navigate(path);
   };
 
-useEffect(()=>{
-
-})
+  useEffect(() => {
+    const doCheck = async () => {
+      if (!localStorage.getItem("auth")) return;
+      try {
+        const response = await Axios.get("/auth");
+        if (response.status !== 200 || response.status >= 500) {
+          SetUser({ auth: false, token: null, User: {} });
+          localStorage.removeItem("auth");
+          return;
+        }
+        console.log(response)
+        localStorage.setItem("auth", response.data.token);
+        SetUser({
+          auth: true,
+          token: response.data.token,
+          User: response.data.user,
+        });
+        navigate("/");
+      } catch (error) {
+        console.log(error);
+        if (error.name === "AbortError") return;
+        if (error.response.status === 401) {
+          SetUser({ auth: false, token: null, User: {} });
+          localStorage.removeItem("auth");
+          return;
+        }
+      }
+    };
+    doCheck();
+    return () => {
+      AbortSignal.abort();
+    };
+  }, []);
   const loginauth = () => {
     Axios.post("/login", {
       username: username,
@@ -29,7 +59,7 @@ useEffect(()=>{
       if (response.data.length == 0) {
         toggle();
       } else {
-        localStorage.setItem("auth",response.data.token)
+        localStorage.setItem("auth", response.data.token);
         SetUser({
           auth: true,
           token: response.data.token,
@@ -39,12 +69,6 @@ useEffect(()=>{
       }
     });
   };
-
-  useEffect(() => {
-    Axios.get("/login").then((response) => {
-      setLoginStatus(response.data.user[0].ID);
-    });
-  }, []);
 
   return (
     <main className="main">

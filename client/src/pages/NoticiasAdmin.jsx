@@ -16,10 +16,12 @@ import {
   Label,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Axios from "../libs/axios"
+import Axios from "../libs/axios";
 import { MdEdit } from "react-icons/md";
 
 const NoticiasAdmin = () => {
+  const today = new Date().toISOString().substring(0, 10);
+
   let navigate = useNavigate();
   const routeChange = () => {
     let path = "/print/materias";
@@ -56,11 +58,7 @@ const NoticiasAdmin = () => {
 
   /* BACKEND INSERTAR */
 
-  const insertMateria = () => {};
-
   /* BACKEND BUSQUEDA Y SELECT */
-
- 
 
   useEffect(() => {
     const getSearch = async () => {
@@ -112,14 +110,14 @@ const NoticiasAdmin = () => {
     });
   };
 
-  const updateMateria = (id) => {
+  const updateNoticias = (id) => {
     Axios.put("/updateNoticias", {
       id: id,
       titulo: tituloUpdate,
       subtitulo: subtituloUpdate,
       contenido: contenidoUpdate,
       imagen: imagenUpdate,
-      destacada: destacadaUpdate
+      destacada: destacadaUpdate,
     }).then(() => {
       toggleUpdateState();
       console.log("success!");
@@ -133,10 +131,16 @@ const NoticiasAdmin = () => {
   }
 
   const onInputChangeInsert = (e) => {
+    const filename =
+      today +
+      "-" +
+      e.target.value
+        .split(/(\\|\/)/g)
+        .pop()
+        .replace(/\s/g, "");
     setFile(e.target.files[0]);
-
-    const filename = Date.now(e.target.value.split(/(\\|\/)/g).pop());
-    setImagenInsert();
+    setImagenInsert(filename);
+    setImagenUpdate(filename)
   };
 
   const handleSubmitInsert = (event) => {
@@ -144,6 +148,7 @@ const NoticiasAdmin = () => {
 
     const formData = new FormData();
     formData.append("ImagenIDISFT", file);
+
     const config = {
       headers: {
         "content-type": "multipart/form-data",
@@ -189,17 +194,6 @@ const NoticiasAdmin = () => {
       .catch((err) => {
         console.log("error", err);
       });
-    console.log(tituloInsert);
-    Axios.post("/insertNoticias", {
-      titulo: tituloInsert,
-      subtitulo: subtituloInsert,
-      contenido: contenidoInsert,
-      imagen: imagenInsert,
-      destacada: destacadaInsert,
-    }).then(() => {
-      toggleInsertState;
-      console.log("success!");
-    });
     refreshpage();
   };
 
@@ -369,15 +363,18 @@ const NoticiasAdmin = () => {
 
           <Modal isOpen={modalUpdateState} toggle={toggleUpdateState}>
             {updateData.map((val, key) => {
+              console.log(tituloUpdate);
               return (
                 <Form
                   method="POST"
                   action="localhost:4001/noticias/uploadImage"
                   enctype="multipart/form-data"
-                  onSubmit={handleSubmitUpdate}
+                  onSubmit={
+                    updateNoticias(val.ID) & handleSubmitUpdate
+                  }
                 >
                   <ModalHeader toggle={toggleUpdateState}>
-                    Agregar Noticias
+                    Actualizar Noticias
                   </ModalHeader>
                   <ModalBody>
                     <FormGroup>
@@ -425,7 +422,6 @@ const NoticiasAdmin = () => {
                         id="ImagenIDISFT"
                         autoComplete="off"
                         type="file"
-                        
                         name="ImagenIDISFT"
                         accept="image/*"
                         onChange={onInputChangeInsert}
@@ -440,7 +436,7 @@ const NoticiasAdmin = () => {
                         autoComplete="off"
                         defaultValue={val.Destacada}
                         onChange={(event) => {
-                          setDestacadaInsert(event.target.value);
+                          setDestacadaUpdate(event.target.value);
                         }}
                         required
                       >

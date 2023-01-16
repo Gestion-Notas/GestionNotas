@@ -1,4 +1,5 @@
 const mysql2 = require("mysql2");
+require("dotenv").config();
 
 const express = require("express");
 const app = express();
@@ -35,36 +36,28 @@ app.use(
     credentials: true,
   })
 );
+
 app.use("/noticias", noticiasImgUpload);
 
-app.use(
-  session({
-    key: "userID",
-    secret: "institutoseminariometodistalibre",
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      expires: 21600,
-    },
-  })
-);
-
 const verifyJWT = (req, res, next) => {
-  const token = req.headers["authorization"]?.split(' ')[1];
+  const token = req.headers["authorization"]?.split(" ")[1];
   if (!token) {
     res.status(401).send("Token Needed");
   } else {
-    jwt.verify(token, "institutoseminariometodistalibre", (err, decoded) => {
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err) {
         res.json({ auth: false, message: "auth failed" });
       } else {
-        db.query(`select * from Usuarios where ID=${decoded.id}`,(err, result) => {
-          req.auth={
-            token,
-            user: result.data
+        db.query(
+          `select * from Usuarios where ID=${decoded.id}`,
+          (err, result) => {
+            req.auth = {
+              token,
+              user: result.data,
+            };
+            next();
           }
-          next();
-        });
+        );
       }
     });
   }
@@ -80,43 +73,52 @@ app.post("/login", (req, res) => {
     (err, result) => {
       if (err) {
         res.send({ err: err });
-      }
-
-      if (result.length > 0) {
-        bcrypt.compare(password, result[0].Clave, (error, response) => {
-          if (response) {
-            const id = result[0].ID;
-            const token = jwt.sign({ id }, "institutoseminariometodistalibre", {
-              expiresIn: 300,
-            });
-            res.cookie("userID", token, {
-              maxAge: 900000,
-            });
-            req.session.user = result;
-            res.json({ auth: true, token: token, result: result });
-          } else {
-            res.send(err);
-          }
-        });
       } else {
-        res.send(err);
+        if (result.length > 0) {
+          bcrypt.compare(password, result[0].Clave, (error, response) => {
+            if (response) {
+              const id = result[0].ID;
+              const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
+                expiresIn: 300,
+              });
+              res.cookie("userID", token, {
+                maxAge: 900000,
+              });
+
+              res.json({ auth: true, token: token, result: result });
+            } else {
+              res.send(err);
+            }
+          });
+        } else {
+          res.send(err);
+        }
       }
     }
   );
 });
 
-
-
-app.get("/isUserAuth", verifyJWT, (req, res) => {
-  req.userID;
-  res.send("Auth");
-});
-
-app.get("/login", (req, res) => {
-  if (req.session.user) {
-    res.send({ loggedIn: true, user: req.session.user });
+app.get("/auth", (req, res) => {
+  const token = req.headers["authorization"]?.split(" ")[1];
+  if (!token) {
+    res.status(401).send("No Token");
   } else {
-    res.send({ loggedIn: false });
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
+      if (err) {
+        res.json({ auth: false, message: "auth failed" });
+      } else {
+        db.query(
+          `select * from Usuarios where ID=${decoded.id}`,
+          (err, result) => {
+            res.send = {
+              auth: true,
+              token,
+              user: result.data,
+            };
+          }
+        );
+      }
+    });
   }
 });
 
@@ -191,17 +193,6 @@ app.get("/getIglesias", (req, res) => {
   });
 });
 
-app.get("/getUsuarios", verifyJWT, (req, res) => {
-  db.query("SELECT * FROM Usuarios", (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      delete result.Clave;
-      res.send(result);
-    }
-  });
-});
-
 app.get("/getNoticiasDetails/:id", (req, res) => {
   db.query(
     "SELECT * FROM Noticias WHERE ID=?",
@@ -223,8 +214,8 @@ app.listen(4001, () => {
 app.get;
 
 /* ==== CRUD USUARIOS ==== */
-app.get("/getUsuarios", (req, res) => {
-  db.query(`SELECT * FROM Usuarios'`, (err, result) => {
+app.get("/getUsuarios", verifyJWT, (req, res) => {
+  db.query("SELECT * FROM Usuarios", (err, result) => {
     if (err) {
       console.log(err);
     } else {
@@ -456,24 +447,37 @@ app.post("/insertNoticias", (req, res) => {
 });
 
 app.put("/updateNoticias", (req, res) => {
+  const fs = require("fs");
+
   const id = req.body.id;
   const titulo = req.body.titulo;
   const subtitulo = req.body.subtitulo;
   const contenido = req.body.contenido;
   const imagen = req.body.imagen;
   const destacada = req.body.destacada;
-
-  db.query(
-    "UPDATE Noticias SET Titulo = ?, Subtitulo = ?, Contenido = ?, Imagen = ?, Destacada = ? WHERE ID = ?",
-    [titulo, subtitulo, contenido, imagen, destacada, id],
-    (err, result) => {
-      if (err) {
-        console.log(err);
-      } else {
-        res.send(result);
-      }
+  db.query(`SELECT * FROM Noticias WHERE ID= ${id}`, (err, results) => {
+    if (err) {
+      console.log(err);
+    } else {
+      const pathDeletable = "public/images/" + results[0].Imagen;
+      db.query(
+        "UPDATE Noticias SET Titulo = ?, Subtitulo = ?, Contenido = ?, Imagen = ?, Destacada = ? WHERE ID = ?",
+        [titulo, subtitulo, contenido, imagen, destacada, id],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            if (!result) {
+              console.log(abueno);
+            } else {
+              fs.unlink(pathDeletable);
+              res.send(result);
+            }
+          }
+        }
+      );
     }
-  );
+  });
 });
 
 app.post("/getnoticiasUpdate", (req, res) => {

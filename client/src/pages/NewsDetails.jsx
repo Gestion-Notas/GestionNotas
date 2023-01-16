@@ -18,7 +18,7 @@ const NewsDetails = () => {
     <main className="main">  
       <div className="container-NewsDetails">
         {noticiasdetalles.map((val, key) => {
-          const imageconcat = "/static/images/" + val.Imagen;
+          const imageconcat = import.meta.env.VITE_HOSTAPI + "/static/images/" + val.Imagen;
           return (
             <div className="containerPrincipal-NewsDetails">
               <p className="title-NewsDetails">{val.Titulo}</p>
