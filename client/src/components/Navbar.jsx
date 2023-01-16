@@ -18,7 +18,7 @@ export const Navbar=(props)=> {
           <img src={logo} alt="Logo" className="logo-Navbar" />
         </Link>
         <h1 className="logotitle-Navbar">ISFT</h1>
-        <ul className={`navbarlist ${isOpen ? "open" : ""}`}>
+        <ul className={`navbarlist ${isOpen && "open"}`}>
           <li>
             <Link to="/pensum">PENSUM</Link>
           </li>

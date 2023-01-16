@@ -1,11 +1,11 @@
 const multer = require("multer");
-
+const today = new Date().toISOString().substring(0, 10);
 const multerConfig = multer.diskStorage({
   destination: (req, file, callback) => {
     callback(null, "public/images");
   },
   filename: (req, file, callback) => {
-    callback(null, file.originalname);
+    callback(null, today+ "-" + file.originalname.replace(/\s/g, ""));
   },
 });
 
@@ -19,7 +19,7 @@ const isImage = (req, file, callback) => {
 
 const upload = multer({
   storage: multerConfig,
-  fileFilter: isImage
+  fileFilter: isImage,
 });
 
 exports.uploadImage = upload.single("ImagenIDISFT");

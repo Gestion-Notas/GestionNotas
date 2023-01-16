@@ -14,7 +14,7 @@ import {
   Label,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Axios from "../libs/axios"
+import Axios from "../libs/axios";
 import { MdEdit } from "react-icons/md";
 
 const UsuariosAdmin = () => {
@@ -296,24 +296,26 @@ const UsuariosAdmin = () => {
                           color="primary"
                           onClick={() => {
                             execUpdate(val.ID);
-                            setNombresUpdate(val.Nombres)
-                            setApellidosUpdate(val.Apellidos)
-                            setCedulaUpdate(val.Cedula)
-                            setSexoUpdate(val.Sexo)
-                            setF_NacimientoUpdate(val.F_Nacimiento.substring(0, 10))
-                            setLugar_NacimientoUpdate(val.Lugar_Nacimiento)
-                            setNacionalidadUpdate(val.Nacionalidad)
-                            setTelUpdate(val.Tel)
-                            setCorreoUpdate(val.Correo)
-                            setDireccionUpdate(val.Direccion)
-                            setSectorUpdate(val.Sector)
-                            setProvinciaUpdate(val.Provincia)
-                            setIglesiaUpdate(val.Iglesia)
-                            setPastorUpdate(val.Pastor)
-                            setCargo_IglesiaUpdate(val.Cargo_Iglesia)
-                            setTipoUpdate(val.Tipo)
-                            setE_AceptadoUpdate(val.E_Aceptado)
-                            setClaveUpdate(val.Clave)
+                            setNombresUpdate(val.Nombres);
+                            setApellidosUpdate(val.Apellidos);
+                            setCedulaUpdate(val.Cedula);
+                            setSexoUpdate(val.Sexo);
+                            setF_NacimientoUpdate(
+                              val.F_Nacimiento.substring(0, 10)
+                            );
+                            setLugar_NacimientoUpdate(val.Lugar_Nacimiento);
+                            setNacionalidadUpdate(val.Nacionalidad);
+                            setTelUpdate(val.Tel);
+                            setCorreoUpdate(val.Correo);
+                            setDireccionUpdate(val.Direccion);
+                            setSectorUpdate(val.Sector);
+                            setProvinciaUpdate(val.Provincia);
+                            setIglesiaUpdate(val.Iglesia);
+                            setPastorUpdate(val.Pastor);
+                            setCargo_IglesiaUpdate(val.Cargo_Iglesia);
+                            setTipoUpdate(val.Tipo);
+                            setE_AceptadoUpdate(val.E_Aceptado);
+                            setClaveUpdate(val.Clave);
                             toggleUpdatestate();
                           }}
                         >
@@ -531,12 +533,19 @@ const UsuariosAdmin = () => {
                     <Label for="Pastor" hidden></Label>
                     <Input
                       id="Pastor"
+                      type="select"
                       placeholder="Pastor"
                       autoComplete="off"
                       onChange={(event) => {
                         setPastorInsert(event.target.value);
                       }}
-                    />
+                    >
+                      <option disabled selected="selected">
+                        Es Pastor?
+                      </option>
+                      <option value={"1"}>Lo Es</option>
+                      <option value={"0"}>No lo es</option>
+                    </Input>
                   </FormGroup>
                 </Col>
                 <Col md={4}>
@@ -606,7 +615,6 @@ const UsuariosAdmin = () => {
 
           <Modal isOpen={modalUpdatestate} toggle={toggleUpdatestate}>
             {updateData.map((val, key) => {
-              
               return (
                 <>
                   <ModalHeader toggle={toggleUpdatestate}>
@@ -617,7 +625,7 @@ const UsuariosAdmin = () => {
                       <Col md={6}>
                         <FormGroup>
                           <Label for="Nombres" hidden></Label>
-                          
+
                           <Input
                             id="Nombres"
                             placeholder="Nombres"
@@ -816,12 +824,20 @@ const UsuariosAdmin = () => {
                           <Label for="Pastor" hidden></Label>
                           <Input
                             id="Pastor"
+                            type="select"
                             placeholder="Pastor"
+                            autoComplete="off"
                             defaultValue={val.Pastor}
                             onChange={(event) => {
                               setPastorUpdate(event.target.value);
                             }}
-                          />
+                          >
+                            <option disabled selected="selected">
+                              Es Pastor?
+                            </option>
+                            <option value={"1"}>Lo Es</option>
+                            <option value={"0"}>No lo es</option>
+                          </Input>
                         </FormGroup>
                       </Col>
                       <Col md={4}>

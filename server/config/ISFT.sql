@@ -32,7 +32,7 @@ CREATE TABLE Usuarios(
     Sector CHAR(20) NOT NULL,
     Provincia CHAR(20) NOT NULL,
     Iglesia CHAR(60) NOT NULL,
-    Pastor CHAR(60) NOT NULL,
+    Pastor BOOL NOT NULL,
     Cargo_Iglesia CHAR(60) NOT NULL,
     Tipo INT, /*0, estudiante, 1 maestro, 2 administrativo*/
     E_Aceptado BOOL,
@@ -72,7 +72,7 @@ CREATE TABLE Requisitos(
  
 CREATE TABLE Periodos(
 	ID INT PRIMARY KEY auto_increment,
-    Nombre CHAR(12), /*Sep-Dic 2022 || Es un combobox seleccionando el mes*/
+    Nombre CHAR(13), /*Sep-Dic 2022 || Es un combobox seleccionando el mes*/
     F_Inicio DATE,
     F_Final DATE,
     Estado BOOL
@@ -135,6 +135,8 @@ CREATE TABLE Noticias(
     Destacada BOOL
 );
 
+UPDATE Noticias SET Titulo = "Hola", Subtitulo = "No", Contenido = "Meno", Imagen = "punto.png", Destacada = true WHERE ID = 1
+
 /*============= TRIGGERS ===============*/
 
 Delimiter $$
@@ -153,6 +155,9 @@ $$
 
 /*============= INSERTS ================*/
 /*
+
+DROP TABLE Noticias
+
 INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas Jair", "Lopez Tavarez", "001-2112123-1", "Masculino", "2006-01-06", 
 "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", 
 "Santo Domingo", "Los Tres Ojos", "Hither Trinidad", "Educacion Somijo", 1, true, "2019-0091");
