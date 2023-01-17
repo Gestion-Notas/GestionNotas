@@ -183,7 +183,7 @@ const Criterios_EvaluacionAdmin = () => {
                     <td>{val.Nombre}</td>
                     <td>{val.Materia}</td>
                     <td>{val.Periodo}</td>
-                    <td>{val.Maxima_calificacion}</td>
+                    <td>{val.Maxima_Calificacion}</td>
                     <td>
                       <div className="acciones-AdminPages">
                         <Button
