@@ -18,8 +18,11 @@ import Admisiones from "./pages/Admisiones";
 import UsuariosAdmin from "./pages/UsuariosAdmin";
 import MateriasAdmin from "./pages/MateriasAdmin";
 import NoticiasAdmin from "./pages/NoticiasAdmin";
+import RequisitosAdmin from "./pages/RequisitosAdmin";
+import Criterios_EvaluacionAdmin from "./pages/Criterios_EvaluacionAdmin";
 
 import PrintUsuarios from "./print/PrintUsuarios";
+import PrintRequisitos from "./print/PrintRequisitos";
 import PrintMaterias from "./print/PrintMaterias";
 
 const App = () => {
@@ -57,8 +60,11 @@ const App = () => {
             path="/admin/noticias"
             element={<MainPage_Admin Main={NoticiasAdmin} />}
           />
+          <Route path="/admin/requisitos" element={<MainPage_Admin Main={RequisitosAdmin}/>}/>
+          <Route path="/admin/criterios_evaluacion" element={<MainPage_Admin Main={Criterios_EvaluacionAdmin}/>}/>
 
           <Route path="/print/usuarios" element={<PrintUsuarios />}></Route>
+          <Route path="/print/requisitos" element={<PrintRequisitos/>}></Route>
           <Route path="/print/materias" element={<PrintMaterias />}></Route>
         </Routes>
       </Router>

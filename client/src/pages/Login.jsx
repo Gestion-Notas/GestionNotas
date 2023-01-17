@@ -24,7 +24,7 @@ const Login = () => {
       try {
         const response = await Axios.get("/auth");
         if (response.status !== 200 || response.status >= 500) {
-          SetUser({ auth: false, token: null, User: {} });
+          SetUser({ auth: false, token: null, data: {} });
           localStorage.removeItem("auth");
           return;
         }
@@ -33,14 +33,14 @@ const Login = () => {
         SetUser({
           auth: true,
           token: response.data.token,
-          User: response.data.user,
+          data: response.data.user,
         });
         navigate("/");
       } catch (error) {
         console.log(error);
         if (error.name === "AbortError") return;
         if (error.response.status === 401) {
-          SetUser({ auth: false, token: null, User: {} });
+          SetUser({ auth: false, token: null, data: {} });
           localStorage.removeItem("auth");
           return;
         }

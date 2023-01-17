@@ -105,16 +105,16 @@ app.get("/auth", (req, res) => {
   } else {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, decoded) => {
       if (err) {
-        res.json({ auth: false, message: "auth failed" });
+        res.status(401).json({ auth: false, message: "auth failed" });
       } else {
         db.query(
           `select * from Usuarios where ID=${decoded.id}`,
           (err, result) => {
-            res.send = {
+            res.send({
               auth: true,
               token,
-              user: result.data,
-            };
+              user: result[0],
+            });
           }
         );
       }
@@ -214,7 +214,7 @@ app.listen(4001, () => {
 app.get;
 
 /* ==== CRUD USUARIOS ==== */
-app.get("/getUsuarios", verifyJWT, (req, res) => {
+app.get("/getUsuarios", (req, res) => {
   db.query("SELECT * FROM Usuarios", (err, result) => {
     if (err) {
       console.log(err);
@@ -493,10 +493,159 @@ app.post("/getnoticiasUpdate", (req, res) => {
 
 /* ==== FIN  NOTICIAS ==== */
 
+/* === CRUD REQUISITOS === */
+
+app.get("/getRequisitos", (req, res) => {
+  db.query("SELECT * FROM Requisitos", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/insertRequisitos", (req, res) => {
+  const materia = req.body.materia;
+  const requisitos = req.body.requisitos;
+
+  db.query(
+    "INSERT INTO Requisitos VALUES (NULL, ?, ?)",
+    [materia, requisitos],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/updateRequisitos", (req, res) => {
+  const id = req.body.id;
+  const materia = req.body.materia;
+  const requisitos = req.body.requisitos;
+
+  db.query(
+    "UPDATE Requisitos SET Materia = ?, Requisitos = ? WHERE ID = ?",
+    [materia, requisitos, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getrequisitosUpdate", (req, res) => {
+  const id = req.body.id;
+  db.query("SELECT * FROM Requisitos WHERE ID = ?", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+/* ===  FIN REQUISITOS === */
+
+/* === CRUD CRITERIOS_EVALUACION === */
+
+app.get("/getCriterios_Evaluacion", (req, res) => {
+  db.query("SELECT * FROM Criterios_Evaluacion", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/insertCriterios_Evaluacion", (req, res) => {
+  const nombre = req.body.nombre;
+  const materia = req.body.materia;
+  const periodo = req.body.periodo;
+  const maxima_calificacion = req.body.maxima_calificacion;
+
+  db.query(
+    "INSERT INTO Criterios_Evaluacion VALUES (NULL, ?, ?, ?, ?)",
+    [nombre, materia, periodo, maxima_calificacion],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/updateCriterios_Evaluacion", (req, res) => {
+  const id = req.body.id;
+  const nombre = req.body.nombre;
+  const materia = req.body.materia;
+  const periodo = req.body.periodo;
+  const maxima_calificacion = req.body.maxima_calificacion;
+
+  db.query(
+    "UPDATE Criterios_Evaluacion SET Nombre = ?, Materia = ?, Periodo = ?, Maxima_Calificacion =? WHERE ID = ?",
+
+    [nombre, materia, periodo, maxima_calificacion, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getCriterios_EvaluacionUpdate", (req, res) => {
+  const id = req.body.id;
+  db.query(
+    "SELECT * FROM Criterios_Evaluacion WHERE ID = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+/* === FIN CRITERIOS_EVALUACION === */
+
 /* ==== COMBO   BOXES ==== */
 
 app.get("/comboboxMaestros", (req, res) => {
   db.query("SELECT * FROM Usuarios WHERE Tipo=1", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxMateriaAsuntos", (req, res) => {
+  db.query("SELECT * FROM Materias", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxPeriodoAsuntos", (req, res) => {
+  db.query("SELECT * FROM Periodos", (err, result) => {
     if (err) {
       console.log(err);
     } else {

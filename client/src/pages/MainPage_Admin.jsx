@@ -36,7 +36,7 @@ const MainPage_Admin = ({ Main }) => {
               <div className="logo-text">ISFT</div>
             </div>
           </div>
-          <FaBars onClick={() => setIsOpen(!isOpen)} className="iconBar" poin/>
+          <FaBars onClick={() => setIsOpen(!isOpen)} className="iconBar" poin />
 
           <ul className="nav_list">
             <li>
@@ -64,13 +64,13 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/requisitos" className="a">
                 <BsPatchCheckFill className="icon" />
                 <span className="links_name">Requisitos</span>
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/criterios_evaluacion" className="a">
                 <MdGrading className="icon" />
                 <span className="links_name">Criterios</span>
               </Link>
@@ -114,7 +114,9 @@ const MainPage_Admin = ({ Main }) => {
                   <div className="nombre">Lucas Lopez</div>
                 </div>
               </div>
-              <Link to="/" className="logout" ><BiLogOut /></Link>
+              <Link to="/" className="logout">
+                <BiLogOut />
+              </Link>
             </div>
           </div>
         </div>
