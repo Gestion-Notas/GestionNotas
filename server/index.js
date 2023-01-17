@@ -570,6 +570,7 @@ app.post("/insertCriterios_Evaluacion", (req, res) => {
   const materia = req.body.materia;
   const periodo = req.body.periodo;
   const maxima_calificacion = req.body.maxima_calificacion;
+  console.log(maxima_calificacion);
 
   db.query(
     "INSERT INTO Criterios_Evaluacion VALUES (NULL, ?, ?, ?, ?)",

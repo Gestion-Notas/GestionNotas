@@ -230,11 +230,11 @@ const Criterios_EvaluacionAdmin = () => {
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="Materiadd" hidden></Label>
+                  <Label for="Materia" hidden></Label>
                   <Input
                     type="select"
                     autoComplete="off"
-                    id="Materiadd"
+                    id="Materia"
                     onChange={(event) => {
                       setmateriaInsert(event.target.value);
                     }}
@@ -320,11 +320,11 @@ const Criterios_EvaluacionAdmin = () => {
               </Col>
               <Col md={6}>
                 <FormGroup>
-                  <Label for="Materiadd" hidden></Label>
+                  <Label for="Materia" hidden></Label>
                   <Input
                     type="select"
                     autoComplete="off"
-                    id="Materiadd"
+                    id="Materia"
                     onChange={(event) => {
                       setmateriaInsert(event.target.value);
                     }}
