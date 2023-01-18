@@ -1,12 +1,20 @@
-import React, { useState } from "react";
-import DropdownAccordion from "../components/DropdownAccordion";
-import Axios from "../libs/axios"
+import React, { useState, useEffect } from "react";
+import { Col, Row, Input, Label, FormGroup } from "reactstrap";
+import Axios from "../libs/axios";
 import "../css/Admisiones.css";
 
 const Admisiones = () => {
   const refreshpage = () => {
     window.location.reload(false);
   };
+
+  const [iglesias, setIglesias] = useState([]);
+
+  useEffect(() => {
+    Axios.get("/getIglesiasPublic").then((response) => {
+      setIglesias(response.data)
+    });
+  }, []);
 
   const [nombres, setNombres] = useState("");
   const [apellidos, setApellidos] = useState("");
@@ -20,8 +28,7 @@ const Admisiones = () => {
   const [direccion, setDireccion] = useState("");
   const [sector, setSector] = useState("");
   const [provincia, setProvincia] = useState("");
-  const [iglesia, setIglesia] = useState("");
-  const [pastor, setPastor] = useState("");
+  const [iglesiacampo, setIglesiaCampo] = useState("");
   const [cargo_iglesia, setCargo_Iglesia] = useState("");
 
   const addUsuario = () => {
@@ -38,188 +45,11 @@ const Admisiones = () => {
       direccion: direccion,
       sector: sector,
       provincia: provincia,
-      iglesia: iglesia,
-      pastor: pastor,
+      iglesia: iglesiacampo,
       cargo_iglesia: cargo_iglesia,
     }).then(() => {
       console.log("success!");
     });
-  };
-
-  const [faqs, setfaqs] = useState([
-    {
-      question: "Datos Personales",
-      answer: (
-        <div className="form-Admisiones">
-          <div className="grid1-1">
-            <input
-              type="text"
-              placeholder="Nombres"
-              onChange={(event) => {
-                setNombres(event.target.value);
-              }}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Apellidos"
-              onChange={(event) => {
-                setApellidos(event.target.value);
-              }}
-              required
-            />
-          </div>
-          <div className="grid3-1"></div>
-          <div className="grid3-1">
-            <input
-              type="text"
-              placeholder="Cédula"
-              required
-              onChange={(event) => {
-                setCedula(event.target.value);
-              }}
-            />
-            <select
-              name="Sexo"
-              onChange={(event) => {
-                setSexo(event.target.value);
-              }}
-              placeholder="Sexo"
-              required
-            >
-              <option disabled selected="selected">
-                Sexo
-              </option>
-              <option value={"Masculino"}>Masculino</option>
-              <option value={"Femenino"}>Femenino</option>
-            </select>
-          </div>
-          <div className="grid3-2">
-            <input
-              type="text"
-              placeholder="Lugar y Fecha de Nacimiento"
-              onChange={(event) => {
-                setLugar_Nacimiento(event.target.value);
-              }}
-            />
-            <div className="grid1-3">
-              <label htmlFor="">Fecha:</label>
-              <input
-                type="date"
-                required
-                placeholder="Fecha de Nacimiento"
-                onChange={(event) => {
-                  setF_Nacimiento(event.target.value);
-                }}
-              />
-            </div>
-          </div>
-          <div className="grid3-1">
-            <input
-              type="text"
-              placeholder="Nacionalidad"
-              onChange={(event) => {
-                setNacionalidad(event.target.value);
-              }}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Teléfono"
-              id="Tel"
-              onChange={(event) => {
-                setTel(event.target.value);
-              }}
-              required
-            />
-          </div>
-          <input
-            type="email"
-            placeholder="Correo Electrónico"
-            onChange={(event) => {
-              setCorreo(event.target.value);
-            }}
-            required
-          />
-          <input
-            type="text"
-            placeholder="Dirección (Calle, Nro, Edificio, Apto.)"
-            onChange={(event) => {
-              setDireccion(event.target.value);
-            }}
-            required
-          />
-          <div className="grid1-1">
-            <input
-              type="text"
-              placeholder="Sector"
-              onChange={(event) => {
-                setSector(event.target.value);
-              }}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Provincia"
-              onChange={(event) => {
-                setProvincia(event.target.value);
-              }}
-              required
-            />
-          </div>
-        </div>
-      ),
-      open: true,
-    },
-
-    {
-      question: "Datos esclesiásticos",
-      answer: (
-        <div className="form-Admisiones">
-          <input
-            type="text"
-            placeholder="Iglesia en la que se congrega actualmente"
-            onChange={(event) => {
-              setIglesia(event.target.value);
-            }}
-            required
-          />
-          <div className="grid1-1">
-            <input
-              type="text"
-              placeholder="Pastor de su iglesia"
-              onChange={(event) => {
-                setPastor(event.target.value);
-              }}
-              required
-            />
-            <input
-              type="text"
-              placeholder="Cargo que desempeña"
-              onChange={(event) => {
-                setCargo_Iglesia(event.target.value);
-              }}
-              required
-            />
-          </div>
-        </div>
-      ),
-      open: false,
-    },
-  ]);
-
-  const toggleFAQ = (index) => {
-    setfaqs(
-      faqs.map((faq, i) => {
-        if (i === index) {
-          faq.open = !faq.open;
-        } else {
-          faq.open = false;
-        }
-
-        return faq;
-      })
-    );
   };
 
   return (
@@ -244,9 +74,207 @@ const Admisiones = () => {
         </div>
         <div className="faqs">
           <div>
-            {faqs.map((faq, i) => (
-              <DropdownAccordion faq={faq} index={i} toggleFAQ={toggleFAQ} />
-            ))}
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Nombres" hidden></Label>
+                  <Input
+                    id="Nombres"
+                    placeholder="Nombres"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setNombres(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Apellidos" hidden></Label>
+                  <Input
+                    id="Apellidos"
+                    autoComplete="off"
+                    placeholder="Apellidos"
+                    onChange={(event) => {
+                      setApellidos(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="Cedula" hidden></Label>
+                  <Input
+                    id="Cedula"
+                    autoComplete="off"
+                    placeholder="Cedula"
+                    onChange={(event) => {
+                      setCedula(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="Tel" hidden></Label>
+                  <Input
+                    id="Tel"
+                    autoComplete="off"
+                    placeholder="Teléfono"
+                    onChange={(event) => {
+                      setTel(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={4}>
+                <FormGroup>
+                  <Label for="Sexo" hidden></Label>
+                  <Input
+                    type="select"
+                    id="Sexo"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setSexo(event.target.value);
+                    }}
+                  >
+                    <option disabled selected="selected">
+                      Sexo
+                    </option>
+                    <option value={"Masculino"}>Masculino</option>
+                    <option value={"Femenino"}>Femenino</option>
+                  </Input>
+                </FormGroup>
+              </Col>
+            </Row>
+            <FormGroup>
+              <Label for="Lugar_Nacimiento" hidden></Label>
+              <Input
+                id="Lugar_Nacimiento"
+                placeholder="Lugar de Nacimiento y Fecha (Debajo)"
+                autoComplete="off"
+                onChange={(event) => {
+                  setLugar_Nacimiento(event.target.value);
+                }}
+              />
+            </FormGroup>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="F_Nacimiento" hidden></Label>
+                  <Input
+                    id="F_Nacimiento"
+                    type="date"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setF_Nacimiento(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Nacionalidad" hidden></Label>
+                  <Input
+                    id="Nacionalidad"
+                    placeholder="Nacionalidad"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setNacionalidad(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <FormGroup>
+              <Label for="Correo" hidden></Label>
+              <Input
+                id="Correo"
+                type="email"
+                autoComplete="off"
+                placeholder="Correo"
+                onChange={(event) => {
+                  setCorreo(event.target.value);
+                }}
+              />
+            </FormGroup>
+            <FormGroup>
+              <Label for="Direccion" hidden></Label>
+              <Input
+                id="Direccion"
+                placeholder="Dirección"
+                autoComplete="off"
+                onChange={(event) => {
+                  setDireccion(event.target.value);
+                }}
+              />
+            </FormGroup>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Sector" hidden></Label>
+                  <Input
+                    id="Sector"
+                    placeholder="Sector"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setSector(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Provincia" hidden></Label>
+                  <Input
+                    id="Provincia"
+                    autoComplete="off"
+                    placeholder="Provincia"
+                    onChange={(event) => {
+                      setProvincia(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Row>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Iglesia" hidden></Label>
+                  <Input
+                    id="Iglesia"
+                    type="select"
+                    autoComplete="off"
+                    placeholder="Iglesia"
+                    onChange={(event) => {
+                      setIglesiaCampo(event.target.value);
+                    }}
+                  >
+                    <option disabled selected="selected">Iglesia</option>
+                    {
+                      iglesias.map((val, key) => {
+                        return(<option value={val.Nombre}>{val.Nombre}</option>)
+                      })
+                    }
+                  </Input>
+                </FormGroup>
+              </Col>
+              <Col md={6}>
+                <FormGroup>
+                  <Label for="Cargo" hidden></Label>
+                  <Input
+                    id="Cargo"
+                    placeholder="Cargo"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setCargo_Iglesia(event.target.value);
+                    }}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
             <button
               type="submit"
               onClick={() => {

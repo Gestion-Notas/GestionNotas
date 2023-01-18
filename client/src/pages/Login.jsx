@@ -4,7 +4,7 @@ import Axios from "../libs/axios";
 import "../css/Login.css";
 import { Alert } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useAuthContext } from "../contexts/Auth";
+import { useAuthContext } from "../contexts/auth";
 const Login = () => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -47,9 +47,6 @@ const Login = () => {
       }
     };
     doCheck();
-    return () => {
-      AbortSignal.abort();
-    };
   }, []);
   const loginauth = () => {
     Axios.post("/login", {

@@ -1,16 +1,16 @@
 DROP DATABASE IF EXISTS ISFT;
 
 /*
-    SELECT * FROM Usuarios;
-    SELECT * FROM Iglesias;
-    SELECT * FROM Materias;
-    SELECT * FROM Requisitos;
-    SELECT * FROM Criterios_Evaluacion;
-    SELECT * FROM Calificaciones_Criterios;
-    SELECT * FROM Materias_Inscritas;
-    SELECT * FROM Calificaciones;
-    SELECT * FROM Periodos;
-    SELECT * FROM Noticias;
+    SELECT * FROM Usuarios; Lucas
+    SELECT * FROM Iglesias; Christopher
+    SELECT * FROM Materias; Lucas
+    SELECT * FROM Requisitos; Jean
+    SELECT * FROM Criterios_Evaluacion; Jean
+    SELECT * FROM Calificaciones_Criterios; Alanna
+    SELECT * FROM Materias_Inscritas; Jean
+    SELECT * FROM Calificaciones; Christopher
+    SELECT * FROM Periodos; Christopher
+    SELECT * FROM Noticias; Lucas
 */
 
 CREATE DATABASE IF NOT EXISTS ISFT;
@@ -104,13 +104,11 @@ CREATE TABLE Calificaciones(
 CREATE TABLE Calificaciones_Criterios(
 	ID INT PRIMARY KEY auto_increment,
     ID_Usuario INT,
-    Materia INT,
     Nota FLOAT,
     Criterio INT,
     Periodo INT,
     
     CONSTRAINT FK_Usuario_CC foreign key (ID_Usuario) REFERENCES Usuarios(ID),
-    CONSTRAINT FK_Materia_CC FOREIGN KEY (Materia) REFERENCES Materias(ID),
     CONSTRAINT FK_Criterio_CC FOREIGN KEY (Criterio) REFERENCES Criterios_Evaluacion(ID),
     CONSTRAINT FK_Periodo_CC foreign key (Periodo) REFERENCES Periodos(ID)
 );
@@ -156,7 +154,7 @@ $$
 /*============= INSERTS ================*/
 /*
 
-DROP TABLE Noticias
+DROP TABLE Calificaciones_Criterios
 
 INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas Jair", "Lopez Tavarez", "001-2112123-1", "Masculino", "2006-01-06", 
 "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", 
@@ -171,10 +169,10 @@ INSERT INTO Criterios_Evaluacion VALUES (NULL, "Evaluacion 1", 1, 50);
 INSERT INTO Criterios_Evaluacion VALUES (NULL, "Practica Grupal", 1, 25);
 INSERT INTO Criterios_Evaluacion VALUES (NULL, "Ensayo", 1, 35);
 
-INSERT INTO Periodos VALUES (NULL, "Ene-Mar 2023", "2023-01-01", "2023-03-30");
+INSERT INTO Periodos VALUES (NULL, "Ene-Mar 2023", "2023-01-01", "2023-03-30", 1);
 
 INSERT INTO Materias_Inscritas VALUES (NULL, 2, 1, 1);
-INSERT INTO Materias_Inscritas VALUES (NULL, 3, 1, 1);
+INSERT INTO Materias_Inscritas VALUES (NULL, 2, 2, 1);
 
 INSERT INTO Calificaciones_Criterios VALUES (NULL,2, 1, 15, 1, 1);
 
@@ -209,32 +207,35 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
 
 ---   PARA SABER CUANTOS ALUMNOS FALTAN POR CORREGIR ---
 
-	SELECT CONCAT(Usuarios.Nombres, " ", Usuarios.Apellidos) AS "Alumno", Usuarios.Cod_Usuario AS "Codigo", Materias.Nombre AS "Nombre Materia", 
-    Criterios_Evaluacion.Nombre AS "Nombre Criterio",  Calificaciones_Criterios.Nota AS "Nota Alcanzada", Criterios_Evaluacion.Maxima_Calificacion 
-    AS "Nota Maxima"
-	FROM Usuarios, Materias, Criterios_Evaluacion
-	LEFT JOIN Calificaciones_Criterios ON Calificaciones_Criterios.Criterio = Criterios_Evaluacion.ID
-	WHERE Materias.ID_Maestro = 1 AND Usuarios.Tipo = 0 AND Usuarios.E_Aceptado = true
-	ORDER BY Usuarios.Cod_Usuario;
+	SELECT * FROM Materias;
+    SELECT * FROM Usuarios;
+    SELECT * FROM Criterios_Evaluacion;
+    SELECT * FROM Materias_Inscritas;
+    SELECT * FROM Calificaciones_Criterios;
+    
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 10, 1, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 10, 6, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 10, 3, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 10, 8, 1);
+    
+    INSERT INTO Materias_Inscritas VALUES (NULL, 3, 1, 1);
+    INSERT INTO Materias_Inscritas VALUES (NULL, 3, 2, 1);
+    INSERT INTO Materias_Inscritas VALUES (NULL, 4, 3, 1);
+    INSERT INTO Materias_Inscritas VALUES (NULL, 4, 4, 1);
+    
+    SELECT CONCAT(U.Nombres, " ", U.Apellidos) AS "Alumno", U.Cod_Usuario AS "Codigo", M.Nombre AS "Materia", CE.Nombre AS "Criterio", CC.Nota AS "Nota",
+    CE.Maxima_Calificacion AS "Nota Maxima"
+    FROM Usuarios U, Materias M, Criterios_Evaluacion CE, Materias_Inscritas MI, Calificaciones_Criterios CC
+    WHERE U.Tipo = 0 AND U.E_Aceptado = true AND U.ID = MI.Alumno AND MI.Materia = M.ID
+    Order BY U.Cod_Usuario
+    
     
 --- PARA SABER LA NOTA MAXIMA DE CALIFICACION DEUNA MATERIA ---
 
 	SELECT Materias.Cod_Materia, Materias.Nombre, SUM(Criterios_Evaluacion.Maxima_Calificacion) AS "Maxima Suma"
     FROM Materias, Criterios_Evaluacion, Periodos
-    WHERE Criterios_Evaluacion.Materia = 1 AND 
+    WHERE Criterios_Evaluacion.Materia = Materias.ID AND Materias.ID = 1
     GROUP BY Materias.Cod_Materia, Materias.Nombre 
 	
     SELECT 
 */
-
-/*UPDATES*/
-
-/*
-
-UPDATE Usuarios SET E_Aceptado = true, Cedula = "1010101" WHERE ID = 2
-
-*/
-
-SELECT * FROM Usuarios WHERE Cod_Usuario Like '%''''%' 
-
-

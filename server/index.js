@@ -12,7 +12,6 @@ const saltRounds = 10;
 
 const bodyParser = require("body-parser");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
 
 const jwt = require("jsonwebtoken");
 
@@ -79,12 +78,8 @@ app.post("/login", (req, res) => {
             if (response) {
               const id = result[0].ID;
               const token = jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
-                expiresIn: 300,
+                expiresIn: 28800,
               });
-              res.cookie("userID", token, {
-                maxAge: 900000,
-              });
-
               res.json({ auth: true, token: token, result: result });
             } else {
               res.send(err);
@@ -122,6 +117,48 @@ app.get("/auth", (req, res) => {
   }
 });
 
+
+
+app.get("/getPensum100", (req, res) => {
+  db.query("SELECT * FROM Materias WHERE Nivel = 100", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Se mando el 100")
+      res.send(result);
+    }
+  });
+});
+
+app.get("/getPensum200", (req, res) => {
+  db.query("SELECT * FROM Materias WHERE Nivel = 200", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+app.get("/getPensum300", (req, res) => {
+  db.query("SELECT * FROM Materias WHERE Nivel = 300", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/getIglesiasPublic", (req, res) => {
+  db.query("SELECT Nombre FROM Iglesias", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  })
+})
+
 app.post("/sumbitAdmisiones", (req, res) => {
   const nombres = req.body.nombres;
   const apellidos = req.body.apellidos;
@@ -136,7 +173,6 @@ app.post("/sumbitAdmisiones", (req, res) => {
   const sector = req.body.sector;
   const provincia = req.body.provincia;
   const iglesia = req.body.iglesia;
-  const pastor = req.body.pastor;
   const cargo_iglesia = req.body.cargo_iglesia;
   bcrypt.hash(req.body.cedula, saltRounds, (err, hash) => {
     if (err) {
@@ -144,7 +180,7 @@ app.post("/sumbitAdmisiones", (req, res) => {
     }
 
     db.query(
-      "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, false, ?)",
+      "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, false, ?)",
       [
         nombres,
         apellidos,
@@ -159,7 +195,6 @@ app.post("/sumbitAdmisiones", (req, res) => {
         sector,
         provincia,
         iglesia,
-        pastor,
         cargo_iglesia,
         hash,
       ],
@@ -212,6 +247,32 @@ app.listen(4001, () => {
 });
 
 app.get;
+
+/* INICIO DE RUTAS PRIVADAS */
+
+app.post("/getMateriasMaestros", verifyJWT, (req, res) => {
+  const id = req.body.id;
+
+  db.query("SELECT Nombre, ID FROM Materias WHERE ID = ?", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/getMateriasMaestros", verifyJWT, (req, res) => {
+  const id = req.body.id;
+
+  db.query("SELECT Nombre, ID FROM Materias WHERE ID = ?", [id], (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 
 /* ==== CRUD USUARIOS ==== */
 app.get("/getUsuarios", (req, res) => {

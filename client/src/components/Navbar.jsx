@@ -4,12 +4,15 @@ import logo from "../logoseminario1.png";
 import Axios from "../libs/axios";
 import { FaUserCircle, FaBars } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { Link } from "react-router-dom";
-import { useAuthContext } from "../contexts/Auth";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuthContext } from "../contexts/auth";
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 export const Navbar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [modal, setModal] = useState(false);
+  const toggle = () => setModal(!modal);
   const [User, SetUser] = useAuthContext();
-  const toggle = () => setDropdownOpen((prevState) => !prevState);
+  const navigate = useNavigate();
   function refreshpage() {
     window.location.reload(false);
   }
@@ -41,9 +44,27 @@ export const Navbar = (props) => {
     doCheck();
   }, []);
 
-  const notaslink = () => {};
   return (
     <header>
+      <Modal isOpen={modal} toggle={toggle} size="sm">
+        <ModalHeader toggle={toggle}>Cerrando Sesión</ModalHeader>
+        <ModalBody>Seguro que deseas cerrar sesión?</ModalBody>
+        <ModalFooter>
+          <Button color="secondary" onClick={toggle}>
+            Cancelar
+          </Button>
+          <Button
+            color="success"
+            onClick={() => {
+              localStorage.removeItem("auth");
+              navigate("/");
+              refreshpage();
+            }}
+          >
+            Aceptar
+          </Button>
+        </ModalFooter>
+      </Modal>
       <div className="seccion2-Navbar">
         <Link to="/">
           <img src={logo} alt="Logo" className="logo-Navbar" />
@@ -61,16 +82,14 @@ export const Navbar = (props) => {
           </li>
           {!User.auth ? (
             <></>
+          ) : User.data.Tipo == "0" ? (
+            <li>
+              <Link to="/notas/vista">NOTAS</Link>
+            </li>
           ) : (
-            User.data.Tipo == "0" ? (
-              <li>
-                <Link to="/notas/vista">NOTAS</Link>
-              </li>
-            ) : (
-              <li>
-                <Link to="/notas/publicar">NOTAS</Link>
-              </li>
-            )
+            <li>
+              <Link to="/notas/publicar">NOTAS</Link>
+            </li>
           )}
           <li>
             <Link to="/admisiones">ADMISIONES</Link>
@@ -88,13 +107,7 @@ export const Navbar = (props) => {
           <div className="Link-Navbar">
             <div>Hola, {User.data.Nombres + " " + User.data.Apellidos}</div>
             <div style={{ cursor: "pointer" }}>
-              <BiLogOut
-                className="usericon-Navbar"
-                onClick={() => {
-                  localStorage.removeItem("auth");
-                  refreshpage();
-                }}
-              />
+              <BiLogOut className="usericon-Navbar" onClick={toggle} />
             </div>
           </div>
         )}
