@@ -45,7 +45,7 @@ const NotasPublicar = () => {
   const getMateriasMaestros = (ID) => {
     Axios.post("/getMateriasMaestros", { id: ID }).then((response) => {
       setMaterias(response.data);
-      console.log("hola");
+      
     });
   };
 
@@ -56,6 +56,7 @@ const NotasPublicar = () => {
       ) : (
         <div className="container-Notas">
           {materias.map((val, key) => {
+            
             return <CardMaestro name={val.Nombre} idMaestro={User.data.ID} />;
           })}
         </div>

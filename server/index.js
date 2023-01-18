@@ -250,22 +250,10 @@ app.get;
 
 /* INICIO DE RUTAS PRIVADAS */
 
-app.post("/getMateriasMaestros", verifyJWT, (req, res) => {
+app.post("/getMateriasMaestros", (req, res) => {
   const id = req.body.id;
 
-  db.query("SELECT Nombre, ID FROM Materias WHERE ID = ?", [id], (err, result) => {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result);
-    }
-  });
-});
-
-app.post("/getMateriasMaestros", verifyJWT, (req, res) => {
-  const id = req.body.id;
-
-  db.query("SELECT Nombre, ID FROM Materias WHERE ID = ?", [id], (err, result) => {
+  db.query("SELECT Nombre, ID FROM Materias WHERE ID_Maestro   = ?", [id], (err, result) => {
     if (err) {
       console.log(err);
     } else {

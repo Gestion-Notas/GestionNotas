@@ -25,7 +25,6 @@ const Pensum = () => {
   useEffect(() => {
     Axios.get("/getPensum100").then((response) => {
       setNivel100(response.data);
-      console.log(response.data);
     });
     Axios.get("/getPensum200").then((response) => {
       setNivel200(response.data);

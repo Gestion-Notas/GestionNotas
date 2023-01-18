@@ -133,7 +133,7 @@ CREATE TABLE Noticias(
     Destacada BOOL
 );
 
-UPDATE Noticias SET Titulo = "Hola", Subtitulo = "No", Contenido = "Meno", Imagen = "punto.png", Destacada = true WHERE ID = 1
+SELECT Nombre, ID FROM Materias WHERE  = 1
 
 /*============= TRIGGERS ===============*/
 
@@ -154,7 +154,7 @@ $$
 /*============= INSERTS ================*/
 /*
 
-DROP TABLE Calificaciones_Criterios
+DROP TABLE Materias_Inscritas
 
 INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas Jair", "Lopez Tavarez", "001-2112123-1", "Masculino", "2006-01-06", 
 "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", 
@@ -167,6 +167,8 @@ INSERT INTO Materias VALUES(null, 1, 'ILC-101', 'Crecimiento Espiritual', 'Mater
 INSERT INTO Criterios_Evaluacion VALUES (NULL, "Asistencia", 1, 15);
 INSERT INTO Criterios_Evaluacion VALUES (NULL, "Evaluacion 1", 1, 50);
 INSERT INTO Criterios_Evaluacion VALUES (NULL, "Practica Grupal", 1, 25);
+
+UPDATE Criterios_Evaluacion SET Nombre = "Examen Final", Maxima_Calificacion = 30, Materia = 1 WHERE ID = 5
 INSERT INTO Criterios_Evaluacion VALUES (NULL, "Ensayo", 1, 35);
 
 INSERT INTO Periodos VALUES (NULL, "Ene-Mar 2023", "2023-01-01", "2023-03-30", 1);
@@ -208,28 +210,31 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
 ---   PARA SABER CUANTOS ALUMNOS FALTAN POR CORREGIR ---
 
 	SELECT * FROM Materias;
-    SELECT * FROM Usuarios;
+    SELECT * FROM Usuarios WHERE Tipo = 0;
     SELECT * FROM Criterios_Evaluacion;
     SELECT * FROM Materias_Inscritas;
     SELECT * FROM Calificaciones_Criterios;
     
     INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 10, 1, 1);
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 10, 6, 1);
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 10, 3, 1);
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 10, 8, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 11, 6, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 12, 3, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 13, 8, 1);
     
     INSERT INTO Materias_Inscritas VALUES (NULL, 3, 1, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 3, 2, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 4, 3, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 4, 4, 1);
     
-    SELECT CONCAT(U.Nombres, " ", U.Apellidos) AS "Alumno", U.Cod_Usuario AS "Codigo", M.Nombre AS "Materia", CE.Nombre AS "Criterio", CC.Nota AS "Nota",
-    CE.Maxima_Calificacion AS "Nota Maxima"
-    FROM Usuarios U, Materias M, Criterios_Evaluacion CE, Materias_Inscritas MI, Calificaciones_Criterios CC
-    WHERE U.Tipo = 0 AND U.E_Aceptado = true AND U.ID = MI.Alumno AND MI.Materia = M.ID
-    Order BY U.Cod_Usuario
-    
-    
+    SELECT DISTINCT U.Nombres AS "Alumno", U.Cod_Usuario AS "Codigo", M.Nombre AS "Materia", CE.Nombre AS "Criterio", CC.Nota AS "Nota",
+	CE.Maxima_Calificacion AS "Nota Maxima"
+	FROM Usuarios U, Materias M, Criterios_Evaluacion CE, Materias_Inscritas MI, Calificaciones_Criterios CC
+	WHERE U.Tipo = 0 AND U.E_Aceptado = true and U.ID = MI.Alumno AND MI.Materia = M.ID  and  M.Cod_Materia = CE.Materia
+    order by U.Nombres
+     
+		SELECT * FROM Materias;
+   SELECT * FROM Calificaciones_Criterios;
+   SELECT * FROM Criterios_Evaluacion;
+		
 --- PARA SABER LA NOTA MAXIMA DE CALIFICACION DEUNA MATERIA ---
 
 	SELECT Materias.Cod_Materia, Materias.Nombre, SUM(Criterios_Evaluacion.Maxima_Calificacion) AS "Maxima Suma"
