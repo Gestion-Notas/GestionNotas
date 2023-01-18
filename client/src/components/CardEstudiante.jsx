@@ -15,14 +15,13 @@ const CardEstudiante = (props) => {
           className="imagen-GradesCard"
           style={{ backgroundImage: `url(${bgimage})` }}
         >
-          {" "}
         </div>
       </div>
       <p>{props.name}</p>
       <Modal isOpen={modal} toggle={toggle} size={"lg"}>
         <ModalHeader toggle={toggle}>Calificaciones del Parcial</ModalHeader>
         <ModalBody>
-          <Table></Table>
+          {props.id}
         </ModalBody>
         <ModalFooter>
           <Button color="primary" onClick={toggle}>

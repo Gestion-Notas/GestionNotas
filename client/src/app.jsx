@@ -1,5 +1,5 @@
 import React, { lazy } from "react";
-import { AuthProvider } from "./contexts/Auth";
+import { AuthProvider } from "./contexts/auth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
 import MainPage_Admin from "./pages/MainPage_Admin";
@@ -26,6 +26,7 @@ import PrintRequisitos from "./print/PrintRequisitos";
 import PrintMaterias from "./print/PrintMaterias";
 
 const App = () => {
+
   return (
     <AuthProvider>
       <Router>

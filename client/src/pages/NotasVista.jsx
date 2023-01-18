@@ -7,7 +7,6 @@ const NotasVista = () => {
     <main className="main">
         <div className="container-Notas">
             <CardEstudiante name="ISFT"/>
-            
         </div>
     </main>
   );
