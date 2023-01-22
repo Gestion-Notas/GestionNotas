@@ -215,15 +215,42 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     SELECT * FROM Materias_Inscritas;
     SELECT * FROM Calificaciones_Criterios;
     
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 10, 1, 1);
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 11, 6, 1);
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 12, 3, 1);
-    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 13, 8, 1);
+    -- INSERTS --
+    
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas", "Lopez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, "2019-0091");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Dariel", "Jerez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, "2019-0091");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Alanna", "Segura", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, "2019-0091");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Luis", "Calderon", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, "2019-0091");
+    
+    INSERT INTO Materias VALUES (NULL, 1, 1, "Matematicas", "Hola", 100, 2);
+    INSERT INTO Materias VALUES (NULL, 1, 1, "Fisica II", "Hola", 100, 2);
+    INSERT INTO Materias VALUES (NULL, 1, 1, "Formacion Humana", "Hola", 100, 2);
+    INSERT INTO Materias VALUES (NULL, 1, 1, "Arquitectura", "Hola", 100, 2);
+    
+    INSERT INTO Periodos VALUES (NULL, "Ene-Mar 2023", "2023-01-01", "2023-03-30", 1);
     
     INSERT INTO Materias_Inscritas VALUES (NULL, 3, 1, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 3, 2, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 4, 3, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 4, 4, 1);
+    
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Asistencia", 1, 1, 10);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Asistencia", 2, 1, 15);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Asistencia", 3, 1, 20);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Asistencia", 4, 1, 25);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Examen Final", 1, 1, 30);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Examen Final", 2, 1, 25);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Examen Final", 3, 1, 20);
+    INSERT INTO Criterios_Evaluacion VALUES (NULL, "Examen Final", 4, 1, 15);
+    
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 10, 1, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 3, 11, 6, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 12, 3, 1);
+    INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 13, 8, 1);
+    
+    
+    -- FIN INSERTS --D
+    
     
     SELECT DISTINCT U.Nombres AS "Alumno", U.Cod_Usuario AS "Codigo", M.Nombre AS "Materia", CE.Nombre AS "Criterio", CC.Nota AS "Nota",
 	CE.Maxima_Calificacion AS "Nota Maxima"
