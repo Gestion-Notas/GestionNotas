@@ -52,7 +52,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="/admin/users" className="a">
+              <Link to="#" className="a">
                 <BiChurch className="icon" />
                 <span className="links_name">Iglesias</span>
               </Link>
@@ -76,7 +76,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/calificaciones" className="a">
                 <GoTasklist className="icon" />
                 <span className="links_name">Calificaciones</span>
               </Link>
@@ -94,7 +94,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/periodos" className="a">
                 <CgTimelapse className="icon" />
                 <span className="links_name">Periodos</span>
               </Link>

@@ -16,9 +16,14 @@ import Admisiones from "./pages/Admisiones";
 
 import UsuariosAdmin from "./pages/UsuariosAdmin";
 import MateriasAdmin from './pages/MateriasAdmin';
+import CalificacioneAdmin from './pages/CalificacionesAdmin'; 
+import PeriodosAdmin from "./pages/PeriodosAdmin";
+
 
 import PrintUsuarios from "./print/PrintUsuarios";
 import PrintMaterias from "./print/PrintMaterias";
+import PrintCalificaciones from "./print/PrintCalificaciones";
+
 export const App = () => {
   return (
     <Router>
@@ -37,9 +42,15 @@ export const App = () => {
         <Route path="/admin/home" element={<MainPage_Admin Main={Null}/>}/>
         <Route path="/admin/usuarios" element={<MainPage_Admin Main={UsuariosAdmin}/>}/>
         <Route path="/admin/materias" element={<MainPage_Admin Main={MateriasAdmin}/>}/>
+        <Route path="/admin/calificaciones" element={<MainPage_Admin Main={CalificacioneAdmin}/>}/>
+        <Route path="/admin/Periodos" element={<MainPage_Admin Main={PeriodosAdmin}/>}/>
+ 
+
+
 
         <Route path="/print/usuarios" element={<PrintUsuarios/>}></Route>
         <Route path="/print/materias" element={<PrintMaterias/>}></Route>
+        <Route path="/print/calificaciones"element={<PrintCalificaciones/>}></Route>
       </Routes>
     </Router>
   );

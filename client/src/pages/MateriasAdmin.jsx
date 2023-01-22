@@ -28,7 +28,7 @@ const MateriasAdmin = () => {
   const [materiasarray, setMateriasarray] = useState([]);
   const [materiasTemp, setMateriasTemp] = useState([]);
   const [cbMaestros, setCbMaestros] = useState([]);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(""); 
 
   const [modalInsertState, setModalInsertState] = useState(false);
   const [modalUpdateState, setModalUpdateState] = useState(false);
@@ -188,7 +188,7 @@ const MateriasAdmin = () => {
         <div className="table-AdminPages">
           <Table hover responsive>
             <thead>
-              <tr>
+              <tr >
                 <th>#</th>
                 <th>ID Maestro</th>
                 <th>Cod_Materia</th>

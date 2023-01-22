@@ -14,6 +14,8 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 
 const jwt = require("jsonwebtoken");
+const e = require("express");
+const { response } = require("express");
 
 const db = mysql2.createConnection({
   user: "root",
@@ -440,6 +442,141 @@ app.post("/getmateriasUpdate", (req, res) => {
 
 /* ==== FIN  MATERIAS ==== */
 
+/* === CRUD CALIFICACIONES ===*/
+
+app.get("/getCalificaciones",(req ,res)=>{
+  db.query("SELECT * FROM Calificaciones",(err, result) => {
+     if(err) {
+       console.log (err);    
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+ 
+ app.post("/insertCalificaciones", (req,res) =>  {
+   const id_usuario = req.body.id_usuario;
+   const materia = req.body.materia;
+   const nota = req.body.nota;
+   const periodo = req.body.periodo;
+   db.query ("INSERT INTO Calificaciones values(NULL, ?, ?, ?, ?)",[
+     id_usuario,
+     materia,
+     periodo,
+     nota
+   ], (err,result)=> {
+     if (err) {
+       console.log(err);
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+ 
+ app.put("/updateCalificaciones", (req, res) => {
+   const id = req.body.id;
+   const id_usuario = req.body.id_usuario;
+   const materia = req.body.materia;
+   const nota = req.body.nota;
+   const periodo = req.body.periodo;
+   db.query ("UPDATE Calificaciones SET ID_Usuario = ?, Materia = ?, Nota = ?, Periodo = ? WHERE ID = ?",
+    [id_usuario, materia, nota, periodo, id],
+    (err,result)=> {
+       if (err) {
+        console.log(err);
+       }
+       else{
+        res.send(result);
+       }
+     }
+   );
+ });
+ 
+ app.post("/getCalificacionesUptade", (req,res) => {
+  db.query("SELCT* FROM Calificaciones WHERE ID=?",[id], (err,result) => {
+     if (err) {
+      console.log(err)
+     } 
+     else {
+      res.send(result)
+     }
+   });
+ });
+ 
+ /* ====FIN CALIFICACIONES====*/ 
+
+
+/*===CRUD PERIODO===*/
+
+app.get("/getPeriodos",(req ,res)=>{
+  db.query("SELECT * FROM Periodos",(err, result) => {
+     if(err) {
+       console.log (err);    
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ app.post("/insertPeriodo", (req,res) =>  {
+  const id = req.body.id;
+  const nombre = req.body.nombre;
+  const f_inicial = req.f_inicial;
+  const f_final = req.body.f_final;
+  const estado = req.body.estado;
+  db.query(
+    "INSERT INTO Periodo VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+    [nombre, f_inicial, f_final, estado],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+  
+
+ app.put("/updatePeriodos", (req, res) => {
+  const id = req.body.id;
+  const nombre = req.body.nombre;
+  const f_inicio = req.body.f_inicio;
+  const f_final = req.body.f_final;
+  const estado = req.body.estado;
+    db.query ("UPDATE Periodos SET Nombre = ? , F_Inicio = ?, F_Final = ?, Estado = ? WHERE ID = ?",
+     [nombre, f_inicio, f_final, estado, id],
+     (err,result)=> {
+        if (err) {
+         console.log(err);
+        }
+        else{
+         res.send(result);
+        }
+      }
+    );
+  });
+
+  
+  app.post("/getPeriodosUptade", (req,res) => {
+    const id = req.body.id;
+    db.query("SELCT* FROM Periodos WHERE ID=?",[id], (err,result) => {
+       if (err) {
+        console.log(err)
+       } 
+       else {
+        res.send(result)
+       }
+     });
+   });
+
+
+/*===FIN PERIODO===*/
+
+
 /* ==== COMBOBOXES ==== */
 
 app.get("/comboboxMaestros", (req, res) => {
@@ -453,4 +590,56 @@ app.get("/comboboxMaestros", (req, res) => {
   });
 });
 
+app.get("/comboboxCalificaciones", (req,res) => {
+  db.query("SELECT * FROM Usuarios WHERE Tipo=0", (err, result) => {
+    if(err) {
+      console.log (err);    
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+
+app.get("/cbx_calificaciones", (req,res) => {
+  db.query("SELECT * FROM Materias", (err, result) => {
+    if(err) {
+      console.log (err);    
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxPeriodos", (req,res) => {
+  db.query("SELECT * FROM Periodos", (err, result) => {
+    if(err) {
+      console.log (err);    
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxIglesias", (req,res) => {
+  db.query("SELECT * FROM Usuarios WHERE Tipo=0", (err, result) => {
+    if(err) {
+      console.log (err);    
+    }
+    else{
+      res.send(result);
+    }
+  });
+});
+
 /* ==== FIN COMBOBOXES ==== */
+
+
+
+
+
+
+
+
