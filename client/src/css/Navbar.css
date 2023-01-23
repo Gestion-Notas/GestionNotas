@@ -45,6 +45,7 @@ ul.navbarlist.false{
   color: var(--BaseTone);
   font-size: 25px;
   margin-left: 10px;
+  display: block;
 }
 
 .menuicon-Navbar {

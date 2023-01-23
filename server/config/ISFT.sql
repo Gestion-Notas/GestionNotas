@@ -16,6 +16,15 @@ DROP DATABASE IF EXISTS ISFT;
 CREATE DATABASE IF NOT EXISTS ISFT;
 USE ISFT;
 
+CREATE TABLE Periodos(
+	ID INT PRIMARY KEY auto_increment,
+    Nombre CHAR(13), /*Sep-Dic 2022 || Es un combobox seleccionando el mes*/
+    F_Inicio DATE,
+    F_Final DATE,
+    Estado BOOL
+);
+
+
 CREATE TABLE Usuarios(
 	ID INT PRIMARY KEY auto_increment,
     Cod_Usuario CHAR(15),
@@ -36,7 +45,10 @@ CREATE TABLE Usuarios(
     Cargo_Iglesia CHAR(60) NOT NULL,
     Tipo INT, /*0, estudiante, 1 maestro, 2 administrativo*/
     E_Aceptado BOOL,
-    Clave TEXT
+    Periodo INT,
+    Clave TEXT,
+    
+    CONSTRAINT FK_Periodo_User FOREIGN KEY (Periodo) REFERENCES Periodos(ID)
 );
 
 CREATE TABLE Iglesias(
@@ -70,14 +82,6 @@ CREATE TABLE Requisitos(
     CONSTRAINT FK_Requisitos FOREIGN KEY (Requisitos) REFERENCES Materias(ID)
 );
  
-CREATE TABLE Periodos(
-	ID INT PRIMARY KEY auto_increment,
-    Nombre CHAR(13), /*Sep-Dic 2022 || Es un combobox seleccionando el mes*/
-    F_Inicio DATE,
-    F_Final DATE,
-    Estado BOOL
-);
-
 CREATE TABLE Criterios_Evaluacion(
     ID INT PRIMARY KEY auto_increment,
     Nombre CHAR(200),
@@ -215,19 +219,22 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     SELECT * FROM Materias_Inscritas;
     SELECT * FROM Calificaciones_Criterios;
     
+    SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas 
+    WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = 1 AND Usuarios.ID = 3
+    
     -- INSERTS --
     
-    INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas", "Lopez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, "2019-0091");
-    INSERT INTO Usuarios VALUES (NULL, NULL, "Dariel", "Jerez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, "2019-0091");
-    INSERT INTO Usuarios VALUES (NULL, NULL, "Alanna", "Segura", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, "2019-0091");
-    INSERT INTO Usuarios VALUES (NULL, NULL, "Luis", "Calderon", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, "2019-0091");
+    INSERT INTO Periodos VALUES (NULL, "Ene-Mar 2023", "2023-01-01", "2023-03-30", 1);
+    
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Lucas", "Lopez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Dariel", "Jerez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Alanna", "Segura", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Luis", "Calderon", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
     
     INSERT INTO Materias VALUES (NULL, 1, 1, "Matematicas", "Hola", 100, 2);
-    INSERT INTO Materias VALUES (NULL, 1, 1, "Fisica II", "Hola", 100, 2);
-    INSERT INTO Materias VALUES (NULL, 1, 1, "Formacion Humana", "Hola", 100, 2);
-    INSERT INTO Materias VALUES (NULL, 1, 1, "Arquitectura", "Hola", 100, 2);
-    
-    INSERT INTO Periodos VALUES (NULL, "Ene-Mar 2023", "2023-01-01", "2023-03-30", 1);
+    INSERT INTO Materias VALUES (NULL, 1, 2, "Fisica II", "Hola", 100, 2);
+    INSERT INTO Materias VALUES (NULL, 2, 3, "Formacion Humana", "Hola", 100, 2);
+    INSERT INTO Materias VALUES (NULL, 2, 4, "Arquitectura", "Hola", 100, 2);    
     
     INSERT INTO Materias_Inscritas VALUES (NULL, 3, 1, 1);
     INSERT INTO Materias_Inscritas VALUES (NULL, 3, 2, 1);
@@ -249,19 +256,19 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 13, 8, 1);
     
     
-    -- FIN INSERTS --D
+    -- FIN INSERTS --
     
+	SELECT Usuarios.Nombres AS "Alumno", Criterios_Evaluacion.Nombre AS "Criterio", 
+	Calificaciones_Criterios.Nota AS "Nota", Maxima_Calificacion AS "Nota Maxima"
+	FROM Usuarios
+	INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID
+	INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID
+	INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID
+	LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio
+    WHERE Materias.ID = 1 AND Materias_Inscritas.Periodo = 1 AND Calificaciones_Criterios.Nota IS NULL;
+	
+    SELECT 
     
-    SELECT DISTINCT U.Nombres AS "Alumno", U.Cod_Usuario AS "Codigo", M.Nombre AS "Materia", CE.Nombre AS "Criterio", CC.Nota AS "Nota",
-	CE.Maxima_Calificacion AS "Nota Maxima"
-	FROM Usuarios U, Materias M, Criterios_Evaluacion CE, Materias_Inscritas MI, Calificaciones_Criterios CC
-	WHERE U.Tipo = 0 AND U.E_Aceptado = true and U.ID = MI.Alumno AND MI.Materia = M.ID  and  M.Cod_Materia = CE.Materia
-    order by U.Nombres
-     
-		SELECT * FROM Materias;
-   SELECT * FROM Calificaciones_Criterios;
-   SELECT * FROM Criterios_Evaluacion;
-		
 --- PARA SABER LA NOTA MAXIMA DE CALIFICACION DEUNA MATERIA ---
 
 	SELECT Materias.Cod_Materia, Materias.Nombre, SUM(Criterios_Evaluacion.Maxima_Calificacion) AS "Maxima Suma"

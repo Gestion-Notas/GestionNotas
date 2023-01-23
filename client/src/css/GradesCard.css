@@ -34,6 +34,36 @@
   overflow: hidden;
 }
 
+.container_fullmodal{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+  height: 70vh;
+}
+
+.title-cards{
+  
+}
+
+.container_leftside{
+  display: grid;
+  grid-gap: 20px;
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.container_bottomside{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
+
+.container_bottomCards{
+  display: grid;
+  grid-template-rows: repeat(2, 1fr);
+  grid-gap: 20px;
+}
+
 @media only screen and (min-width: 1500px) {
   .container-GradesCard {
     height: 300px;
