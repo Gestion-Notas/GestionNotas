@@ -576,11 +576,85 @@ app.get("/getPeriodos",(req ,res)=>{
 
 /*===FIN PERIODO===*/
 
+/*====CRUD DE IGLESIA====*/
+ app.get("/getIglesias",(req ,res)=>{
+  db.query("SELECT * FROM Iglesias",(err, result) => {
+     if(err) {
+       console.log (err);    
+     }
+     else{
+       res.send(result);
+     }
+   });
+ });
+
+ app.post("/insertIglesias", (req,res) =>  {
+  const id = req.body.id;
+  const nombre = req.body.nombre;
+  const direccion = req.direccion;
+  const pastor = req.body.pastor;
+  db.query(
+    "INSERT INTO Materias VALUES (NULL, ?, ?, ?, ?, ?, ?)",
+    [nombre, direccion, pastor],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+  app.put("/updateIglesias", (req, res) => {
+    const id = req.body.id;
+    const nombre = req.body.nombre;
+    const direccion = req.body.direccion;
+    const pastor = req.body.pastor;   
+    db.query ("UPDATE Calificaciones SET Nombre = ? , Direccion = ?, Pastor=? WHERE ID = ?",
+     [nombre, direccion, pastor, id],
+     (err,result)=> {
+        if (err) {
+         console.log(err);
+        }
+        else{
+         res.send(result);
+        }
+      }
+    );
+  });
+
+  app.post("/getIglesiasUptade", (req,res) => {
+    const id = req.body.id;
+    console.log(id);
+    db.query("SELCT* FROM Iglesias WHERE ID=?",[id], (err,result) => {
+       if (err) {
+        console.log(err)
+       } 
+       else {
+        res.send(result)
+       }
+     });
+   });
+   
+/*====FIN IGLESIA==== */
+
 
 /* ==== COMBOBOXES ==== */
 
 app.get("/comboboxMaestros", (req, res) => {
   db.query("SELECT * FROM Usuarios WHERE Tipo=1", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxIglesia", (req, res) => {
+  db.query("SELECT * FROM Usuarios WHERE Pastor", (err, result) => {
     if (err) {
       console.log(err);
     } else {

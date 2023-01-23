@@ -52,7 +52,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/iglesias" className="a">
                 <BiChurch className="icon" />
                 <span className="links_name">Iglesias</span>
               </Link>

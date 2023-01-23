@@ -18,11 +18,14 @@ import UsuariosAdmin from "./pages/UsuariosAdmin";
 import MateriasAdmin from './pages/MateriasAdmin';
 import CalificacioneAdmin from './pages/CalificacionesAdmin'; 
 import PeriodosAdmin from "./pages/PeriodosAdmin";
+import IglesiasAdmin from "./pages/IglesiasAdmin";
 
 
 import PrintUsuarios from "./print/PrintUsuarios";
 import PrintMaterias from "./print/PrintMaterias";
 import PrintCalificaciones from "./print/PrintCalificaciones";
+import PrintIglesia from "./print/PrintIglesia";
+
 
 export const App = () => {
   return (
@@ -44,6 +47,7 @@ export const App = () => {
         <Route path="/admin/materias" element={<MainPage_Admin Main={MateriasAdmin}/>}/>
         <Route path="/admin/calificaciones" element={<MainPage_Admin Main={CalificacioneAdmin}/>}/>
         <Route path="/admin/Periodos" element={<MainPage_Admin Main={PeriodosAdmin}/>}/>
+        <Route path="/admin/iglesias" element={<MainPage_Admin Main={IglesiasAdmin}/>}/>
  
 
 
@@ -51,6 +55,7 @@ export const App = () => {
         <Route path="/print/usuarios" element={<PrintUsuarios/>}></Route>
         <Route path="/print/materias" element={<PrintMaterias/>}></Route>
         <Route path="/print/calificaciones"element={<PrintCalificaciones/>}></Route>
+        <Route path="/print/Iglesias"element={<PrintIglesia/>}></Route>
       </Routes>
     </Router>
   );
