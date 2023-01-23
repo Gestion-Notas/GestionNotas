@@ -176,40 +176,43 @@ app.post("/submitAdmisiones", (req, res) => {
     if (err) {
       console.log(err);
     }
-    db.query ("SELECT MAX(ID) As PeriodoMaximo FROM Periodos", (err, resultPeriodos) => {
-      if (err) {
-        console.log(err);
-      } else {
-        db.query(
-          "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, false, ?,?)",
-          [
-            nombres,
-            apellidos,
-            cedula,
-            sexo,
-            f_nacimiento,
-            lugar_nacimiento,
-            nacionalidad,
-            tel,
-            correo,
-            direccion,
-            sector,
-            provincia,
-            iglesia,
-            cargo_iglesia,
-            resultPeriodos[0].PeriodoMaximo,
-            hash,
-          ],
-          (err, result) => {
-            if (err) {
-              console.log(err);
-            } else {
-              res.send("Values Inserted");
+    db.query(
+      "SELECT MAX(ID) As PeriodoMaximo FROM Periodos",
+      (err, resultPeriodos) => {
+        if (err) {
+          console.log(err);
+        } else {
+          db.query(
+            "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, false, ?,?)",
+            [
+              nombres,
+              apellidos,
+              cedula,
+              sexo,
+              f_nacimiento,
+              lugar_nacimiento,
+              nacionalidad,
+              tel,
+              correo,
+              direccion,
+              sector,
+              provincia,
+              iglesia,
+              cargo_iglesia,
+              resultPeriodos[0].PeriodoMaximo,
+              hash,
+            ],
+            (err, result) => {
+              if (err) {
+                console.log(err);
+              } else {
+                res.send("Values Inserted");
+              }
             }
-          }
-        );
+          );
+        }
       }
-    })
+    );
   });
 });
 app.get("/getNoticias", (req, res) => {
@@ -273,49 +276,196 @@ app.post("/getMateriasMaestros", verifyJWT, (req, res) => {
 app.post("/getMateriasAlumnos", verifyJWT, (req, res) => {
   const id = req.body.id;
 
-  db.query ("SELECT MAX(ID) As PeriodoMaximo FROM Periodos", (err, resultPeriodos) => {
-    if (err) {
-      console.log(err);
-    } else {
-      db.query(
-        "SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = ? AND Usuarios.ID = ?",
-        [resultPeriodos[0].PeriodoMaximo, id],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            
-            res.send(result);
+  db.query(
+    "SELECT MAX(ID) As PeriodoMaximo FROM Periodos WHERE Estado = 1",
+    (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = ? AND Usuarios.ID = ?",
+          [resultPeriodos[0].PeriodoMaximo, id],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
           }
-        }
-      );
+        );
+      }
     }
-  })
+  );
+});
+
+app.post("/getCriteriosExistentes", verifyJWT, (req, res) => {
+  const id = req.body.id;
+
+  db.query(
+    "SELECT MAX(ID) As PeriodoMaximo FROM Periodos WHERE Estado = 1",
+    (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "SELECT * FROM Criterios_Evaluacion WHERE Materia = ? AND Periodo = ?",
+          [id, resultPeriodos[0].PeriodoMaximo],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+app.post("/getUsersCorregidos", verifyJWT, (req, res) => {
+  const id = req.body.id;
+
+  db.query(
+    "SELECT MAX(ID) As PeriodoMaximo FROM Periodos WHERE Estado = 1",
+    (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "SELECT row_number() over (order by Usuarios.ID) as ID, Usuarios.Nombres AS Alumno, Usuarios.ID AS Alumno_ID, Criterios_Evaluacion.Nombre AS Criterio, Criterios_Evaluacion.ID AS Criterio_ID, Calificaciones_Criterios.Nota AS Nota, Maxima_Calificacion AS Nota_Maxima FROM Usuarios INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio WHERE Materias.ID = ? AND Materias_Inscritas.Periodo = ? AND Calificaciones_Criterios.Nota IS NOT NULL AND Usuarios.Tipo = 0",
+          [id, resultPeriodos[0].PeriodoMaximo],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      }
+    }
+  );
 });
 
 app.post("/getUsersCorregir", verifyJWT, (req, res) => {
   const id = req.body.id;
 
-  db.query ("SELECT MAX(ID) As PeriodoMaximo FROM Periodos", (err, resultPeriodos) => {
+  db.query(
+    "SELECT MAX(ID) As PeriodoMaximo FROM Periodos WHERE Estado = 1",
+    (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "SELECT row_number() over (order by Usuarios.ID) as ID, Usuarios.Nombres AS Alumno, Usuarios.ID AS Alumno_ID, Criterios_Evaluacion.Nombre AS Criterio, Criterios_Evaluacion.ID AS Criterio_ID, Calificaciones_Criterios.Nota AS Nota, Maxima_Calificacion AS Nota_Maxima FROM Usuarios INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio WHERE Materias.ID = ? AND Materias_Inscritas.Periodo = ? AND Calificaciones_Criterios.Nota IS NULL AND Usuarios.Tipo = 0",
+          [id, resultPeriodos[0].PeriodoMaximo],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+app.post("/insertCorreccion", verifyJWT, (req, res) => {
+  db.query(
+    "SELECT MAX(ID) As PeriodoMaximo FROM Periodos WHERE Estado = 1",
+    (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "INSERT INTO Calificaciones_Criterios VALUES (NULL, ?, ?, ?, ?)",
+          [
+            req.body.id_usuario,
+            req.body.nota,
+            req.body.criterio,
+            resultPeriodos[0].PeriodoMaximo,
+          ],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(req.body.id_usuario);
+              res.send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+app.put("/updateCorregidos", verifyJWT, (req, res) => {
+  db.query(
+    "SELECT MAX(ID) As PeriodoMaximo FROM Periodos WHERE Estado = 1",
+    (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "UPDATE Calificaciones_Criterios SET ID_Usuario = ?, Nota = ?, Criterio = ?, Periodo = ? WHERE ID = ?",
+          [
+            req.body.id_usuario,
+            req.body.nota,
+            req.body.criterio,
+            resultPeriodos[0].PeriodoMaximo,
+            req.body.id,
+          ],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log(req.body);
+              res.send(result);
+            }
+          }
+        );
+      }
+    }
+  );
+});
+
+app.post("/getcorreccionesupdate", verifyJWT, (req, res) => {
+  db.query(
+    "SELECT ID FROM Calificaciones_Criterios WHERE ID_Usuario = ? AND Criterio = ?",
+    [req.body.usuario, req.body.criterio],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result[0].ID);
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.get("/getCountCorregir", verifyJWT, (req, res) => {
+  db.query("SELECT * FROM Materias", (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      db.query(
-        "SELECT Usuarios.Nombres AS Alumno, Criterios_Evaluacion.Nombre AS Criterio, Calificaciones_Criterios.Nota AS Nota, Maxima_Calificacion AS Nota Maxima FROM Usuarios INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio WHERE Materias.ID = ? AND Materias_Inscritas.Periodo = ?",
-        [id, resultPeriodos[0].PeriodoMaximo],
-        (err, result) => {
-          if (err) {
-            console.log(err);
-          } else {
-            res.send(result);
-          }
-        }
-      );
+      res.send(result);
     }
-  })
+  });
 });
 
-
+app.get("/getCountCorregidos", verifyJWT, (req, res) => {
+  db.query("SELECT * FROM Materias", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
 
 /* ==== CRUD USUARIOS ==== */
 app.get("/getUsuarios", verifyJWT, (req, res) => {
@@ -462,7 +612,7 @@ app.get("/getMaterias", verifyJWT, (req, res) => {
   });
 });
 
-app.post("/insertMaterias",  verifyJWT,(req, res) => {
+app.post("/insertMaterias", verifyJWT, (req, res) => {
   const id_maestro = req.body.id_maestro;
   const cod_materia = req.body.cod_materia;
   const nombre = req.body.nombre;

@@ -48,6 +48,7 @@ const NotasPublicar = () => {
     });
   };
 
+  
   return (
     <main className="main">
       {!User.auth ? (
@@ -55,7 +56,7 @@ const NotasPublicar = () => {
       ) : (
         <div className="container-Notas">
           {materias.map((val, key) => {
-            return <CardMaestro name={val.Nombre} idMateria={val.ID} />;
+            return <CardMaestro name={val.Nombre} idMateria={val.ID} auth={User.auth} />;
           })}
         </div>
       )}
