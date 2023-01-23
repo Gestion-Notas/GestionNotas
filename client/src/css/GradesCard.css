@@ -41,8 +41,29 @@
   height: 70vh;
 }
 
-.title-cards{
-  
+.centernormal{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table100-Cards {
+  max-height: calc(70vh - 8px);
+  overflow-y: auto;
+}
+
+.table50-Cards {
+  max-height: calc(35vh - 30px);
+  overflow-y: auto;
+}
+
+.tablebutton-Cards {
+  max-height: calc(35vh - 30px);
+  overflow-y: auto;
+}
+
+.normaldiv{
+  background-color: var(--BaseYellow);
 }
 
 .container_leftside{

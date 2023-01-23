@@ -218,6 +218,7 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     SELECT * FROM Criterios_Evaluacion;
     SELECT * FROM Materias_Inscritas;
     SELECT * FROM Calificaciones_Criterios;
+    SELECT * FROM Periodos
     
     SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas 
     WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = 1 AND Usuarios.ID = 3
@@ -258,7 +259,7 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     
     -- FIN INSERTS --
     
-	SELECT Usuarios.Nombres AS "Alumno", Criterios_Evaluacion.Nombre AS "Criterio", 
+	SELECT Usuarios.Nombres AS "Alumno", Usuarios.ID AS Alumno_Id, Criterios_Evaluacion.Nombre AS "Criterio", 
 	Calificaciones_Criterios.Nota AS "Nota", Maxima_Calificacion AS "Nota Maxima"
 	FROM Usuarios
 	INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID
@@ -266,6 +267,7 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
 	INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID
 	LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio
     WHERE Materias.ID = 1 AND Materias_Inscritas.Periodo = 1 AND Calificaciones_Criterios.Nota IS NULL;
+    
 	
     SELECT 
     
@@ -275,6 +277,8 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     FROM Materias, Criterios_Evaluacion, Periodos
     WHERE Criterios_Evaluacion.Materia = Materias.ID AND Materias.ID = 1
     GROUP BY Materias.Cod_Materia, Materias.Nombre 
+    
+    SELECT Usuarios.Nombres AS Alumno, Criterios_Evaluacion.Nombre AS Criterio, Calificaciones_Criterios.Nota AS Nota, Maxima_Calificacion AS Nota_Maxima FROM Usuarios INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio WHERE Materias.ID = 1 AND Materias_Inscritas.Periodo = 1 AND Calificaciones_Criterios.Nota IS NOT NULL
 	
     SELECT 
 */
