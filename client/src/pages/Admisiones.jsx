@@ -32,7 +32,7 @@ const Admisiones = () => {
   const [cargo_iglesia, setCargo_Iglesia] = useState("");
 
   const addUsuario = () => {
-    Axios.post("/sumbitAdmisiones", {
+    Axios.post("/submitAdmisiones", {
       nombres: nombres,
       apellidos: apellidos,
       cedula: cedula,

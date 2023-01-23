@@ -117,14 +117,12 @@ app.get("/auth", (req, res) => {
   }
 });
 
-
-
 app.get("/getPensum100", (req, res) => {
   db.query("SELECT * FROM Materias WHERE Nivel = 100", (err, result) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Se mando el 100")
+      console.log("Se mando el 100");
       res.send(result);
     }
   });
@@ -156,10 +154,10 @@ app.get("/getIglesiasPublic", (req, res) => {
     } else {
       res.send(result);
     }
-  })
-})
+  });
+});
 
-app.post("/sumbitAdmisiones", (req, res) => {
+app.post("/submitAdmisiones", (req, res) => {
   const nombres = req.body.nombres;
   const apellidos = req.body.apellidos;
   const cedula = req.body.cedula;
@@ -178,34 +176,40 @@ app.post("/sumbitAdmisiones", (req, res) => {
     if (err) {
       console.log(err);
     }
-
-    db.query(
-      "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, false, ?)",
-      [
-        nombres,
-        apellidos,
-        cedula,
-        sexo,
-        f_nacimiento,
-        lugar_nacimiento,
-        nacionalidad,
-        tel,
-        correo,
-        direccion,
-        sector,
-        provincia,
-        iglesia,
-        cargo_iglesia,
-        hash,
-      ],
-      (err, result) => {
-        if (err) {
-          console.log(err);
-        } else {
-          res.send("Values Inserted");
-        }
+    db.query ("SELECT MAX(ID) As PeriodoMaximo FROM Periodos", (err, resultPeriodos) => {
+      if (err) {
+        console.log(err);
+      } else {
+        db.query(
+          "INSERT INTO Usuarios VALUES (NULL, NULL, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, 0, false, ?,?)",
+          [
+            nombres,
+            apellidos,
+            cedula,
+            sexo,
+            f_nacimiento,
+            lugar_nacimiento,
+            nacionalidad,
+            tel,
+            correo,
+            direccion,
+            sector,
+            provincia,
+            iglesia,
+            cargo_iglesia,
+            resultPeriodos[0].PeriodoMaximo,
+            hash,
+          ],
+          (err, result) => {
+            if (err) {
+              console.log(err);
+            } else {
+              res.send("Values Inserted");
+            }
+          }
+        );
       }
-    );
+    })
   });
 });
 app.get("/getNoticias", (req, res) => {
@@ -250,20 +254,71 @@ app.get;
 
 /* INICIO DE RUTAS PRIVADAS */
 
-app.post("/getMateriasMaestros", (req, res) => {
+app.post("/getMateriasMaestros", verifyJWT, (req, res) => {
   const id = req.body.id;
 
-  db.query("SELECT Nombre, ID FROM Materias WHERE ID_Maestro   = ?", [id], (err, result) => {
+  db.query(
+    "SELECT Nombre, ID FROM Materias WHERE ID_Maestro   = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getMateriasAlumnos", verifyJWT, (req, res) => {
+  const id = req.body.id;
+
+  db.query ("SELECT MAX(ID) As PeriodoMaximo FROM Periodos", (err, resultPeriodos) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(result);
+      db.query(
+        "SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = ? AND Usuarios.ID = ?",
+        [resultPeriodos[0].PeriodoMaximo, id],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            
+            res.send(result);
+          }
+        }
+      );
     }
-  });
+  })
 });
 
+app.post("/getUsersCorregir", verifyJWT, (req, res) => {
+  const id = req.body.id;
+
+  db.query ("SELECT MAX(ID) As PeriodoMaximo FROM Periodos", (err, resultPeriodos) => {
+    if (err) {
+      console.log(err);
+    } else {
+      db.query(
+        "SELECT Usuarios.Nombres AS Alumno, Criterios_Evaluacion.Nombre AS Criterio, Calificaciones_Criterios.Nota AS Nota, Maxima_Calificacion AS Nota Maxima FROM Usuarios INNER JOIN Materias_Inscritas ON Materias_Inscritas.Alumno = Usuarios.ID INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio WHERE Materias.ID = ? AND Materias_Inscritas.Periodo = ?",
+        [id, resultPeriodos[0].PeriodoMaximo],
+        (err, result) => {
+          if (err) {
+            console.log(err);
+          } else {
+            res.send(result);
+          }
+        }
+      );
+    }
+  })
+});
+
+
+
 /* ==== CRUD USUARIOS ==== */
-app.get("/getUsuarios", (req, res) => {
+app.get("/getUsuarios", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Usuarios", (err, result) => {
     if (err) {
       console.log(err);
@@ -273,7 +328,7 @@ app.get("/getUsuarios", (req, res) => {
   });
 });
 
-app.post("/insertUsuarios", (req, res) => {
+app.post("/insertUsuarios", verifyJWT, (req, res) => {
   const nombres = req.body.nombres;
   const apellidos = req.body.apellidos;
   const cedula = req.body.cedula;
@@ -330,7 +385,7 @@ app.post("/insertUsuarios", (req, res) => {
   });
 });
 
-app.put("/updateUsuarios", (req, res) => {
+app.put("/updateUsuarios", verifyJWT, (req, res) => {
   const id = req.body.id;
   const nombres = req.body.nombres;
   const apellidos = req.body.apellidos;
@@ -382,7 +437,7 @@ app.put("/updateUsuarios", (req, res) => {
   );
 });
 
-app.post("/getusuariosUpdate", (req, res) => {
+app.post("/getusuariosUpdate", verifyJWT, (req, res) => {
   const id = req.body.id;
   db.query("SELECT * FROM Usuarios WHERE ID=?", [id], (err, result) => {
     if (err) {
@@ -397,7 +452,7 @@ app.post("/getusuariosUpdate", (req, res) => {
 
 /* ==== CRUD MATERIAS ==== */
 
-app.get("/getMaterias", (req, res) => {
+app.get("/getMaterias", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Materias", (err, result) => {
     if (err) {
       console.log(err);
@@ -407,7 +462,7 @@ app.get("/getMaterias", (req, res) => {
   });
 });
 
-app.post("/insertMaterias", (req, res) => {
+app.post("/insertMaterias",  verifyJWT,(req, res) => {
   const id_maestro = req.body.id_maestro;
   const cod_materia = req.body.cod_materia;
   const nombre = req.body.nombre;
@@ -428,7 +483,7 @@ app.post("/insertMaterias", (req, res) => {
   );
 });
 
-app.put("/updateMaterias", (req, res) => {
+app.put("/updateMaterias", verifyJWT, (req, res) => {
   const id = req.body.id;
   const id_maestro = req.body.id_maestro;
   const cod_materia = req.body.cod_materia;
@@ -450,7 +505,7 @@ app.put("/updateMaterias", (req, res) => {
   );
 });
 
-app.post("/getmateriasUpdate", (req, res) => {
+app.post("/getmateriasUpdate", verifyJWT, (req, res) => {
   const id = req.body.id;
   db.query("SELECT * FROM Materias WHERE ID = ?", [id], (err, result) => {
     if (err) {
@@ -465,7 +520,7 @@ app.post("/getmateriasUpdate", (req, res) => {
 
 /* ==== CRUD NOTICIAS ==== */
 
-app.get("/getNoticias", (req, res) => {
+app.get("/getNoticias", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Noticias", (err, result) => {
     if (err) {
       console.log(err);
@@ -475,7 +530,7 @@ app.get("/getNoticias", (req, res) => {
   });
 });
 
-app.post("/insertNoticias", (req, res) => {
+app.post("/insertNoticias", verifyJWT, (req, res) => {
   const titulo = req.body.titulo;
   const subtitulo = req.body.subtitulo;
   const contenido = req.body.contenido;
@@ -495,7 +550,7 @@ app.post("/insertNoticias", (req, res) => {
   );
 });
 
-app.put("/updateNoticias", (req, res) => {
+app.put("/updateNoticias", verifyJWT, (req, res) => {
   const fs = require("fs");
 
   const id = req.body.id;
@@ -529,7 +584,7 @@ app.put("/updateNoticias", (req, res) => {
   });
 });
 
-app.post("/getnoticiasUpdate", (req, res) => {
+app.post("/getnoticiasUpdate", verifyJWT, (req, res) => {
   const id = req.body.id;
   db.query("SELECT * FROM Noticias WHERE ID = ?", [id], (err, result) => {
     if (err) {
@@ -544,7 +599,7 @@ app.post("/getnoticiasUpdate", (req, res) => {
 
 /* === CRUD REQUISITOS === */
 
-app.get("/getRequisitos", (req, res) => {
+app.get("/getRequisitos", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Requisitos", (err, result) => {
     if (err) {
       console.log(err);
@@ -554,7 +609,7 @@ app.get("/getRequisitos", (req, res) => {
   });
 });
 
-app.post("/insertRequisitos", (req, res) => {
+app.post("/insertRequisitos", verifyJWT, (req, res) => {
   const materia = req.body.materia;
   const requisitos = req.body.requisitos;
 
@@ -571,7 +626,7 @@ app.post("/insertRequisitos", (req, res) => {
   );
 });
 
-app.put("/updateRequisitos", (req, res) => {
+app.put("/updateRequisitos", verifyJWT, (req, res) => {
   const id = req.body.id;
   const materia = req.body.materia;
   const requisitos = req.body.requisitos;
@@ -589,7 +644,7 @@ app.put("/updateRequisitos", (req, res) => {
   );
 });
 
-app.post("/getrequisitosUpdate", (req, res) => {
+app.post("/getrequisitosUpdate", verifyJWT, (req, res) => {
   const id = req.body.id;
   db.query("SELECT * FROM Requisitos WHERE ID = ?", [id], (err, result) => {
     if (err) {
@@ -604,7 +659,7 @@ app.post("/getrequisitosUpdate", (req, res) => {
 
 /* === CRUD CRITERIOS_EVALUACION === */
 
-app.get("/getCriterios_Evaluacion", (req, res) => {
+app.get("/getCriterios_Evaluacion", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Criterios_Evaluacion", (err, result) => {
     if (err) {
       console.log(err);
@@ -614,7 +669,7 @@ app.get("/getCriterios_Evaluacion", (req, res) => {
   });
 });
 
-app.post("/insertCriterios_Evaluacion", (req, res) => {
+app.post("/insertCriterios_Evaluacion", verifyJWT, (req, res) => {
   const nombre = req.body.nombre;
   const materia = req.body.materia;
   const periodo = req.body.periodo;
@@ -634,7 +689,7 @@ app.post("/insertCriterios_Evaluacion", (req, res) => {
   );
 });
 
-app.put("/updateCriterios_Evaluacion", (req, res) => {
+app.put("/updateCriterios_Evaluacion", verifyJWT, (req, res) => {
   const id = req.body.id;
   const nombre = req.body.nombre;
   const materia = req.body.materia;
@@ -655,7 +710,7 @@ app.put("/updateCriterios_Evaluacion", (req, res) => {
   );
 });
 
-app.post("/getCriterios_EvaluacionUpdate", (req, res) => {
+app.post("/getCriterios_EvaluacionUpdate", verifyJWT, (req, res) => {
   const id = req.body.id;
   db.query(
     "SELECT * FROM Criterios_Evaluacion WHERE ID = ?",
@@ -674,7 +729,7 @@ app.post("/getCriterios_EvaluacionUpdate", (req, res) => {
 
 /* ==== COMBO   BOXES ==== */
 
-app.get("/comboboxMaestros", (req, res) => {
+app.get("/comboboxMaestros", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Usuarios WHERE Tipo=1", (err, result) => {
     if (err) {
       console.log(err);
@@ -684,7 +739,7 @@ app.get("/comboboxMaestros", (req, res) => {
   });
 });
 
-app.get("/comboboxMateriaAsuntos", (req, res) => {
+app.get("/comboboxMateriaAsuntos", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Materias", (err, result) => {
     if (err) {
       console.log(err);
@@ -694,7 +749,7 @@ app.get("/comboboxMateriaAsuntos", (req, res) => {
   });
 });
 
-app.get("/comboboxPeriodoAsuntos", (req, res) => {
+app.get("/comboboxPeriodoAsuntos", verifyJWT, (req, res) => {
   db.query("SELECT * FROM Periodos", (err, result) => {
     if (err) {
       console.log(err);
