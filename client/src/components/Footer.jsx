@@ -22,6 +22,7 @@ const Footer = () => {
         <div className="box-Footer">
           <h2>ALGO NO SE XD</h2>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt molestias corrupti cumque vero quae suscipit, cupiditate est ut molestiae quas, ex soluta, itaque porro? Ipsam possimus veritatis odit at a!</p>
+          <Link to="/admin/home" style={{color: "white"}}>Eres Admin? Entra aquí</Link>
         </div>
         <div className="box-Footer">
           <h2>SIGUENOS</h2>

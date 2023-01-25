@@ -210,14 +210,6 @@ const NoticiasAdmin = () => {
             >
               Agregar Noticia
             </Button>
-            <Button
-              color="primary"
-              onClick={() => {
-                routeChange();
-              }}
-            >
-              Imprimir
-            </Button>
           </div>
           <div className="botones-AdminPages">
             <Input
@@ -249,25 +241,6 @@ const NoticiasAdmin = () => {
                     <td>{val.Contenido}</td>
                     <td>{val.Imagen}</td>
                     <td>{val.Destacada}</td>
-                    <td>
-                      <div className="acciones-AdminPages">
-                        <Button
-                          color="primary"
-                          onClick={() => {
-                            execUpdate(val.ID);
-                            setTituloUpdate(val.Titulo);
-                            setSubtituloUpdate(val.Subtitulo);
-                            setContenidoUpdate(val.Contenido);
-                            setImagenUpdate(val.Imagen);
-                            setDestacadaUpdate(val.Destacada);
-                            setToggleUpdateImage(false);
-                            toggleUpdateState();
-                          }}
-                        >
-                          <MdEdit fontSize={"20px"} />
-                        </Button>
-                      </div>
-                    </td>
                   </tr>
                 );
               })}

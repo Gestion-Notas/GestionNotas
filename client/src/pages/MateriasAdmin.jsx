@@ -130,7 +130,7 @@ const MateriasAdmin = () => {
     Axios.post("/getmateriasUpdate", {
       id: id,
     }).then((response) => {
-      setUpdateData(response.data);
+      setUpdateData(response.data)
     });
   };
 

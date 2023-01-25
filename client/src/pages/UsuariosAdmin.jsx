@@ -16,6 +16,7 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "../libs/axios";
 import { MdEdit } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 const UsuariosAdmin = () => {
   const [usuariosarray, setUsuariosArray] = useState([]);
@@ -42,6 +43,7 @@ const UsuariosAdmin = () => {
   const [cargo_iglesiaInsert, setCargo_IglesiaInsert] = useState("");
   const [tipoInsert, setTipoInsert] = useState("");
   const [e_aceptadoInsert, setE_AceptadoInsert] = useState("");
+  const [periodoInsert, setPeriodoInsert] = useState([]);
   const [claveInsert, setClaveInsert] = useState("");
 
   const insertUsuario = () => {
@@ -63,10 +65,26 @@ const UsuariosAdmin = () => {
       cargo_iglesia: cargo_iglesiaInsert,
       tipo: tipoInsert,
       e_aceptado: e_aceptadoInsert,
+      periodo: periodoInsert,
       clave: claveInsert,
     }).then(() => {
       toggleInsertstate();
       console.log("success!");
+    });
+  };
+
+  const [CbIglesias, setCbIglesias] = useState([]);
+  const [CbPeriodos, setCbPeriodos] = useState([]);
+
+  const getIglesias = () => {
+    Axios.get("/getIglesias").then((response) => {
+      setCbIglesias(response.data);
+    });
+  };
+
+  const getPeriodos = () => {
+    Axios.get("/getPeriodos").then((response) => {
+      setCbPeriodos(response.data);
     });
   };
 
@@ -103,6 +121,7 @@ const UsuariosAdmin = () => {
   const [cargo_iglesiaUpdate, setCargo_IglesiaUpdate] = useState("");
   const [tipoUpdate, setTipoUpdate] = useState("");
   const [e_aceptadoUpdate, setE_AceptadoUpdate] = useState("");
+  const [periodoUpdate, setPeriodoUpdate] = useState("");
   const [claveUpdate, setClaveUpdate] = useState("");
 
   const updateUsuario = (id) => {
@@ -125,6 +144,7 @@ const UsuariosAdmin = () => {
       cargo_iglesia: cargo_iglesiaUpdate,
       tipo: tipoUpdate,
       e_aceptado: e_aceptadoUpdate,
+      periodo: periodoUpdate,
       clave: claveUpdate,
     }).then(() => {
       toggleUpdatestate();
@@ -202,6 +222,9 @@ const UsuariosAdmin = () => {
         elemento.Tipo.toString()
           .toLowerCase()
           .includes(busqueda.toLowerCase()) ||
+        elemento.Periodo.toString()
+          .toLowerCase()
+          .includes(busqueda.toLowerCase()) ||
         elemento.E_Aceptado.toString()
           .toLowerCase()
           .includes(busqueda.toLowerCase())
@@ -213,7 +236,11 @@ const UsuariosAdmin = () => {
   };
   useEffect(() => {
     getsearch();
+    getIglesias();
+    getPeriodos();
   }, []);
+
+  const navigate = useNavigate();
 
   return (
     <div className="container-AdminPages">
@@ -228,7 +255,7 @@ const UsuariosAdmin = () => {
             >
               Agregar Usuario
             </Button>
-            <Button color="primary">Imprimir</Button>
+            <Button color="primary" onClick={() => navigate("/print/usuarios")}>Imprimir</Button>
           </div>
           <div className="botones-AdminPages">
             <Input
@@ -262,6 +289,7 @@ const UsuariosAdmin = () => {
                 <th>Cargo_Iglesia</th>
                 <th>Tipo</th>
                 <th>Aceptado</th>
+                <th>Periodo</th>
                 <th>Clave</th>
                 <th>Acciones</th>
               </tr>
@@ -289,6 +317,7 @@ const UsuariosAdmin = () => {
                     <td>{val.Cargo_Iglesia}</td>
                     <td>{val.Tipo}</td>
                     <td>{val.E_Aceptado}</td>
+                    <td>{val.Periodo}</td>
                     <td>{val.Clave}</td>
                     <td>
                       <div className="acciones-AdminPages">
@@ -316,6 +345,7 @@ const UsuariosAdmin = () => {
                             setTipoUpdate(val.Tipo);
                             setE_AceptadoUpdate(val.E_Aceptado);
                             setClaveUpdate(val.Clave);
+                            setPeriodoUpdate(val.Periodo);
                             toggleUpdatestate();
                           }}
                         >
@@ -500,20 +530,28 @@ const UsuariosAdmin = () => {
                 </Col>
               </Row>
               <Row>
-                <Col md={6}>
+                <Col md={4}>
                   <FormGroup>
                     <Label for="Iglesia" hidden></Label>
                     <Input
                       id="Iglesia"
                       autoComplete="off"
+                      type="select"
                       placeholder="Iglesia"
                       onChange={(event) => {
                         setIglesiaInsert(event.target.value);
                       }}
-                    />
+                    >
+                      <option disabled selected="selected">
+                        Iglesia
+                      </option>
+                      {CbIglesias.map((val, key) => {
+                        return <option value={val.Nombre}>{val.Nombre}</option>;
+                      })}
+                    </Input>
                   </FormGroup>
                 </Col>
-                <Col md={6}>
+                <Col md={4}>
                   <FormGroup>
                     <Label for="Cargo" hidden></Label>
                     <Input
@@ -526,8 +564,6 @@ const UsuariosAdmin = () => {
                     />
                   </FormGroup>
                 </Col>
-              </Row>
-              <Row>
                 <Col md={4}>
                   <FormGroup>
                     <Label for="Pastor" hidden></Label>
@@ -545,6 +581,29 @@ const UsuariosAdmin = () => {
                       </option>
                       <option value={"1"}>Lo Es</option>
                       <option value={"0"}>No lo es</option>
+                    </Input>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row>
+                <Col md={4}>
+                  <FormGroup>
+                    <Label for="Periodo" hidden></Label>
+                    <Input
+                      id="Periodo"
+                      type="select"
+                      placeholder="Periodo"
+                      autoComplete="off"
+                      onChange={(event) => {
+                        setPeriodoInsert(event.target.value);
+                      }}
+                    >
+                      <option disabled selected="selected">
+                        Periodo
+                      </option>
+                      {CbPeriodos.map((val, key) => {
+                        return <option value={val.ID}>{val.Nombre}</option>;
+                      })}
                     </Input>
                   </FormGroup>
                 </Col>
@@ -791,20 +850,30 @@ const UsuariosAdmin = () => {
                       </Col>
                     </Row>
                     <Row>
-                      <Col md={6}>
+                      <Col md={4}>
                         <FormGroup>
                           <Label for="Iglesia" hidden></Label>
                           <Input
                             id="Iglesia"
+                            type="select"
                             placeholder="Iglesia"
                             defaultValue={val.Iglesia}
                             onChange={(event) => {
                               setIglesiaUpdate(event.target.value);
                             }}
-                          />
+                          >
+                            <option disabled selected="selected">
+                              Iglesia
+                            </option>
+                            {CbIglesias.map((val, key) => {
+                              return (
+                                <option value={val.Nombre}>{val.Nombre}</option>
+                              );
+                            })}
+                          </Input>
                         </FormGroup>
                       </Col>
-                      <Col md={6}>
+                      <Col md={4}>
                         <FormGroup>
                           <Label for="Cargo" hidden></Label>
                           <Input
@@ -817,8 +886,6 @@ const UsuariosAdmin = () => {
                           />
                         </FormGroup>
                       </Col>
-                    </Row>
-                    <Row>
                       <Col md={4}>
                         <FormGroup>
                           <Label for="Pastor" hidden></Label>
@@ -834,6 +901,29 @@ const UsuariosAdmin = () => {
                           >
                             <option disabled selected="selected">
                               Es Pastor?
+                            </option>
+                            <option value={"1"}>Lo Es</option>
+                            <option value={"0"}>No lo es</option>
+                          </Input>
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={4}>
+                        <FormGroup>
+                          <Label for="Periodo" hidden></Label>
+                          <Input
+                            id="Periodo"
+                            type="select"
+                            placeholder="Pastor"
+                            autoComplete="off"
+                            defaultValue={val.Periodo}
+                            onChange={(event) => {
+                              setPeriodoUpdate(event.target.value);
+                            }}
+                          >
+                            <option disabled selected="selected">
+                              Periodo
                             </option>
                             <option value={"1"}>Lo Es</option>
                             <option value={"0"}>No lo es</option>

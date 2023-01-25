@@ -18,12 +18,14 @@ import {
   Row,
 } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FaClipboardList, FaCalendarCheck } from "react-icons/fa";
 
 const CardMaestro = (props) => {
   const [modal, setModal] = useState(false);
   const [modalCorregirState, setModalCorregirState] = useState(false);
   const [modalUpdateCorregidosState, setModalUpdateCorregidosState] =
     useState(false);
+  const [modalAddCriteriosState, setModalAddCriteriosState] = useState(false);
 
   function refreshpage() {
     window.location.reload(false);
@@ -31,6 +33,8 @@ const CardMaestro = (props) => {
 
   const toggle = () => setModal(!modal);
   const toggleCorregirState = () => setModalCorregirState(!modalCorregirState);
+  const toggleAddCriteriosState = () =>
+    setModalAddCriteriosState(!modalAddCriteriosState);
   const toggleUpdateCorregidosState = () =>
     setModalUpdateCorregidosState(!modalUpdateCorregidosState);
 
@@ -47,9 +51,13 @@ const CardMaestro = (props) => {
       Criterio_ID: "",
       Nota: "",
       Nota_Maxima: "",
-      ExecUpdateID: ""
+      ExecUpdateID: "",
+      Nombre_Criterio: ""
     };
   });
+
+  const [countCorregir, setCountCorregir] = useState([]);
+  const [countCorregidos, setCountCorregidos] = useState([]);
 
   const getAlumnosCorregir = (ID) => {
     Axios.post("/getUsersCorregir", { id: ID }).then((response) => {
@@ -63,18 +71,23 @@ const CardMaestro = (props) => {
     });
   };
 
-  const getCriteriosExistentes = (ID) => {
-    Axios.post("/getCriteriosExistentes", { id: ID }).then((response) => {
-      setCriterios(response.data);
+  const getCountCorregidos = (ID) => {
+    Axios.post("/getCountCorregidos", { id: ID }).then((response) => {
+      setCountCorregidos(response.data[0].Cantidad);
+      console.log(data + " - Corregidos")
     });
   };
 
-  const execUpdate = (user, criterio) => {
-    Axios.post("/getcorreccionesupdate", {
-      usuario: user,
-      criterio: criterio
-    }).then((response) => {
-      setUpdateCorregir({ ...updateCorregir, ExecUpdateID: response.data[0].ID})
+  const getCountCorregir = (ID) => {
+    Axios.post("/getCountCorregir", { id: ID }).then((response) => {
+      setCountCorregir(response.data[0].Cantidad);
+      console.log(response.data[0].Cantidad + " - Corregir")
+    });
+  };
+
+  const getCriteriosExistentes = (ID) => {
+    Axios.post("/getCriteriosExistentes", { id: ID }).then((response) => {
+      setCriterios(response.data);
     });
   };
 
@@ -89,9 +102,20 @@ const CardMaestro = (props) => {
     });
   };
 
+  const insertCriterios = () => {
+    Axios.post("/insertCriterios", {
+      nombre: updateCorregir.Nombre_Criterio,
+      maxima_calificacion: updateCorregir.Nota_Maxima,
+      materia: props.idMateria,
+    }).then(() => {
+      toggleAddCriteriosState;
+      console.log("success!");
+    });
+  };
+
   const updateCorreccion = () => {
-    console.log(updateCorregir)
-    Axios.put("/updateCorregidos", {
+    console.log(updateCorregir);
+    Axios.post("/updateCorregidos", {
       id: updateCorregir.ExecUpdateID,
       id_usuario: updateCorregir.Alumno_ID,
       nota: updateCorregir.Nota,
@@ -105,6 +129,8 @@ const CardMaestro = (props) => {
   useEffect(() => {
     getAlumnosCorregir(props.idMateria);
     getAlumnosCorregidos(props.idMateria);
+    getCountCorregidos(props.idMateria);
+    getCountCorregir(props.idMateria);
     getCriteriosExistentes(props.idMateria);
   }, []);
 
@@ -118,7 +144,7 @@ const CardMaestro = (props) => {
       </div>
       <p>{props.name}</p>
       <Modal isOpen={modal} toggle={toggle} size={"xl"}>
-        <ModalHeader toggle={toggle}>Calificaciones del Parcial</ModalHeader>
+        <ModalHeader toggle={toggle}>Calificaciones del Parcial - <strong>{props.name}</strong></ModalHeader>
         <ModalBody>
           <div className="container_fullmodal">
             <div className="table100-Cards">
@@ -192,8 +218,6 @@ const CardMaestro = (props) => {
                               <Button
                                 color="primary"
                                 onClick={() => {
-                                  
-                                  execUpdate(val.Alumno_ID, val.Criterio_ID)
                                   setUpdateCorregir({
                                     id: val.ID,
                                     Nombre: val.Alumno,
@@ -202,6 +226,7 @@ const CardMaestro = (props) => {
                                     Criterio_ID: val.Criterio_ID,
                                     Nota: val.Nota,
                                     Nota_Maxima: val.Nota_Maxima,
+                                    ExecUpdateID: val.Calificaciones_ID,
                                   });
                                   toggleUpdateCorregidosState();
                                 }}
@@ -223,7 +248,6 @@ const CardMaestro = (props) => {
                       <tr>
                         <th>Nombre</th>
                         <th>Maxima Calificacion</th>
-                        <th>Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -232,13 +256,11 @@ const CardMaestro = (props) => {
                           <tr key={key}>
                             <td>{val.Nombre}</td>
                             <td>{val.Maxima_Calificacion}</td>
-                            <td>
-                              <div className="acciones-AdminPages">
+                              {/*<div className="acciones-AdminPages">
                                 <Button color="primary" onClick={() => {}}>
                                   <MdEdit fontSize={"20px"} />
                                 </Button>
-                              </div>
-                            </td>
+                        </div>*/}
                           </tr>
                         );
                       })}
@@ -247,10 +269,29 @@ const CardMaestro = (props) => {
                 </div>
 
                 <div className="container_bottomCards">
-                  <div className="normaldiv"></div>
-                  <div className="normaldiv"></div>
+                  <div className="normaldiv-Count">
+                    <div className="textgradescard">
+                      <p className="titlegradescard">POR CORREGIR</p>
+                      <p className="numbergradescard">{countCorregir}</p>
+                    </div>
+                    <FaClipboardList className="icongradescard" />
+                  </div>
+                  <div className="normaldiv-Count">
+                    <div className="textgradescard">
+                      <p className="titlegradescard">CORREGIDOS</p>
+                      <p className="numbergradescard">{countCorregidos}</p>
+                    </div>
+                    <FaCalendarCheck className="icongradescard" />
+                  </div>
                   <div className="centernormal">
-                    <Button color="primary">Agregar Criterio</Button>
+                    <Button
+                      color="primary"
+                      onClick={() => {
+                        toggleAddCriteriosState();
+                      }}
+                    >
+                      Agregar Criterio
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -300,6 +341,8 @@ const CardMaestro = (props) => {
                       defaultValue={updateCorregir.Nota}
                       id="Nota"
                       placeholder="Nota"
+                      type="number"
+                      max={updateCorregir.Nota_Maxima}
                       autoComplete="off"
                       onChange={(event) => {
                         setUpdateCorregir({
@@ -343,14 +386,13 @@ const CardMaestro = (props) => {
         toggle={toggleUpdateCorregidosState}
       >
         <ModalHeader toggle={toggleUpdateCorregidosState}>
-          Corrección del Alumno {updateCorregir.Nombre}
+          Agregar Criterios de Evaluacion
         </ModalHeader>
         <ModalBody>
           {!props.auth ? (
             <></>
           ) : (
             <>
-
               <FormGroup>
                 <Label for="Nombre" hidden></Label>
                 <Input
@@ -379,6 +421,8 @@ const CardMaestro = (props) => {
                       defaultValue={updateCorregir.Nota}
                       id="Nota"
                       placeholder="Nota"
+                      type="number"
+                      max={updateCorregir.Nota_Maxima}
                       autoComplete="off"
                       onChange={(event) => {
                         setUpdateCorregir({
@@ -409,8 +453,60 @@ const CardMaestro = (props) => {
           <Button
             color="success"
             onClick={() => {
+              refreshpage();
               updateCorreccion();
-              //refreshpage();
+            }}
+          >
+            Aceptar
+          </Button>
+        </ModalFooter>
+      </Modal>
+      <Modal isOpen={modalAddCriteriosState} toggle={toggleAddCriteriosState}>
+        <ModalHeader toggle={toggleAddCriteriosState}>
+          Agregar Criterio
+        </ModalHeader>
+        <ModalBody>
+          {!props.auth ? (
+            <></>
+          ) : (
+            <>
+              <FormGroup>
+                <Label for="Nombre" hidden></Label>
+                <Input
+                  id="Nombre"
+                  placeholder="Nombre del criterio"
+                  autoComplete="off"
+                  onChange={(event) => {
+                    setUpdateCorregir({
+                      ...updateCorregir,
+                      Nombre_Criterio: event.target.value,
+                    });
+                  }}
+                />
+              </FormGroup>
+              <FormGroup>
+                <Label for="Calificacion_Maxima" hidden></Label>
+                <Input
+                  id="Calificacion_Maxima"
+                  placeholder="Máxima Calificación"
+                  autoComplete="off"
+                  onChange={(event) => {
+                    setUpdateCorregir({
+                      ...updateCorregir,
+                      Nota_Maxima: event.target.value,
+                    });
+                  }}
+                />
+              </FormGroup>
+            </>
+          )}
+        </ModalBody>
+        <ModalFooter>
+          <Button
+            color="success"
+            onClick={() => {
+              insertCriterios();
+              refreshpage();
             }}
           >
             Aceptar

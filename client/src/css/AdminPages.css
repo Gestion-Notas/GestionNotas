@@ -34,6 +34,47 @@
   grid-gap: 10px;
 }
 
+.containertablaDashboard-AdminPages{
+  display: grid;
+  height: calc(100vh - 230px);
+  grid-template-rows: 1fr 1.8fr;
+  grid-gap: 2em;
+}
+
+.containerTable-Adminpages{
+  overflow-y: auto;
+}
+
+.containerCards-AdminPages{
+  display: grid;
+  grid-gap:3em;
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.cardsCount-AdminPages{
+  background-color: var(--BaseYellow);
+  height: 100%;
+  color: var(--BaseTone);
+  text-transform: uppercase;
+  border-radius: 12px 12px;
+  padding: 2em;
+}
+
+.cardsCount-AdminPages p {
+  font-size: 2.1em;
+  margin: 0;
+}
+
+.titlePeriodo-AdminPages{
+  font-size: 2.1em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.result-AdminPages{
+  font-size: 1.8em;
+}
+
 .tablePrint-Adminpages {
   margin: 40px;
 }

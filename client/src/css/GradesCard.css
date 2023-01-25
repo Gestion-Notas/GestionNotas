@@ -2,7 +2,7 @@
   display: flex;
   flex-direction: column;
   height: 200px;
-  
+
   background-color: var(--BaseYellow);
 }
 
@@ -27,21 +27,21 @@
   margin: 0 0px 10px 10px;
 }
 
-.container_img-GradesCard{
+.container_img-GradesCard {
   height: 160px;
   margin: 5px;
   position: relative;
   overflow: hidden;
 }
 
-.container_fullmodal{
+.container_fullmodal {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
   height: 70vh;
 }
 
-.centernormal{
+.centernormal {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,6 +51,8 @@
   max-height: calc(70vh - 8px);
   overflow-y: auto;
 }
+
+.notafinal
 
 .table50-Cards {
   max-height: calc(35vh - 30px);
@@ -62,26 +64,51 @@
   overflow-y: auto;
 }
 
-.normaldiv{
+.normaldiv-Count {
   background-color: var(--BaseYellow);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--BaseTone);
 }
 
-.container_leftside{
+.textgradescard {
+  padding: 7% 0;
+  padding-left: 7%;
+  justify-content: center;
+  align-items: center;
+}
+
+.titlegradescard {
+  margin: 0;
+  font-weight: 600;
+}
+
+.numbergradescard {
+  margin: 0;
+}
+
+.icongradescard {
+  font-size: 5em;
+  padding: 7% 0;
+  padding-right: 7%;
+}
+
+.container_leftside {
   display: grid;
   grid-gap: 20px;
   grid-template-rows: repeat(2, 1fr);
 }
 
-.container_bottomside{
+.container_bottomside {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 20px;
 }
 
-
-.container_bottomCards{
+.container_bottomCards {
   display: grid;
-  grid-template-rows: repeat(2, 1fr);
+  grid-template-rows: 0.8fr 0.8fr 0.1fr;
   grid-gap: 20px;
 }
 
