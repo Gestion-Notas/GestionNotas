@@ -672,6 +672,77 @@ app.post("/getCriterios_EvaluacionUpdate", (req, res) => {
 
 /* === FIN CRITERIOS_EVALUACION === */
 
+/* === CRUD MATERIAS_INSCRITAS === */
+
+app.get("/getMaterias_Inscritas", (req, res) => {
+  db.query("SELECT * FROM Materias_Inscritas", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.post("/insertMaterias_Inscritas", (req, res) => {
+  const alumno = req.body.alumno;
+  const materia = req.body.materia;
+  const periodo = req.body.periodo;
+  console.log(alumno);
+
+  db.query(
+    "INSERT INTO Materias_Inscritas VALUES (NULL, ?, ?, ?)",
+    [alumno, materia, periodo],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.put("/updateMaterias_Inscritas", (req, res) => {
+  const id = req.body.id;
+  const alumno = req.body.alumno;
+  const materia = req.body.materia;
+  const periodo = req.body.periodo;
+
+  db.query(
+    "UPDATE Criterios_Evaluacion SET Alumno = ?, Materia = ?, Periodo = ? WHERE ID = ?",
+
+    [alumno, materia, periodo, id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+app.post("/getMaterias_Inscritas", (req, res) => {
+  const id = req.body.id;
+  db.query(
+    "SELECT * FROM Materias_Inscritas WHERE ID = ?",
+    [id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
+    }
+  );
+});
+
+
+
+/* === FIN MATERIAS_INSCRITAS === */
+
+
 /* ==== COMBO   BOXES ==== */
 
 app.get("/comboboxMaestros", (req, res) => {
@@ -703,5 +774,36 @@ app.get("/comboboxPeriodoAsuntos", (req, res) => {
     }
   });
 });
+
+app.get("/comboboxAlumno_MatI", (req, res) => {
+  db.query("SELECT * FROM Usuarios WHERE Tipo=0", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxPeriodo_MatI", (req, res) => {
+  db.query("SELECT * FROM Periodos WHERE Tipo=0", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+app.get("/comboboxMateria_MatI", (req, res) => {
+  db.query("SELECT * FROM Materias WHERE Tipo=0", (err, result) => {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
 
 /* ==== FIN COMBOBOXES ==== */

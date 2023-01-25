@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import "../css/AdminPages.css";
 import {
   Modal,
@@ -19,11 +19,11 @@ import Axios from "../libs/axios";
 import { MdEdit } from "react-icons/md";
 
 const Criterios_EvaluacionAdmin = () => {
-let navigate = useNavigate();
-const routeChange = () => {
-let path = "/print/criterios_evaluacion";
-navigate(path);
-};
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = "/print/criterios_evaluacion";
+    navigate(path);
+  };
 
   const [criterios_evaluacionarray, setcriterios_evaluacionarray] = useState(
     []
@@ -127,7 +127,7 @@ navigate(path);
 
   /*  BACKEND UPDATE */
   const execUpdate = (id) => {
-    Axios.get("/getcriterios_evaluacionUpdate", {
+    Axios.post("/getcriterios_evaluacionUpdate", {
       id: id,
     }).then((response) => {
       setUpdateData(response[0].data);
@@ -136,7 +136,7 @@ navigate(path);
 
   const updateCriterios_Evaluacion = (id) => {
     Axios.put("/updateCriterios_Evaluacion", {
-      id:id,
+      id: id,
       nombre: nombreUpdate,
       materia: materiaUpdate,
       periodo: periodoUpdate,
@@ -168,7 +168,8 @@ navigate(path);
             </Button>
             <Button
               color="primary"
-              onClick={() => {routeChange();
+              onClick={() => {
+                routeChange();
                 routeChange();
               }}
             >
@@ -297,13 +298,13 @@ navigate(path);
             </FormGroup>
 
             <FormGroup>
-              <Label for="Calificacion Maxima" hidden></Label>
+              <Label for="Maxima Calificacion" hidden></Label>
               <Input
-                id="Calificacion_Maxima"
+                id="Maxima Calificacion"
                 onChange={(event) => {
                   setmaxima_calificacionInsert(event.target.value);
                 }}
-                placeholder="Calificacion Maxima"
+                placeholder="Maxima Calificacion"
               ></Input>
             </FormGroup>
           </ModalBody>
@@ -322,7 +323,7 @@ navigate(path);
 
         <Modal isOpen={modalUpdateState} toggle={toggleUpdateState}>
           {updateData.map((val, key) => {
-            /*return (*/
+            return (
             <>
               <ModalHeader toggle={toggleUpdateState}>
                 Agregar Criterios
@@ -333,10 +334,10 @@ navigate(path);
                     <FormGroup>
                       <Label for="Nombre" hidden></Label>
                       <Input
-                      defaultValue={val.Nombre} 
+                        defaultValue={val.Nombre}
                         id="Nombre"
                         onChange={(event) => {
-                          setnombreUpdare(event.target.value);
+                          setnombreUpdate(event.target.value);
                         }}
                         placeholder="Nombre"
                       ></Input>
@@ -395,7 +396,7 @@ navigate(path);
                 <FormGroup>
                   <Label for="Calificacion Maxima" hidden></Label>
                   <Input
-                  defaultValue={val.Calificacion_Maxima}
+                    defaultValue={val.Calificacion_Maxima}
                     id="Calificacion_Maxima"
                     onChange={(event) => {
                       setmaxima_calificacionUpdate(event.target.value);
@@ -415,8 +416,8 @@ navigate(path);
                   Aceptar
                 </Button>
               </ModalFooter>
-            </>;
-            /*);*/
+            </>
+            );
           })}
         </Modal>
       </div>

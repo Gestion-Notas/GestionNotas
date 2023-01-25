@@ -20,15 +20,18 @@ import MateriasAdmin from "./pages/MateriasAdmin";
 import NoticiasAdmin from "./pages/NoticiasAdmin";
 import RequisitosAdmin from "./pages/RequisitosAdmin";
 import Criterios_EvaluacionAdmin from "./pages/Criterios_EvaluacionAdmin";
+import Materias_InscritasAdmin from "./pages/Materias_InscritasAdmin";
+
 
 import PrintUsuarios from "./print/PrintUsuarios";
 import PrintRequisitos from "./print/PrintRequisitos";
 import PrintMaterias from "./print/PrintMaterias";
 import PrintCriterios_Evaluacion from "./print/PrintCriterios_Evaluacion";
+import PrintMaterias_Inscritas from "./print/PrintMaterias_Inscritas";
+
 
 const App = () => {
-
-  return (
+    return (
     <AuthProvider>
       <Router>
         <Routes>
@@ -37,39 +40,25 @@ const App = () => {
           <Route path="/pensum" element={<MainPage Main={Pensum} />} />
           <Route path="/noticias" element={<MainPage Main={News} />} />
           <Route path="/nosotros" element={<MainPage Main={AboutUs} />} />
-          <Route
-            path="/notas/publicar"
-            element={<MainPage Main={NotasPublicar} />}
-          />
+          <Route path="/notas/publicar" element={<MainPage Main={NotasPublicar} />}/>
           <Route path="/notas/vista" element={<MainPage Main={NotasVista} />} />
           <Route path="/admisiones" element={<MainPage Main={Admisiones} />} />
           <Route path="/login" element={<MainPage Main={Login} />} />
-          <Route
-            path="/noticias/:id"
-            element={<MainPage Main={NewsDetails} />}
-          />
+          <Route path="/noticias/:id" element={<MainPage Main={NewsDetails} />}/>
 
           <Route path="/admin/home" element={<MainPage_Admin Main={Null} />} />
-          <Route
-            path="/admin/usuarios"
-            element={<MainPage_Admin Main={UsuariosAdmin} />}
-          />
-          <Route
-            path="/admin/materias"
-            element={<MainPage_Admin Main={MateriasAdmin} />}
-          />
-          <Route
-            path="/admin/noticias"
-            element={<MainPage_Admin Main={NoticiasAdmin} />}
-          />
-          <Route path="/admin/requisitos" element={<MainPage_Admin Main={RequisitosAdmin}/>}/>
-          <Route path="/admin/criterios_evaluacion" element={<MainPage_Admin Main={Criterios_EvaluacionAdmin}/>}/>
+          <Route path="/admin/usuarios" element={<MainPage_Admin Main={UsuariosAdmin} />}/>
+          <Route path="/admin/materias" element={<MainPage_Admin Main={MateriasAdmin} />}/>
+          <Route path="/admin/noticias" element={<MainPage_Admin Main={NoticiasAdmin} />}/>
+          <Route path="/admin/requisitos" element={<MainPage_Admin Main={RequisitosAdmin} />}/>
+          <Route path="/admin/criterios_evaluacion" element={<MainPage_Admin Main={Criterios_EvaluacionAdmin} />}/>
+          <Route path="/admin/materias_inscritas" element={<MainPage_Admin Main={Materias_InscritasAdmin} />}/>
 
           <Route path="/print/usuarios" element={<PrintUsuarios />}></Route>
-          <Route path="/print/requisitos" element={<PrintRequisitos/>}></Route>
+          <Route path="/print/requisitos" element={<PrintRequisitos />}></Route>
           <Route path="/print/materias" element={<PrintMaterias />}></Route>
           <Route path="/print/criterios_evaluacion" element={<PrintCriterios_Evaluacion />}></Route>
-
+          <Route path="/print/materias_inscritas" element={<PrintMaterias_Inscritas />}></Route>
         </Routes>
       </Router>
     </AuthProvider>

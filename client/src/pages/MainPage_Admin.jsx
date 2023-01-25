@@ -82,7 +82,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/materias_inscritas" className="a">
                 <RiContactsBookUploadFill className="icon" />
                 <span className="links_name">Materias-Usuarios</span>
               </Link>
