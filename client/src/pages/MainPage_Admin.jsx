@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../css/Sidebar.css";
 import logo from "../logoseminario1.png";
@@ -14,6 +14,7 @@ import { ImBooks } from "react-icons/im";
 import { BsPatchCheckFill } from "react-icons/bs";
 import { MdGrading } from "react-icons/md";
 import { GoTasklist } from "react-icons/go";
+import { useAuthContext } from "../contexts/auth";
 import { RiContactsBookUploadFill } from "react-icons/ri";
 import { CgTimelapse } from "react-icons/cg";
 import { HiNewspaper } from "react-icons/hi";
@@ -21,10 +22,37 @@ import { HiNewspaper } from "react-icons/hi";
 const MainPage_Admin = ({ Main }) => {
   const [isOpen, setIsOpen] = useState(false);
   let navigate = useNavigate();
-  const routeChange = () => {
-    let path = "/";
-    navigate(path);
-  };
+
+  const [User, SetUser] = useAuthContext();
+
+  useEffect(() => {
+    const doCheck = async () => {
+      if (!localStorage.getItem("auth")) return;
+      try {
+        const response = await Axios.get("/auth");
+        if (response.status !== 200 || response.status >= 500) {
+          SetUser({ auth: false, token: null, data: {} });
+          localStorage.removeItem("auth");
+          return;
+        }
+        localStorage.setItem("auth", response.data.token);
+        SetUser({
+          auth: true,
+          token: response.data.token,
+          data: response.data.user,
+        });
+      } catch (error) {
+        if (error.name === "AbortError") return;
+        if (error.response.status === 401) {
+          SetUser({ auth: false, token: null, data: {} });
+          localStorage.removeItem("auth");
+          return;
+        }
+      }
+    };
+    console.log(User.auth);
+    doCheck();
+  }, []);
 
   return (
     <>
@@ -52,7 +80,7 @@ const MainPage_Admin = ({ Main }) => {
               </Link>
             </li>
             <li>
-              <Link to="/admin/users" className="a">
+              <Link to="/admin/iglesias" className="a">
                 <BiChurch className="icon" />
                 <span className="links_name">Iglesias</span>
               </Link>
@@ -75,26 +103,26 @@ const MainPage_Admin = ({ Main }) => {
                 <span className="links_name">Criterios</span>
               </Link>
             </li>
-            <li>
-              <Link to="#" className="a">
+            {/*<li>
+              <Link to="" className="a">
                 <GoTasklist className="icon" />
                 <span className="links_name">Calificaciones</span>
               </Link>
-            </li>
+            </li>*/}
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/materias_inscritas" className="a">
                 <RiContactsBookUploadFill className="icon" />
                 <span className="links_name">Materias-Usuarios</span>
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/calificaciones" className="a">
                 <FaEnvelopeOpenText className="icon" />
                 <span className="links_name">Grados Finales</span>
               </Link>
             </li>
             <li>
-              <Link to="#" className="a">
+              <Link to="/admin/periodos" className="a">
                 <CgTimelapse className="icon" />
                 <span className="links_name">Periodos</span>
               </Link>
@@ -111,7 +139,13 @@ const MainPage_Admin = ({ Main }) => {
               <div className="profile_details">
                 <FaUserCircle className="imageUser" />
                 <div className="name_job">
-                  <div className="nombre">Lucas Lopez</div>
+                  {!User.auth ? (
+                    <></>
+                  ) : (
+                    <div className="nombre">
+                      {User.data.Nombres + " " + User.data.Apellidos}
+                    </div>
+                  )}
                 </div>
               </div>
               <Link to="/" className="logout">

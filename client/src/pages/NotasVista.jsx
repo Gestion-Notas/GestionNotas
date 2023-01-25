@@ -53,7 +53,7 @@ const NotasVista = () => {
       ) : (
         <div className="container-Notas">
           {materias.map((val, key) => {
-            return <CardEstudiante name={val.Nombre} />
+            return <CardEstudiante name={val.Nombre} idMateria={val.Materia_ID} idAlumno={val.Usuario}/>
           })}
         </div>
       )}

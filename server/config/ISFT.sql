@@ -218,7 +218,9 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     SELECT * FROM Criterios_Evaluacion;
     SELECT * FROM Materias_Inscritas;
     SELECT * FROM Calificaciones_Criterios;
-    SELECT * FROM Periodos
+    SELECT * FROM Periodos;
+    
+    SELECT MAX(Nombre) As PeriodoMaximo FROM Periodos WHERE Estado = 1
     
     SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas 
     WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = 1 AND Usuarios.ID = 3
@@ -231,6 +233,7 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     INSERT INTO Usuarios VALUES (NULL, NULL, "Dariel", "Jerez", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 1, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
     INSERT INTO Usuarios VALUES (NULL, NULL, "Alanna", "Segura", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
     INSERT INTO Usuarios VALUES (NULL, NULL, "Luis", "Calderon", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 0, "Educacion Somijo", 0, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
+    INSERT INTO Usuarios VALUES (NULL, NULL, "Luis", "Calderon", "001-2112123-1", "Masculino", "2006-01-06", "Santo Domingo Este", "Dominicano", "829-828-2190", "ljairolopez@gmail.com", "Calle 6 #23", "Ens. Isabelita", "Santo Domingo", "Los Tres Ojos", 1, "Educacion Somijo", 2, true, 1,"$2b$10$LRJo1Pn7.KM1E8UcfZJzcepxVnE.flFZWWWocuqsn.ONhf/.T9oNu");
     
     INSERT INTO Materias VALUES (NULL, 1, 1, "Matematicas", "Hola", 100, 2);
     INSERT INTO Materias VALUES (NULL, 1, 2, "Fisica II", "Hola", 100, 2);
@@ -256,6 +259,7 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
     INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 12, 3, 1);
     INSERT INTO Calificaciones_Criterios VALUES (NULL, 4, 13, 8, 1);
     
+    INSERT INTO Calificaciones VALUES (NULL, 3, 1, 100, 1);
     
     -- FIN INSERTS --
     
@@ -266,10 +270,14 @@ El récord es de 150.000 en 2019, pero la cifra es más alta que la del año pas
 	INNER JOIN Materias ON Materias_Inscritas.Materia = Materias.ID
 	INNER JOIN Criterios_Evaluacion ON Criterios_Evaluacion.Materia = Materias.ID
 	LEFT JOIN Calificaciones_Criterios ON Criterios_Evaluacion.ID = Calificaciones_Criterios.Criterio
-    WHERE Materias.ID = 1 AND Materias_Inscritas.Periodo = 1 AND Calificaciones_Criterios.Nota IS NULL;
+    WHERE Usuarios.ID = 3 AND Materias.ID = 2 AND Materias_Inscritas.Periodo = 1;
     
-	
-    SELECT 
+	SELECT Materias.Nombre, Materias.ID AS Materia_ID, Usuarios.ID AS Usuario FROM Materias, Usuarios, Materias_Inscritas WHERE Usuarios.ID = Materias_Inscritas.Alumno AND Materias.ID = Materias_Inscritas.Materia AND Materias_Inscritas.Periodo = 1 AND Usuarios.ID = 3
+    
+    SELECT * FROM Calificaciones WHERE ID_Usuario = 3 AND Materia = 1 AND Periodo = 1
+    
+    SELECT COUNT(*) AS Cantidad FROM Usuarios WHERE E_Aceptado = true AND Tipo = 0
+    SELECT COUNT(*) AS Cantidad FROM Usuarios WHERE E_Aceptado = false AND Tipo = 0
     
 --- PARA SABER LA NOTA MAXIMA DE CALIFICACION DEUNA MATERIA ---
 

@@ -36,12 +36,12 @@ const NewsDetails = () => {
           );
         })}
 
-        <div className="importantSection-NewsDetails">
+        {/*<div className="importantSection-NewsDetails">
           <p className="titleimportant-NewsDetails">Noticias Destacadas</p>
           <ImportantNews />
           <ImportantNews />
           <ImportantNews />
-        </div>
+      </div>*/}
       </div>
     </main>
   );

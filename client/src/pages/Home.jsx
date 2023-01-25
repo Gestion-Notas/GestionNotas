@@ -36,9 +36,7 @@ const Home = () => {
           </div>
         </div>
 
-        {/* noticias */}
-
-        <div className="container_news-Home">
+        {/* <div className="container_news-Home">
           <div className="imagen_news-Home">
             <div className="fixed-title">NOTICIAS DESTACADAS</div>
             <IoIosArrowDroprightCircle className="icon_news-Home" />
@@ -57,7 +55,7 @@ const Home = () => {
             </p>
             <NewsButton />
           </div>
-        </div>
+        </div> */}
       </main>
     </>
   );

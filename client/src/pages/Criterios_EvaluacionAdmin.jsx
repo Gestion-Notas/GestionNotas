@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../css/AdminPages.css";
 import {
   Modal,
@@ -18,6 +19,12 @@ import Axios from "../libs/axios";
 import { MdEdit } from "react-icons/md";
 
 const Criterios_EvaluacionAdmin = () => {
+  let navigate = useNavigate();
+  const routeChange = () => {
+    let path = "/print/criterios_evaluacion";
+    navigate(path);
+  };
+
   const [criterios_evaluacionarray, setcriterios_evaluacionarray] = useState(
     []
   );
@@ -120,10 +127,23 @@ const Criterios_EvaluacionAdmin = () => {
 
   /*  BACKEND UPDATE */
   const execUpdate = (id) => {
-    Axios.get("/getcriterios_evaluacionUpdate", {
+    Axios.post("/getcriterios_evaluacionUpdate", {
       id: id,
     }).then((response) => {
       setUpdateData(response.data);
+    });
+  };
+
+  const updateCriterios_Evaluacion = (id) => {
+    Axios.put("/updateCriterios_Evaluacion", {
+      id: id,
+      nombre: nombreUpdate,
+      materia: materiaUpdate,
+      periodo: periodoUpdate,
+      maxima_calificacion: maxima_calificacionUpdate,
+    }).then(() => {
+      toggleUpdateState;
+      console.log("success!");
     });
   };
 
@@ -149,6 +169,7 @@ const Criterios_EvaluacionAdmin = () => {
             <Button
               color="primary"
               onClick={() => {
+                routeChange();
                 routeChange();
               }}
             >
@@ -277,13 +298,13 @@ const Criterios_EvaluacionAdmin = () => {
             </FormGroup>
 
             <FormGroup>
-              <Label for="Calificacion Maxima" hidden></Label>
+              <Label for="Maxima Calificacion" hidden></Label>
               <Input
-                id="Calificacion_Maxima"
+                id="Maxima Calificacion"
                 onChange={(event) => {
                   setmaxima_calificacionInsert(event.target.value);
                 }}
-                placeholder="Calificacion Maxima"
+                placeholder="Maxima Calificacion"
               ></Input>
             </FormGroup>
           </ModalBody>
@@ -301,95 +322,105 @@ const Criterios_EvaluacionAdmin = () => {
         </Modal>
 
         <Modal isOpen={modalUpdateState} toggle={toggleUpdateState}>
-          <ModalHeader toggle={toggleUpdateState}>
-            Agregar Criterios
-          </ModalHeader>
-          <ModalBody>
-            <Row>
-              <Col md={6}>
+          {updateData.map((val, key) => {
+            return (
+            <>
+              <ModalHeader toggle={toggleUpdateState}>
+                Agregar Criterios
+              </ModalHeader>
+              <ModalBody>
+                <Row>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="Nombre" hidden></Label>
+                      <Input
+                        defaultValue={val.Nombre}
+                        id="Nombre"
+                        onChange={(event) => {
+                          setnombreUpdate(event.target.value);
+                        }}
+                        placeholder="Nombre"
+                      ></Input>
+                    </FormGroup>
+                  </Col>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="Materia" hidden></Label>
+                      <Input
+                        type="select"
+                        autoComplete="off"
+                        id="Materia"
+                        defaultValue={val.Materia}
+                        onChange={(event) => {
+                          setmateriaUpdate(event.target.value);
+                        }}
+                      >
+                        <option disabled selected="selected">
+                          Materias
+                        </option>
+                        {cbMaterias.map((val, key) => {
+                          return (
+                            <option key={key} value={val.ID}>
+                              {val.Cod_Materia + " - " + val.Nombre}
+                            </option>
+                          );
+                        })}
+                      </Input>
+                    </FormGroup>
+                  </Col>
+                </Row>
                 <FormGroup>
-                  <Label for="Nombre" hidden></Label>
+                  <Label for="Periodo" hidden></Label>
                   <Input
-                    id="Nombre"
-                    onChange={(event) => {
-                      setnombreInsert(event.target.value);
-                    }}
-                    placeholder="Nombre"
-                  ></Input>
-                </FormGroup>
-              </Col>
-              <Col md={6}>
-                <FormGroup>
-                  <Label for="Materia" hidden></Label>
-                  <Input
+                    defaultValue={val.Periodo}
                     type="select"
-                    autoComplete="off"
-                    id="Materia"
+                    id="Periodo"
                     onChange={(event) => {
-                      setmateriaInsert(event.target.value);
+                      setperiodoUpdate(event.target.value);
                     }}
+                    placeholder="Periodo"
                   >
-                    <option disabled selected="selected">
-                      Materias
+                    <option disable selected="selected">
+                      Periodo
                     </option>
-                    {cbMaterias.map((val, key) => {
+                    {cbPeriodos.map((val, key) => {
                       return (
                         <option key={key} value={val.ID}>
-                          {val.Cod_Materia + " - " + val.Nombre}
+                          {val.Nombre}
                         </option>
                       );
                     })}
                   </Input>
                 </FormGroup>
-              </Col>
-            </Row>
-            <FormGroup>
-              <Label for="Periodo" hidden></Label>
-              <Input
-                type="select"
-                id="Periodo"
-                onChange={(event) => {
-                  setperiodoInsert(event.target.value);
-                }}
-                placeholder="Periodo"
-              >
-                <option disable selected="selected">
-                  Periodo
-                </option>
-                {cbPeriodos.map((val, key) => {
-                  return (
-                    <option key={key} value={val.ID}>
-                      {val.Nombre}
-                    </option>
-                  );
-                })}
-              </Input>
-            </FormGroup>
 
-            <FormGroup>
-              <Label for="Calificacion Maxima" hidden></Label>
-              <Input
-                id="Calificacion_Maxima"
-                onChange={(event) => {
-                  setmaxima_calificacionInsert(event.target.value);
-                }}
-                placeholder="Calificacion Maxima"
-              ></Input>
-            </FormGroup>
-          </ModalBody>
-          <ModalFooter>
-            <Button
-              color="success"
-              onClick={() => {
-                insertCriterios_Evaluacion();
-                refreshpage();
-              }}
-            >
-              Aceptar
-            </Button>
-          </ModalFooter>
+                <FormGroup>
+                  <Label for="Calificacion Maxima" hidden></Label>
+                  <Input
+                    defaultValue={val.Maxima_Calificacion}
+                    id="Calificacion_Maxima"
+                    autoComplete="off"
+                    onChange={(event) => {
+                      setmaxima_calificacionUpdate(event.target.value);
+                    }}
+                    placeholder="Calificacion Maxima"
+                  ></Input>
+                </FormGroup>
+              </ModalBody>
+              <ModalFooter>
+                <Button
+                  color="success"
+                  onClick={() => {
+                    updateCriterios_Evaluacion(val.ID);
+                    refreshpage();
+                  }}
+                >
+                  Aceptar
+                </Button>
+              </ModalFooter>
+            </>
+            );
+          })}
         </Modal>
-
       </div>
     </div>
   );
