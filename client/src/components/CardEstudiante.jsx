@@ -85,7 +85,6 @@ const CardEstudiante = (props) => {
               <Table bordered>
                 <tbody>
                   <tr>
-                    {console.log(notaFinal)}
                     <th>NOTA FINAL</th>
                     {notaFinal.length > 0 ? (<td>{notaFinal[0].Nota} / 100</td>) : (<td>No ha sido publicada</td>)}
                   </tr>
