@@ -41,6 +41,7 @@ export const Navbar = (props) => {
         }
       }
     };
+
     doCheck();
   }, []);
 
@@ -86,10 +87,12 @@ export const Navbar = (props) => {
             <li>
               <Link to="/notas/vista">NOTAS</Link>
             </li>
-          ) : (
+          ) : User.data.Tipo == "1" ? (
             <li>
               <Link to="/notas/publicar">NOTAS</Link>
             </li>
+          ) : (
+            <></>
           )}
           <li>
             <Link to="/admisiones">ADMISIONES</Link>

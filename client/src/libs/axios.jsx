@@ -3,7 +3,7 @@ const axios = Axios.create({
   baseURL: `${import.meta.env.VITE_HOSTAPI}`,
   timeout: 1000,
   headers: {
-    authorization: "Bearer " + localStorage.getItem("auth")
+    authorization: "Bearer " + localStorage.getItem("auth") || null,
   },
   validateStatus: function (status) {
     return status >= 200 && status < 500; // default

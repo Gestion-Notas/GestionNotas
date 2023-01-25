@@ -122,7 +122,6 @@ app.get("/getPensum100", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      console.log("Se mando el 100");
       res.send(result);
     }
   });
@@ -612,8 +611,6 @@ app.get("/getMaterias_Inscritas", (req, res) => {
 });
 
 app.post("/insertMaterias_Inscritas", (req, res) => {
-
-  console.log(req.body)
   const alumno = req.body.alumno;
   const materia = req.body.materia;
   const periodo = req.body.periodo;

@@ -5,7 +5,7 @@ export function useAuthContext() {
 }
 export function AuthProvider({ children }) {
   const [User, SetUser] = useState(() => {
-    return { auth: false, token: null, User: {} };
+    return { auth: false, token: null, User: {}};
   });
   return (
     <AuthContext.Provider value={[User, SetUser]}>
