@@ -52,7 +52,7 @@ const CardMaestro = (props) => {
       Nota: "",
       Nota_Maxima: "",
       ExecUpdateID: "",
-      Nombre_Criterio: ""
+      Nombre_Criterio: "",
     };
   });
 
@@ -74,14 +74,12 @@ const CardMaestro = (props) => {
   const getCountCorregidos = (ID) => {
     Axios.post("/getCountCorregidos", { id: ID }).then((response) => {
       setCountCorregidos(response.data[0].Cantidad);
-      console.log(data + " - Corregidos")
     });
   };
 
   const getCountCorregir = (ID) => {
     Axios.post("/getCountCorregir", { id: ID }).then((response) => {
       setCountCorregir(response.data[0].Cantidad);
-      console.log(response.data[0].Cantidad + " - Corregir")
     });
   };
 
@@ -116,7 +114,6 @@ const CardMaestro = (props) => {
   const updateCorreccion = () => {
     console.log(updateCorregir);
     Axios.post("/updateCorregidos", {
-      id: updateCorregir.ExecUpdateID,
       id_usuario: updateCorregir.Alumno_ID,
       nota: updateCorregir.Nota,
       criterio_id: updateCorregir.Criterio_ID,
@@ -144,7 +141,9 @@ const CardMaestro = (props) => {
       </div>
       <p>{props.name}</p>
       <Modal isOpen={modal} toggle={toggle} size={"xl"}>
-        <ModalHeader toggle={toggle}>Calificaciones del Parcial - <strong>{props.name}</strong></ModalHeader>
+        <ModalHeader toggle={toggle}>
+          Calificaciones del Parcial - <strong>{props.name}</strong>
+        </ModalHeader>
         <ModalBody>
           <div className="container_fullmodal">
             <div className="table100-Cards">
@@ -171,12 +170,12 @@ const CardMaestro = (props) => {
                             <Button
                               color="primary"
                               onClick={() => {
+                                console.log(val)
                                 setUpdateCorregir({
-                                  id: val.ID,
+                                  Criterio_ID: val.ID,
                                   Nombre: val.Alumno,
-                                  Alumno_ID: val.Alumno_ID,
+                                  Alumno_ID: val.ID_Usuario,
                                   Criterio: val.Criterio,
-                                  Criterio_ID: val.Criterio_ID,
                                   Nota: val.Nota,
                                   Nota_Maxima: val.Nota_Maxima,
                                 });
@@ -219,15 +218,14 @@ const CardMaestro = (props) => {
                                 color="primary"
                                 onClick={() => {
                                   setUpdateCorregir({
-                                    id: val.ID,
                                     Nombre: val.Alumno,
-                                    Alumno_ID: val.Alumno_ID,
+                                    Alumno_ID: val.ID_Usuario,
                                     Criterio: val.Criterio,
-                                    Criterio_ID: val.Criterio_ID,
+                                    Criterio_ID: val.ID,
                                     Nota: val.Nota,
                                     Nota_Maxima: val.Nota_Maxima,
-                                    ExecUpdateID: val.Calificaciones_ID,
                                   });
+                                  console.log(val)
                                   toggleUpdateCorregidosState();
                                 }}
                               >
@@ -256,7 +254,7 @@ const CardMaestro = (props) => {
                           <tr key={key}>
                             <td>{val.Nombre}</td>
                             <td>{val.Maxima_Calificacion}</td>
-                              {/*<div className="acciones-AdminPages">
+                            {/*<div className="acciones-AdminPages">
                                 <Button color="primary" onClick={() => {}}>
                                   <MdEdit fontSize={"20px"} />
                                 </Button>
@@ -342,6 +340,7 @@ const CardMaestro = (props) => {
                       id="Nota"
                       placeholder="Nota"
                       type="number"
+                      min={0}
                       max={updateCorregir.Nota_Maxima}
                       autoComplete="off"
                       onChange={(event) => {

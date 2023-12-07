@@ -30,7 +30,7 @@ const Footer = () => {
             <a href="#">
               <FaFacebookSquare className="icon-Footer" />
             </a>
-            <a href="#">
+            <a href="https://www.instagram.com/isftsureste/" target="_blank" rel="noopener noreferrer">
               <FaInstagramSquare className="icon-Footer" />
             </a>
             <a href="#">

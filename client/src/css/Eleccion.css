@@ -1,0 +1,24 @@
+.grid2-3_Eleccion{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+}
+
+.info_Eleccion {
+    background-color: red;
+    height: 100%;
+}
+
+.formulario_Eleccion {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+}
+
+.formulario_Eleccion label {
+    text-align: left;
+}
+
+.formulario_Eleccion input {
+    margin-top: 0.9rem;
+}

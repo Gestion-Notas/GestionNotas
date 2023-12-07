@@ -48,6 +48,22 @@
   cursor: auto;
 }
 
+.container-Elecciones{
+  margin-top: 20px;
+  padding: 20px;
+  color: var(--BaseTone);
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: var(--BaseYellow);
+  transition: 400ms;
+}
+
+.container-Elecciones:hover {
+  background-color: var(--DarkerYellow);
+  transition: 400ms;
+}
+
 @media only screen and (max-width: 1000px) {
   .container-Pensum {
     display: grid;

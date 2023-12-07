@@ -7,7 +7,8 @@ import { BiLogOut } from "react-icons/bi";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/auth";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
-export const Navbar = (props) => {
+
+export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const toggle = () => setModal(!modal);
@@ -16,32 +17,34 @@ export const Navbar = (props) => {
   function refreshpage() {
     window.location.reload(false);
   }
-  useEffect(() => {
-    const doCheck = async () => {
-      if (!localStorage.getItem("auth")) return;
-      try {
-        const response = await Axios.get("/auth");
-        if (response.status !== 200 || response.status >= 500) {
-          SetUser({ auth: false, token: null, data: {} });
-          localStorage.removeItem("auth");
-          return;
-        }
-        localStorage.setItem("auth", response.data.token);
-        SetUser({
-          auth: true,
-          token: response.data.token,
-          data: response.data.user,
-        });
-      } catch (error) {
-        if (error.name === "AbortError") return;
-        if (error.response.status === 401) {
-          SetUser({ auth: false, token: null, data: {} });
-          localStorage.removeItem("auth");
-          return;
-        }
-      }
-    };
 
+  const doCheck = async () => {
+    if (!localStorage.getItem("auth")) return;
+    try {
+      const response = await Axios.get("/auth");
+      if (response.status !== 200 || response.status >= 500) {
+        SetUser({ auth: false, token: null, userdata: {} });
+        localStorage.removeItem("auth");
+        return;
+      }
+      console.log(response.data.userdata);
+      localStorage.setItem("auth", response.data.token);
+      SetUser({
+        auth: true,
+        token: response.data.token,
+        userdata: response.data.userdata,
+      });
+    } catch (error) {
+      if (error.name === "AbortError") return;
+      if (error.response.status === 401) {
+        SetUser({ auth: false, token: null, userdata: {} });
+        localStorage.removeItem("auth");
+        return;
+      }
+    }
+  };
+
+  useEffect(() => {
     doCheck();
   }, []);
 
@@ -83,11 +86,11 @@ export const Navbar = (props) => {
           </li>
           {!User.auth ? (
             <></>
-          ) : User.data.Tipo == "0" ? (
+          ) : User.userdata.Tipo == "0" ? (
             <li>
               <Link to="/notas/vista">NOTAS</Link>
             </li>
-          ) : User.data.Tipo == "1" ? (
+          ) : User.userdata.Tipo == "1" ? (
             <li>
               <Link to="/notas/publicar">NOTAS</Link>
             </li>
@@ -108,7 +111,9 @@ export const Navbar = (props) => {
           </Link>
         ) : (
           <div className="Link-Navbar">
-            <div>Hola, {User.data.Nombres + " " + User.data.Apellidos}</div>
+            <div>
+              Hola, {User.userdata.Nombres + " " + User.userdata.Apellidos}
+            </div>
             <div style={{ cursor: "pointer" }}>
               <BiLogOut className="usericon-Navbar" onClick={toggle} />
             </div>

@@ -10,12 +10,12 @@ const News = () => {
     setNoticias(response.data);
   }).catch((err)=>{
     console.log(err)
-  })});
+  })}, []);
 
   return (
     <main className="main">
       <div className="news-Container">
-        {noticias.map((val, key) => {
+        {noticias.map((val) => {
           return (
             <NewsView
               idnew={val.ID}

@@ -2,25 +2,13 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/auth";
 import "../css/AdminPages.css";
-import {
-  Modal,
-  ModalBody,
-  ModalHeader,
-  ModalFooter,
-  Table,
-  Button,
-  Input,
-  FormGroup,
-  Row,
-  Col,
-  Label,
-} from "reactstrap";
+import { Table, Toast, ToastBody, ToastHeader } from "reactstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Axios from "../libs/axios";
 
-const MateriasAdmin = () => {
-
+const DashboardAdmin = () => {
   const [materiasarray, setMateriasarray] = useState([]);
+  const [toastTrabajar, setToastTrabajar] = useState(false);
   const [admitidos, setAdmitidos] = useState([]);
   const [espera, setEspera] = useState([]);
   const [periodo, setPeriodo] = useState([]);
@@ -39,8 +27,8 @@ const MateriasAdmin = () => {
     });
 
     Axios.get("/getPeriodoActual").then((response) => {
-        setPeriodo(response.data);
-      });
+      setPeriodo(response.data);
+    });
   };
 
   useEffect(() => {
@@ -65,35 +53,52 @@ const MateriasAdmin = () => {
             <div className="result-AdminPages">{periodo[0].PeriodoMaximo}</div>
           </div>
         </div>
-        <div className="containerTable-Adminpages">
-          <Table hover responsive>
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>ID Maestro</th>
-                <th>Cod_Materia</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
-                <th>Nivel</th>
-                <th>Creditos</th>
-              </tr>
-            </thead>
-            <tbody>
-              {materiasarray.map((val, key) => {
-                return (
-                  <tr key={key}>
-                    <th>{val.ID}</th>
-                    <td>{val.ID_Maestro}</td>
-                    <td>{val.Cod_Materia}</td>
-                    <td>{val.Nombre}</td>
-                    <td>{val.Descripcion}</td>
-                    <td>{val.Nivel}</td>
-                    <td>{val.Creditos}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </Table>
+        <div className="containerbottom-AdminPages">
+          <div className="containernotifs-Adminpages">
+            <p>Notificaciones</p>
+            <Toast>
+              <ToastHeader>Reactstrap</ToastHeader>
+              <ToastBody>
+                This is a toast on a white background — check it out!
+              </ToastBody>
+            </Toast>
+            <Toast isOpen={toastTrabajar}>
+              <ToastHeader>Reactstrap</ToastHeader>
+              <ToastBody>
+                This is a toast on a white background — check it out!
+              </ToastBody>
+            </Toast>
+          </div>
+          <div className="containerTable-Adminpages">
+            <Table hover responsive>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>ID Maestro</th>
+                  <th>Cod_Materia</th>
+                  <th>Nombre</th>
+                  <th>Descripción</th>
+                  <th>Nivel</th>
+                  <th>Creditos</th>
+                </tr>
+              </thead>
+              <tbody>
+                {materiasarray.map((val, key) => {
+                  return (
+                    <tr key={key}>
+                      <th>{val.ID}</th>
+                      <td>{val.ID_Maestro}</td>
+                      <td>{val.Cod_Materia}</td>
+                      <td>{val.Nombre}</td>
+                      <td>{val.Descripcion}</td>
+                      <td>{val.Nivel}</td>
+                      <td>{val.Creditos}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </Table>
+          </div>
         </div>
       </div>
     </div>
@@ -102,4 +107,4 @@ const MateriasAdmin = () => {
   );
 };
 
-export default MateriasAdmin;
+export default DashboardAdmin;
