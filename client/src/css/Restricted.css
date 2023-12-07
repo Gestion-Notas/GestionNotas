@@ -1,0 +1,34 @@
+.container-403 {
+  width: 100%;
+  height: 60vh;
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+}
+
+.text-403 {
+  padding: 2vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.Acceso-403 {
+  font-size: 17vh;
+}
+
+.Restringido-403 {
+  font-size: 10.2vh;
+}
+
+.text-403 p {
+  line-height: 13vh;
+  font-weight: 700;
+  margin: 0;
+}
+
+
+.iconChild-403 {
+  width: 100%;
+  height: 100%;
+  color: red;
+}

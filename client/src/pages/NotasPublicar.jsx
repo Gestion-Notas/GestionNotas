@@ -14,7 +14,7 @@ const NotasPublicar = () => {
       try {
         const response = await Axios.get("/auth");
         if (response.status !== 200 || response.status >= 500) {
-          SetUser({ auth: false, token: null, data: {} });
+          SetUser({ auth: false, token: null, userdata: {} });
           localStorage.removeItem("auth");
           return;
         }
@@ -22,12 +22,12 @@ const NotasPublicar = () => {
         SetUser({
           auth: true,
           token: response.data.token,
-          data: response.data.user,
+          userdata: response.data.userdata,
         });
       } catch (error) {
         if (error.name === "AbortError") return;
         if (error.response.status === 401) {
-          SetUser({ auth: false, token: null, data: {} });
+          SetUser({ auth: false, token: null, userdata: {} });
           localStorage.removeItem("auth");
           return;
         }
@@ -38,8 +38,8 @@ const NotasPublicar = () => {
   }, []);
 
   useEffect(() => {
-    !User.auth ? console.log("No Auth") : getMateriasMaestros(User.data.ID);
-  });
+    !User.auth ? console.log("No Auth") : getMateriasMaestros(User.userdata.ID);
+  }, []);
 
   const getMateriasMaestros = (ID) => {
     Axios.post("/getMateriasMaestros", { id: ID }).then((response) => {

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useReactToPrint } from "react-to-print";
 import { Table, Button } from "reactstrap";
 import Axios from "../libs/axios"
@@ -13,9 +13,11 @@ const PrintUsuarios = () => {
     documentTitle: "Usuarios-Impresion",
   });
 
-  Axios.get("/getUsuarios").then((response) => {
-    setUsuariosTemp(response.data);
-  });
+  useEffect(() => {
+    Axios.get("/getUsuarios").then((response) => {
+      setUsuariosTemp(response.data);
+    });
+  }, []);
 
   return (
     <div

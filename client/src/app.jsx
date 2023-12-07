@@ -1,4 +1,4 @@
-import React, { lazy } from "react";
+import React from "react";
 import { AuthProvider } from "./contexts/auth";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import MainPage from "./pages/MainPage";
@@ -13,10 +13,12 @@ import News from "./pages/News";
 import NewsDetails from "./pages/NewsDetails";
 import AboutUs from "./pages/AboutUs";
 import Admisiones from "./pages/Admisiones";
+import Eleccion from "./pages/Eleccion";
 
 import RequireAdmin from "./components/RequireAdmin";
 import RequireAlumno from "./components/RequireAlumno";
 import RequireMaestro from "./components/RequireMaestro";
+import NotFound from "./components/NotFound";
 
 import UsuariosAdmin from "./pages/UsuariosAdmin";
 import MateriasAdmin from "./pages/MateriasAdmin";
@@ -43,11 +45,12 @@ const App = () => {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="*" element={<h1>hola 404</h1>} />
+          <Route path="*" element={<MainPage Main={NotFound} />} />
           <Route path="/" element={<MainPage Main={Home} />} />
           <Route path="/pensum" element={<MainPage Main={Pensum} />} />
           <Route path="/noticias" element={<MainPage Main={News} />} />
           <Route path="/nosotros" element={<MainPage Main={AboutUs} />} />
+
           <Route element={<RequireMaestro />}>
             <Route
               path="/notas/publicar"
@@ -55,6 +58,10 @@ const App = () => {
             />
           </Route>
           <Route element={<RequireAlumno />}>
+            <Route
+              path="/eleccionMaterias"
+              element={<MainPage Main={Eleccion} />}
+            />
             <Route
               path="/notas/vista"
               element={<MainPage Main={NotasVista} />}

@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useAuthContext } from "../contexts/auth";
-import "../css/NotasVista.css";
+import { Form, FormGroup, Label, Input } from "reactstrap";
+import "../css/Eleccion.css";
 import Axios from "../libs/axios";
-import CardEstudiante from "../components/CardEstudiante";
+import { useAuthContext } from "../contexts/auth";
 
-const NotasVista = () => {
-  const [User, SetUser] = useAuthContext();
+const Eleccion = () => {
   const [materias, setMaterias] = useState([]);
+  const [User, SetUser] = useAuthContext();
+
   useEffect(() => {
     const doCheck = async () => {
       if (!localStorage.getItem("auth")) return;
@@ -32,33 +33,44 @@ const NotasVista = () => {
         }
       }
     };
-
     doCheck();
   }, []);
 
   useEffect(() => {
-    !User.auth ? console.log("No Auth" + " - "  + User.auth) : getMateriasAlumnos(User.userdata.ID);
-  }, []);
+    !User.auth
+      ? console.log("No Auth" + " - " + User.auth)
+      : getElegibles(User.userdata.ID);
+  });
 
-  const getMateriasAlumnos = (ID) => {
-    Axios.post("/getMateriasAlumnos", { id: ID }).then((response) => {
+  const getElegibles = (ID) => {
+    Axios.post("/getMateriasElegibles", { id: ID }).then((response) => {
       setMaterias(response.data);
     });
   };
 
   return (
     <main className="main">
-      {!User.auth ? (
-        <></>
-      ) : (
-        <div className="container-Notas">
-          {materias.map((val, key) => {
-            return <CardEstudiante name={val.Nombre} idMateria={val.Materia_ID} idAlumno={val.Usuario}/>
-          })}
+      <div className="grid2-3_Eleccion">
+        <div className="elegibles_Eleccion">
+          {!User.auth ? (
+            <></>
+          ) : (
+            <Form className="formulario_Eleccion">
+              {materias.map((val, key) => {
+                return (
+                  <FormGroup check inline>
+                    <Input type="checkbox" />
+                    <Label check>{val.Materia}</Label>
+                  </FormGroup>
+                );
+              })}
+            </Form>
+          )}
         </div>
-      )}
+        <div className="info_Eleccion"></div>
+      </div>
     </main>
   );
 };
 
-export default NotasVista;
+export default Eleccion;

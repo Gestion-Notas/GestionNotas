@@ -6,7 +6,7 @@ const MainPage = ({ Main }) => {
   return (
     <>
       <Navbar user="Lucas Jair Lopez Tavarez" />
-        <Main />
+      <Main />
       <Footer />
     </>
   );

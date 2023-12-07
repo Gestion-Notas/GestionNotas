@@ -52,11 +52,10 @@
   overflow-y: auto;
 }
 
-.notafinal
 
 .table50-Cards {
-  max-height: calc(35vh - 30px);
-  overflow-y: auto;
+  max-height: calc(70vh - 8px);
+  overflow-y: auto; 
 }
 
 .tablebutton-Cards {
@@ -96,6 +95,7 @@
 
 .container_leftside {
   display: grid;
+  max-height: calc(70vh - 8px);
   grid-gap: 20px;
   grid-template-rows: repeat(2, 1fr);
 }

@@ -31,7 +31,7 @@ const MainPage_Admin = ({ Main }) => {
       try {
         const response = await Axios.get("/auth");
         if (response.status !== 200 || response.status >= 500) {
-          SetUser({ auth: false, token: null, data: {} });
+          SetUser({ auth: false, token: null, userdata: {} });
           localStorage.removeItem("auth");
           return;
         }
@@ -39,12 +39,12 @@ const MainPage_Admin = ({ Main }) => {
         SetUser({
           auth: true,
           token: response.data.token,
-          data: response.data.user,
+          userdata: response.data.userdata,
         });
       } catch (error) {
         if (error.name === "AbortError") return;
         if (error.response.status === 401) {
-          SetUser({ auth: false, token: null, data: {} });
+          SetUser({ auth: false, token: null, userdata: {} });
           localStorage.removeItem("auth");
           return;
         }
@@ -103,12 +103,12 @@ const MainPage_Admin = ({ Main }) => {
                 <span className="links_name">Criterios</span>
               </Link>
             </li>
-            {/*<li>
-              <Link to="" className="a">
+            <li>
+              <Link to="/admin/calificaciones_criterios" className="a">
                 <GoTasklist className="icon" />
                 <span className="links_name">Calificaciones</span>
               </Link>
-            </li>*/}
+            </li>
             <li>
               <Link to="/admin/materias_inscritas" className="a">
                 <RiContactsBookUploadFill className="icon" />
@@ -143,7 +143,7 @@ const MainPage_Admin = ({ Main }) => {
                     <></>
                   ) : (
                     <div className="nombre">
-                      {User.data.Nombres + " " + User.data.Apellidos}
+                      {User.userdata.Nombres + " " + User.userdata.Apellidos}
                     </div>
                   )}
                 </div>

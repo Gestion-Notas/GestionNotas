@@ -1,5 +1,6 @@
 {
   "name": "seminario",
+  "homepage": "",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -19,6 +20,7 @@
     "react-router-dom": "^6.4.3",
     "react-to-print": "^2.14.10",
     "reactstrap": "^9.1.5",
+    "socket.io-client": "^4.7.1",
     "universal-cookie": "^4.0.4"
   },
   "devDependencies": {

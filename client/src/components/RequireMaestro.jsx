@@ -1,26 +1,26 @@
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useAuthContext } from "../contexts/auth";
+import MainPage from "../pages/MainPage";
 import Restricted from "./Restricted";
 import Axios from "../libs/axios";
 function RequireMaestro() {
-  const [auth, Setauth] = useAuthContext();
   const location = useLocation();
+  const [auth, Setauth] = useAuthContext();
   let isLoading = false;
   if (!auth.auth && localStorage.getItem("auth") !== null) {
     isLoading = true;
-    Axios
-      .get("/auth")
+    Axios.get("/auth")
       .then((res) => {
         Setauth(
           res.status === 200
             ? {
                 auth: true,
                 token: res.data.token,
-                data: res.data.user,
+                userdata: res.data.userdata,
               }
             : () => {
                 localStorage.removeItem("auth");
-                return { auth: false, token: null, data: null };
+                return { auth: false, token: null, userdata: null };
               }
         );
         isLoading = false;
@@ -28,19 +28,19 @@ function RequireMaestro() {
       .catch((err) => {
         console.log(err);
         localStorage.removeItem("auth");
-        Setauth({ auth: false, token: null, data: null });
+        Setauth({ auth: false, token: null, userdata: null });
         isLoading = false;
       });
   }
   if (isLoading) {
     return <div>Loading...</div>;
   }
-  return auth.data.Tipo == 1 ? (
+  return !auth.auth ? (
+    <Navigate to="/login" state={{ from: location }} replace />
+  ) : auth.userdata.Tipo == 1 ? (
     <Outlet />
-  ) : auth?.auth ? (
-    <Restricted />
   ) : (
-    <Navigate to="/Login" state={{ from: location }} replace />
+    <MainPage Main={Restricted} />
   );
 }
 

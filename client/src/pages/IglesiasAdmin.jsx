@@ -57,7 +57,6 @@ const IglesiaAdmin = () => {
   };
 
   const insertPastor = () => {
-    console.log(direccionInsert);
     Axios.post("/insertIglesias", {
       nombre: nombreInsert,
       direccion: direccionInsert,
@@ -275,7 +274,6 @@ const IglesiaAdmin = () => {
           </Modal>
 
           <Modal isOpen={modalUpdateState} toggle={toggleUpdateState}>
-            {console.log(updateData)}
             {updateData.map((val, key) => {
               return (
                 <>

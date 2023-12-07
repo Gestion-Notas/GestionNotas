@@ -29,7 +29,6 @@ const PrintCriterios_Evaluacion = () => {
       style={{ display: "flex", flexDirection: "column", alighItems: "center" }}
     >
       <Button color="success" onClick={handlePrint}>
-        {" "}
         IMPRIMIR MATERIAS INSCRITAS - VISTA DEBAJO
       </Button>
       <div
@@ -59,7 +58,7 @@ const PrintCriterios_Evaluacion = () => {
                     <td>{val.Periodo}</td>
                   </tr>
                 );
-              })}
+              })};
             </tbody>
           </Table>
         </div>
